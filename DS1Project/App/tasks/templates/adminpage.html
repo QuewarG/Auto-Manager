@@ -1,0 +1,40 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block content %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block sidebar">
+            <div class="sidebar-sticky d-flex flex-column align-items-center">
+                <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
+                <h5 class="admin-label">Admin</h5>
+                <button type="button" class="btn btn-primary btn-block mt-3">Crear Rol</button>
+                <button type="button" class="btn btn-primary btn-block mt-3">Sucursales</button>
+                <button type="button" class="btn btn-primary btn-block mt-3">Inventario</button>
+                <button type="button" class="btn btn-primary btn-block mt-3">Usuarios</button>
+            </div>
+        </nav>
+        
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <!-- Your content goes here -->
+        </main>
+    </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>

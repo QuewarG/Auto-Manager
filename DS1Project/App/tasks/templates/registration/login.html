@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% block content %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'styles/style_login.css''%}">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Bienvenido</h2>
+    <form action="" method="post">
+      {% csrf_token %}
+  
+        <div class="user">
+            <input type="text"  id="username" name="username" required>
+            <label> Username </label>
+        </div>
+        <div class="user">
+            <input type="password"  id="password" name="password" required>
+            <label> Password </label>
+        </div>
+  
+        <button type="submit" value="Enviar">
+            Enviar
+        </button>
+  
+  
+    </form>
+  </div>
+  
+</body>
+</html>
+
+{% endblock %}

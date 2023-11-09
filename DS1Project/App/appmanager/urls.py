@@ -1,8 +1,9 @@
 from django.urls import path, include
-from .views import home, adminpage, exit
+from .views import adminpage, exit, users, roles
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('adminpage/', adminpage, name='adminpage'),
+    path('', adminpage, name='adminpage'),
+    path('users/', users, name='users'),
+    path('roles/', roles, name='roles'),
     path('logout/', exit, name='exit'),
 ]

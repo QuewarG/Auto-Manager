@@ -18,15 +18,22 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 240px;
+    width: 250px;
     height: 100vh;
     padding: 0 1.7rem;
     color: #fff;
     overflow: hidden;
+    transition: all 0.5s linear;
     background: rgb(22, 33, 52);
 }
 
-.sidebar button {
+.sidebar:hover {
+    width: 250px;
+    transition: 0.5s;
+}
+
+.sidebar a {
+    text-decoration: none;
     color: #fff;
     cursor: pointer;
     background: transparent;
@@ -45,7 +52,7 @@ body {
 }
 
 .menu li {
-    padding: 1rem;
+    padding: 0.7rem;
     margin: 8px 0;
     border-radius: 8px;
     transition: all 0.5s ease-in-out;
@@ -55,7 +62,7 @@ body {
     background: #e0e0e058;
 }
 
-.menu button {
+.menu a {
     color: #fff;
     font-size: 14px;
     text-decoration: none;
@@ -64,11 +71,11 @@ body {
     gap: 1.2rem;
 }
 
-.menu span {
+.menu a span {
     overflow: hidden;
 }
 
-.menu i {
+.menu a i {
     font-size: 1.2rem;
 }
 
@@ -77,6 +84,18 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
+}
+
+.settings {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+}
+
+.logout a {
+    text-decoration: none;
+    color: #fff;
 }
 
 .main--content {
@@ -137,4 +156,36 @@ body {
 
 .search--box i:hover {
     transform: scale(1.2);
+}
+
+section article {
+    transition: box-shadow 0.3s ease;
+    background-color: #fff;
+    margin: 1rem 1rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0;
+    cursor: pointer;
+}
+
+section article:hover {
+    box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,0.3);
+}
+
+section article h2 {
+    margin: 1.5rem;
+} 
+
+.section--card {
+    width: 250px;
+    margin: 0 auto;
+    display: inline-block;
+    
+}
+
+.article--card i{
+    font-size: 1.5rem;
+    padding-top: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

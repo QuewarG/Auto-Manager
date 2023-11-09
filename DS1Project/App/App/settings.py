@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Appmanager",
+    "appmanager",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -86,10 +86,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
         "HOST": 'localhost',
-        "PORT": 5433,
+        "PORT": 5432,
         "NAME": 'automanager',
         "USER": 'postgres',
-        "PASSWORD": '12345678',
+        "PASSWORD": 'Dylan2503',
     }
 }
 

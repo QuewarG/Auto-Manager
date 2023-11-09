@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<script src="{% static '/js/editRol.js' %}"></script>
+<script src="{% static '/js/createRol.js' %}"></script>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
+        
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-11">
+        <h2> Roles </h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th colspan="2"> Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rol in rol %}
+                    <tr>
+                        <td>{{rol.name}}</td>
+                        <td>{{rol.description}}</td>
+                        <td> <button class="btn btn-outline-info" onclick="editRol('{{ rol.name }}', '{{ rol.description }}')">Editar</button></td>
+                        <td><button class="btn btn-outline-danger"> Eliminar</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success" onclick="createRol('{{rol.name}}')" style = "margin-left: 5px;"> <i class="fa-solid fa-person-circle-plus"></i> Crear Rol </button>
+        </div>
+    </div>
+</div>
+
+<!--
+        <div class="form--container">
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="boton">Crear Rol</button>
+            </form>
+        </div>
+    -->
+
+{% endblock %}

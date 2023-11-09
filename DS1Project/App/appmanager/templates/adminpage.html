@@ -1,78 +1,21 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% block content %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <div class="sidebar">
-        <div class="logo"></div>
-        <ul class="menu">
-            <li class="activate">
-                <button class="button-link">
-                    <i class="fa-solid fa-a"></i>
-                    <span>Automanager</span>
-                </button>
-            </li>
-            <li>
-                <button class="button-link" onclick="createUser()">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>CrearUsuario</span>
-                </button>
-            </li>
-            <li>
-                <button class="button-link" onclick="users()">
-                    <i class="fas fa-user"></i>
-                    <span>Usuarios</span>
-                </button>
-            </li>
-            <li>
-                <button class="button-link" onclick="sucursales()">
-                    <i class="fa-solid fa-bars"></i>
-                    <span>Sucursales</span>
-                </button>
-            </li>
-            <li>
-                <button class="button-link" onclick="inventory()">
-                    <i class="fa-solid fa-box"></i>
-                    <span>Inventario</span>
-                </button>
-            </li>
-            <li class="logout">
-                <button class="button-link">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Log Out</span>
-                </button>
-            </li>
-        </ul>
+{% block content %}
 
-    </div>
-   
+<section class="section--card">
+    <article class="article--card">
+        <i class="fa-solid fa-user"></i>
+        <h2>Usuarios</h2>
+    </article>
 
-    <div class="main--content">
-        <div class="header--wrapper">
-            <div class="header--title">
-                <span>Admin</span>
-                <h2>Dashboard</h2>
-            </div>
-            <div class="user--info">
-                <div class="search--box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="search">
-                </div>
-                <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
-            </div>
-        </div>
-    </div>
+</section>
 
-    <script src="{% static 'js/script.js' %}"></script>
+<section class="section--card">
+    <article class="article--card">
+        <h2>Hola</h2>
+    </article>
+
+</section>
+</div>
+
 {% endblock %}
-</body>
-</html>

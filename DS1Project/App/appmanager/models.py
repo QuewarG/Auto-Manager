@@ -1,5 +1,20 @@
 from django.db import models
 
+
+#MODELOS DE PRUEBA
+class User(models.Model):
+    name = models.CharField(max_length=50, default='')
+    username = models.CharField(max_length=50, default='')
+    email = models.EmailField(max_length=30, default='')
+    password = models.CharField(max_length=20, default='')
+    phone = models.CharField(max_length=20, default='')
+    ndoc = models.CharField(max_length=20, default='')
+
+class Rol_local(models.Model):
+    name = models.CharField(max_length=20, default='')
+    description = models.TextField(max_length=100, default='')
+
+#MODELOS
 class Persona(models.Model):
     per_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     per_apellido = models.CharField(max_length=50)

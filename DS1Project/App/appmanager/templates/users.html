@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<script src="{% static '/js/editUser.js' %}"></script>
+<script src="{% static '/js/createUser.js' %}"></script>
+
+
+<div class="row">
+    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
+        
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-11">
+        <h2>Usuarios</h2>
+        <div class="table-responsive py-3">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
+                        <th>Nombre</th>
+                        <th>Username</th>
+                        <th>NroDoc</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Rol</th>
+                        <th colspan="2"> Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
+                    {% for usuario in user %}
+                    <tr>
+                        <td>{{usuario.name}}</td>
+                        <td>{{usuario.username}}</td>
+                        <td>{{usuario.ndoc}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.phone}}</td>
+                        <td>#rol</td>
+                        <td> <button class="btn btn-outline-info" onclick="editUser('{{ usuario.name }}', '{{ usuario.username }}', '{{ usuario.ndoc }}','{{ usuario.email }}', '{{ usuario.phone }}')"> Editar </button></td>
+                        <td><button class="btn btn-outline-danger"> Eliminar </button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success" onclick="createUser('{{usuario.name}}')" style = "margin-left: 5px;"> <i class="fa-solid fa-user-plus"></i> Crear Usuario </button>
+        </div>
+    </div>
+
+</div>
+
+<!--
+        <div class="form--container">
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="boton">Crear Usuario</button>
+            </form>
+        </div>
+    -->
+
+</div>
+
+{% endblock %}
+</body>
+
+</html>

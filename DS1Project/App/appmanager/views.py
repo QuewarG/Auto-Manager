@@ -5,16 +5,22 @@ from .models import *
 
 # FUNCIONES DEL SISTEMA
 
-def home(request):
-    return render(request, 'home.html')
-
 @login_required
 def adminpage(request):
-    return render(request, "adminpage.html")
+    return render(request, 'adminpage.html')
 
 def exit(request):
     logout(request)
-    return redirect('home')
+    return redirect('adminpage')
+
+#VISTAS DE PRUEBA
+def roles(request):
+    rol = Rol_local.objects.all()
+    return render(request, 'roles.html', {'rol' : rol})
+
+def users(request):
+    user = User.objects.all()
+    return render(request, 'users.html', {'user' : user})
 
 #Falta todo el direccionamiento de las rutas aqui y en el archivo de urls
 #Lo que hay dentro de .POST['persona_apellido'] corresponde al name que le debes colocar a los campos del formulario

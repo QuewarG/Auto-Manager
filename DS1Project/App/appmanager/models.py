@@ -1,32 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-#MODELOS DE PRUEBA
-class User(models.Model):
-    name = models.CharField(max_length=50, default='')
-    username = models.CharField(max_length=50, default='')
-    email = models.EmailField(max_length=30, default='')
-    password = models.CharField(max_length=20, default='')
-    phone = models.CharField(max_length=20, default='')
-    ndoc = models.CharField(max_length=20, default='')
-
-class Rol_local(models.Model):
-    name = models.CharField(max_length=20, default='')
-    description = models.TextField(max_length=100, default='')
+#nueva tabla usuario
+class Usuario(AbstractUser):
+    user_per_tipo_doc = models.CharField(max_length=10)
+    user_numero_doc = models.CharField(max_length=20)
+    user_telefono = models.CharField(max_length=20)
+    cod_rol = models.ForeignKey('Rol', on_delete=models.CASCADE)  # Clave foránea a rol
 
 #MODELOS
-class Persona(models.Model):
-    per_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
-    per_apellido = models.CharField(max_length=50)
-    per_nombre = models.CharField(max_length=50)
-    per_tipo_doc = models.CharField(max_length=10)
-    per_numero_doc = models.CharField(max_length=20)
-    per_correo = models.EmailField(max_length=50)  # EmailField valida el formato del correo electrónico
-    per_telefono = models.CharField(max_length=20)
-    per_vigente = models.BooleanField()
-    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
-
 class Cargo(models.Model):
     cargo_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     cargo_nombre = models.CharField(max_length=30)
@@ -47,11 +30,22 @@ class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     sucursal_nombre = models.CharField(max_length=50)
     sucursal_ubicacion = models.CharField(max_length=100)
-    sucursal_cod_gerente = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a la tabla Persona
+    sucursal_cod_gerente = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a la tabla Persona OjO
     sucursal_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+class PersonaXCargo(models.Model):
+    perxcargo_cod = models.AutoField(primary_key=True)
+    perxcargo_persona_cod = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+    perxcargo_cargo_cod = models.ForeignKey('Cargo', on_delete=models.CASCADE)
+    perxcargo_sucursal_cod = models.ForeignKey('Sucursal', on_delete=models.CASCADE)
+    perxcargo_rol_cod = models.ForeignKey('Rol', on_delete=models.CASCADE, default=00)
+    perxcargo_vigente = models.BooleanField(default=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+'''
 class PersonaXCargo(models.Model):
     perxcargo_cod = models.AutoField(primary_key=True)
     perxcargo_persona_cod = models.ForeignKey('Persona', on_delete=models.CASCADE)
@@ -60,20 +54,8 @@ class PersonaXCargo(models.Model):
     perxcargo_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+'''
 
-class Usuario(models.Model):
-    usuario_id = models.AutoField(primary_key=True)
-    usuario_persona_cod = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a persona
-    usuario_nickname = models.CharField(max_length=20)
-    usuario_correo = models.EmailField(max_length=40)
-    usuario_password = models.CharField(max_length=20)
-    usuario_cod_rol = models.ForeignKey('Rol', on_delete=models.CASCADE)  # Clave foránea a rol
-    usuario_cod_sucursal = models.ForeignKey('Sucursal', on_delete=models.CASCADE)  # Clave foránea a sucursal
-    usuario_ultima_conexion = models.DateTimeField(null=True, blank=True)
-    usuario_vigente = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-    
 class Menu(models.Model):
     menu_id = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
     menu_nombre = models.CharField(max_length=30, null=False)  # NOT NULL en SQL se traduce a null=False en Django
@@ -114,7 +96,7 @@ class VehiculoReparacion(models.Model):
     vehrep_marca = models.CharField(max_length=30)
     vehrep_color = models.CharField(max_length=30)
     vehrep_enReparacion = models.BooleanField(default=False)
-    vehrep_dueño = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a persona
+    vehrep_dueño = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a persona OjO
     vehrep_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
@@ -189,7 +171,7 @@ class CotizacionVehiculo(models.Model):
 
 class Factura(models.Model):
     codfac = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    codfac_cliente = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a Persona
+    codfac_cliente = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a Persona
     codfac_vendedor = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
     codfac_cotizacion_vehiculonuevo = models.ForeignKey('CotizacionVehiculo', on_delete=models.CASCADE)  # Clave foránea a CotizacionVehiculo
     codfac_reparacion = models.ForeignKey('CotizacionReparacion', on_delete=models.CASCADE)  # Clave foránea a CotizacionReparacion
@@ -203,4 +185,22 @@ class Factura(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
+'''
+class Factura(models.Model):
+    codfac = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
+    codfac_cliente = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a Persona
+    codfac_vendedor = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
+    codfac_cotizacion_vehiculonuevo = models.ForeignKey('CotizacionVehiculo', on_delete=models.CASCADE)  # Clave foránea a CotizacionVehiculo
+    codfac_reparacion = models.ForeignKey('CotizacionReparacion', on_delete=models.CASCADE)  # Clave foránea a CotizacionReparacion
+    codfac_repuestos = models.ForeignKey('CotizacionRepuestos', on_delete=models.CASCADE)  # Clave foránea a CotizacionRepuestos
+    codfac_subtotal = models.DecimalField(max_digits=15, decimal_places=2)
+    codfac_iva = models.DecimalField(max_digits=15, decimal_places=2)
+    codfac_descuento = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    codfac_precioTotal = models.DecimalField(max_digits=15, decimal_places=2)
+    codfac_fecharealizada = models.DateField()
+    codfac_vigente = models.BooleanField(default=True)
+    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
+    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+'''
    

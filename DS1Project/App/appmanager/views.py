@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import login, logout
+from django.contrib import messages
 from .models import *
+from .forms import UserCreationForm, CustomUserCreationForm
+from django.db import IntegrityError
 
 # FUNCIONES DEL SISTEMA
 
@@ -15,12 +19,53 @@ def exit(request):
 
 #VISTAS DE PRUEBA
 def roles(request):
-    rol = Rol_local.objects.all()
+    rol = Rol.objects.all()
     return render(request, 'roles.html', {'rol' : rol})
 
 def users(request):
-    user = User.objects.all()
+    user = Usuario.objects.all()
+    messages.get_messages(request)
     return render(request, 'users.html', {'user' : user})
+
+#funcion para la creacion del usuario por medio de la interfaz inicial
+def signup(request):
+    #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
+    if request.method == 'GET':
+        messages.get_messages(request)
+        return render(request, 'signup.html',{
+                                                'form': CustomUserCreationForm
+                                             })
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            #crea usuario en el sistema
+            try: #Manejo del error al momento de ingresar el usuario
+                   
+                new_user = Usuario.objects.create_user(
+                                                    username = request.POST['username'],
+                                                    password = request.POST['password1'],
+                                                    first_name = request.POST['first_name'],
+                                                    last_name = request.POST['last_name'],
+                                                    email = request.POST['email'],
+                                                    user_per_tipo_doc = request.POST['tipo_doc'],
+                                                    user_numero_doc = request.POST['num_doc'],
+                                                    user_telefono = request.POST['num_tel'],
+                                                    cod_rol = Rol.objects.get(rol_cod = request.POST['rol'])
+                                                   )
+                new_user.save()
+                messages.success(request, 'Usuario creado con éxito.')
+                return redirect('users')
+            except IntegrityError:
+                #Se reenvia a la misma direccion junto a su respectivo mensaje de error
+                messages.warning(request, 'Nombre de usuario ya existe')
+                return render(request, 'signup.html',{
+                                                'form': CustomUserCreationForm
+                                             })
+        #Se reenvia a la misma direccion junto a su respectivo mensaje de error
+        messages.warning(request, 'La contraseña no coincide.')
+        return render(request, 'signup.html',{
+                                                'form': CustomUserCreationForm
+                                             })
+    
 
 #Falta todo el direccionamiento de las rutas aqui y en el archivo de urls
 #Lo que hay dentro de .POST['persona_apellido'] corresponde al name que le debes colocar a los campos del formulario
@@ -79,21 +124,6 @@ def create_PersonaxCargo(request):
                                         perxcargo_vigente = True
                                     )
     new_personaxcargo.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def create_Usuario(request):
-    new_usuario = Usuario(
-                            usuario_persona_cod = request.POST['usuario_persona'],
-                            usuario_nickname = request.POST['usuario_nickname'],
-                            usuario_correo = request.POST['usuario_correo'],
-                            usuario_password = request.POST['usuario_password'],
-                            usuario_cod_rol = request.POST['usuario_rol'],
-                            usuario_cod_sucursal = request.POST['usuario_sucursal'],
-                            usuario_ultima_conexion = request.POST['usuario_ultima_conexion'],
-                            usuario_vigente = True
-                        )
-    new_usuario.save()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 

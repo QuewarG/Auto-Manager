@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from appmanager import views
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('appmanager.urls')),
     path("admin/", admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('signup/', views.signup, name='signup'),
 ]
 
 if settings.DEBUG:

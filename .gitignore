@@ -6,6 +6,12 @@ __pycache__
 db.sqlite3
 media
 
+# Carpeta de archivos de caché de Django
+*.py[cod]
+*.db
+*.sqlite3
+*.log
+
 # Backup files # 
 *.bak 
 

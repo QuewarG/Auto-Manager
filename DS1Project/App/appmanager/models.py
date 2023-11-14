@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
-#nueva tabla usuario
 class Usuario(AbstractUser):
     user_per_tipo_doc = models.CharField(max_length=10)
     user_numero_doc = models.CharField(max_length=20)
@@ -25,6 +23,12 @@ class Rol(models.Model):
     rol_vigente = models.BooleanField(default=True)  # Valor predeterminado True para rol_vigente
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
+    def __str__(self):
+        return self.rol_nombre
+    
+    class Meta:
+        ordering = ['rol_cod']
     
 class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django

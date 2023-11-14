@@ -24,7 +24,10 @@ urlpatterns = [
     path('', include('appmanager.urls')),
     path("admin/", admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('signup/', views.signup, name='signup'),
+    path('users/signup/', views.signup, name='signup'),
+    path('users/edit_user/', views.edit_usuario, name='edit_usuario'),
+    path('users/delete_user/', views.delete_Usuario, name='delete_user'),
+    
 ]
 
 if settings.DEBUG:

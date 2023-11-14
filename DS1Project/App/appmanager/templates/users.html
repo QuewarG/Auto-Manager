@@ -48,8 +48,21 @@
                         <td>{{usuario.email}}</td>
                         <td>{{usuario.user_telefono}}</td>
                         <td>{{usuario.cod_rol_id}}</td>
-                        <td> <button class="btn btn-outline-info" onclick="editUser('{{ usuario.name }}', '{{ usuario.username }}', '{{ usuario.ndoc }}','{{ usuario.email }}', '{{ usuario.phone }}')"> Editar </button></td>
-                        <td><button class="btn btn-outline-danger"> Eliminar </button></td>
+                        
+                        <!--Boton de edicion-->
+                        <form method="get" action="{% url 'edit_usuario' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="editID" value="{{usuario.id}}">
+                            <td> <button type="submit" class="btn btn-outline-info" > Editar </button></td>
+                        </form>
+                        
+                        <!--Boton de borrado-->
+                        <form method="post" action="{% url 'delete_user' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="userID" value="{{usuario.id}}">
+                            <td> <button type="submit" class="btn btn-outline-danger" > Eliminar </button></td>
+                        </form>
+                        
                     </tr>
                     {% endfor %}
                 </tbody>

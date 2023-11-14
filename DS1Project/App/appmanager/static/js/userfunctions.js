@@ -114,7 +114,6 @@ function editUser(name, username, ndoc, email, phone, rol) {
     });
   }
   
-  function redirectcreateUser() {
-    // Redirigir a otra ruta (por ejemplo, '/otra_ruta/') utilizando JavaScript.
-    window.location.href = '/signup/';
+function redirectcreateUser() {
+    window.location.href = '/users/signup/';
 }

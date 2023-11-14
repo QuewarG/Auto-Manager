@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .models import *
-from .forms import UserCreationForm, CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserEditForm
 from django.db import IntegrityError
 
 # FUNCIONES DEL SISTEMA
@@ -27,7 +27,54 @@ def users(request):
     messages.get_messages(request)
     return render(request, 'users.html', {'user' : user})
 
+
+def delete_Usuario(request):
+    if request.method == 'GET':
+        users(request)
+    else:
+        usuario = Usuario.objects.get( id = request.POST['userID'])
+        messages.success(request, 'Usuario eliminado con éxito.')
+        usuario.delete()
+
+    return redirect('/users/') #añadr la ruta donde se vaya a redirigir
+
+#Funcion encargada de la edicion de la informacion del usuario
+def edit_usuario(request):
+    if request.method == 'GET':
+        usuario = Usuario.objects.get( id = request.GET['editID'])
+        
+
+        valores_por_defecto = {
+            'username': usuario.username,
+            'email': usuario.email,
+            'first_name': usuario.first_name,
+            'last_name': usuario.last_name,
+            'user_per_tipo_doc': usuario.user_per_tipo_doc,
+            'user_numero_doc': usuario.user_numero_doc,
+            'user_telefono': usuario.user_telefono,
+        }
+
+        editform = CustomUserEditForm(initial=valores_por_defecto)
+
+        return render(request, 'signupEdit.html',{
+                                                'form': editform
+                                             })
+    else:
+
+        usuario = Usuario.objects.get( username = request.POST['username'])
+        form = CustomUserEditForm(request.POST, instance=usuario)
+        if form.is_valid():
+            # Guarda los cambios en el usuario
+            form.save()
+            messages.success(request, 'La información del usuario ha sido actualizada.')
+            return redirect('users')
+
+        print(request.POST)
+        return render(request, 'editar_usuario.html', {'form': form, 'usuario': usuario})
+
+
 #funcion para la creacion del usuario por medio de la interfaz inicial
+@login_required
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
     if request.method == 'GET':
@@ -300,12 +347,6 @@ def delete_Sucursal(request, sucursal_id):
 def delete_PersonaxCargo(request, personaxcarg_id):
     personaxcargo = PersonaXCargo.objects.get( perxcargo_cod = personaxcarg_id)
     personaxcargo.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def delete_Usuario(request, usuarioid):
-    usuario = Usuario.objects.get( usuario_id = usuarioid)
-    usuario.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 

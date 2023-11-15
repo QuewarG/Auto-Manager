@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .models import *
-from .forms import CustomUserCreationForm, CustomUserEditForm
+from .forms import *
 from django.db import IntegrityError
+from django.utils.translation import gettext as _
 
 # FUNCIONES DEL SISTEMA
 
@@ -20,25 +21,93 @@ def exit(request):
 #VISTAS DE PRUEBA
 def roles(request):
     rol = Rol.objects.all()
+    messages.get_messages(request)
     return render(request, 'roles.html', {'rol' : rol})
 
+@login_required
+def create_rol(request):
+    if request.method == 'GET':
+        messages.get_messages(request)
+        return render(request, 'new_rol.html',{
+                                                'form': RolForm
+                                             })
+    else:
+        form = RolForm(request.POST)
+        if form.is_valid():
+            new_rol = Rol(
+                            rol_nombre = form.cleaned_data['rol_nombre'],
+                            rol_descripcion = form.cleaned_data['rol_descripcion']
+            )
+            new_rol.save()
+            msg =_('Rol creado con éxito.')
+            messages.success(request, msg)
+            return redirect('roles')
+        else:
+            return render(request, 'new_rol.html',{
+                                                'form': RolForm
+                                             })
+
+@login_required
+def edit_rol(request):
+    if request.method == 'GET':
+        rol = Rol.objects.get( rol_cod = request.GET['rol_editID'])
+        
+        valores_por_defecto = {
+            'rol_cod': rol.rol_cod,
+            'rol_nombre': rol.rol_nombre,
+            'rol_descripcion': rol.rol_descripcion,
+        }
+
+        editform = RolForm(initial=valores_por_defecto)
+
+        return render(request, 'edit_rol.html',{
+                                                'form': editform
+                                             })
+    else:
+
+        rol = Rol.objects.get( rol_cod = request.POST['rol_cod'])
+        form = RolForm(request.POST, instance=rol)
+        if form.is_valid():
+            # Guarda los cambios en el usuario
+            form.save()
+            msg = _('Rol actualizado.')
+            messages.success(request, msg)
+            return redirect('roles')
+
+        return render(request, 'edit_rol.html', {'form': form, 'rol': rol}) 
+
+@login_required
+def delete_rol(request):
+    if request.method == 'GET':
+        roles(request)
+    else:
+        rol = Rol.objects.get( rol_cod = request.POST['rolID'])
+        msg = _('Rol eliminado con éxito.')
+        messages.success(request, msg)
+        rol.delete()
+
+    return redirect('/roles/') #añadr la ruta donde se vaya a redirigir
+
+@login_required
 def users(request):
     user = Usuario.objects.all()
     messages.get_messages(request)
     return render(request, 'users.html', {'user' : user})
 
-
+@login_required
 def delete_Usuario(request):
     if request.method == 'GET':
         users(request)
     else:
         usuario = Usuario.objects.get( id = request.POST['userID'])
-        messages.success(request, 'Usuario eliminado con éxito.')
+        msg = _('Usuario eliminado con éxito.')
+        messages.success(request, msg)
         usuario.delete()
 
     return redirect('/users/') #añadr la ruta donde se vaya a redirigir
 
 #Funcion encargada de la edicion de la informacion del usuario
+@login_required
 def edit_usuario(request):
     if request.method == 'GET':
         usuario = Usuario.objects.get( id = request.GET['editID'])
@@ -66,11 +135,12 @@ def edit_usuario(request):
         if form.is_valid():
             # Guarda los cambios en el usuario
             form.save()
-            messages.success(request, 'La información del usuario ha sido actualizada.')
+            msg = _('La información del usuario ha sido actualizada.')
+            messages.success(request, msg)
             return redirect('users')
 
         print(request.POST)
-        return render(request, 'editar_usuario.html', {'form': form, 'usuario': usuario})
+        return render(request, 'signupEdit.html', {'form': form, 'usuario': usuario})
 
 
 #funcion para la creacion del usuario por medio de la interfaz inicial
@@ -83,54 +153,46 @@ def signup(request):
                                                 'form': CustomUserCreationForm
                                              })
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            #crea usuario en el sistema
-            try: #Manejo del error al momento de ingresar el usuario
-                   
-                new_user = Usuario.objects.create_user(
-                                                    username = request.POST['username'],
-                                                    password = request.POST['password1'],
-                                                    first_name = request.POST['first_name'],
-                                                    last_name = request.POST['last_name'],
-                                                    email = request.POST['email'],
-                                                    user_per_tipo_doc = request.POST['tipo_doc'],
-                                                    user_numero_doc = request.POST['num_doc'],
-                                                    user_telefono = request.POST['num_tel'],
-                                                    cod_rol = Rol.objects.get(rol_cod = request.POST['rol'])
-                                                   )
-                new_user.save()
-                messages.success(request, 'Usuario creado con éxito.')
-                return redirect('users')
-            except IntegrityError:
-                #Se reenvia a la misma direccion junto a su respectivo mensaje de error
-                messages.warning(request, 'Nombre de usuario ya existe')
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['password1'] == form.cleaned_data['password2']:
+                try:
+                    new_user = Usuario.objects.create_user(
+                        username=form.cleaned_data['username'],
+                        password=form.cleaned_data['password1'],
+                        first_name=form.cleaned_data['first_name'],
+                        last_name=form.cleaned_data['last_name'],
+                        email=form.cleaned_data['email'],
+                        user_per_tipo_doc=form.cleaned_data['tipo_doc'],
+                        user_numero_doc=form.cleaned_data['num_doc'],
+                        user_telefono=form.cleaned_data['num_tel'],
+                        cod_rol=Rol.objects.get(rol_cod=form.cleaned_data['rol'])
+                    )
+                    new_user.save()
+                    msg =_('Usuario creado con éxito.')
+                    messages.success(request, msg)
+                    return redirect('users')
+                except IntegrityError:
+                    messages.warning(request, 'Nombre de usuario ya existe.')
+                    return render(request, 'signup.html',{
+                                                'form': CustomUserCreationForm
+                                             })
+            else:
+                msg = _('La contraseña no coincide.')
+                messages.warning(request, msg)
                 return render(request, 'signup.html',{
                                                 'form': CustomUserCreationForm
                                              })
-        #Se reenvia a la misma direccion junto a su respectivo mensaje de error
-        messages.warning(request, 'La contraseña no coincide.')
-        return render(request, 'signup.html',{
+        else:
+            # Captura los errores del formulario y procesa según tus necesidades
+            errors = form.errors
+            for field, error_list in errors.items():
+                for error in error_list:
+                    messages.warning(request, f'{field}: {error}')
+            return render(request, 'signup.html',{
                                                 'form': CustomUserCreationForm
                                              })
-    
 
-#Falta todo el direccionamiento de las rutas aqui y en el archivo de urls
-#Lo que hay dentro de .POST['persona_apellido'] corresponde al name que le debes colocar a los campos del formulario
-
-#CREACION DE LAS FUNCIONES PARA LA INSERCION DE LOS DATOS EN LAS TABLAS DE LA BD
-def create_Persona(request):
-    new_persona = Persona(
-                        per_apellido = request.POST['persona_apellido'],
-                        per_nombre = request.POST['persona_nombre'],
-                        per_tipo_doc = request.POST['persona_tipo_doc'],
-                        per_numero_doc = request.POST['persona_numeroDoc'],
-                        per_correo = request.POST['persona_correo'],
-                        per_telefono = request.POST['persona_telefono'],
-                        per_vigente = True
-                        )
-    new_persona.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 def create_Cargo(request):
     new_cargo = Cargo(
@@ -142,15 +204,6 @@ def create_Cargo(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_Rol(request):
-    new_rol = Rol(
-                    rol_nombre = request.POST['rol_nombre'],
-                    rol_descripcion = request.POST['rol_descripcion'],
-                    rol_vigente = True
-                )
-    new_rol.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 def create_Sucursal(request):
     new_sucursal = Sucursal(
@@ -319,22 +372,11 @@ def create_Factura(request):
 #FIN SECCION DE INSERCIONES
 
 #SECCION DE BORRADOS EN LAS TABLAS DE LA BD
-
-def delete_Persona(request, persona_id):
-    persona = Persona.objects.get( per_cod = persona_id)
-    persona.delete()
-
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 def delete_Cargo(request, cargo_id):
     cargo = Cargo.objects.get( cargo_cod = cargo_id)
     cargo.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def delete_Rol(request, rol_id):
-    rol = Rol.objects.get( rol_cod = rol_id)
-    rol.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 

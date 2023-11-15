@@ -3,16 +3,26 @@
 {% load static %}
 
 {% block content %}
-<script src="{% static '/js/editRol.js' %}"></script>
-<script src="{% static '/js/createRol.js' %}"></script>
+<script src="{% static '/js/rolfunctions.js' %}"></script>
 
 <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
-        
+    {% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
+
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-11">
+
         <h2> Roles </h2>
+
         <div class="table-responsive py-2">
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -24,17 +34,34 @@
                 <tbody>
                     {% for rol in rol %}
                     <tr>
-                        <td>{{rol.name}}</td>
-                        <td>{{rol.description}}</td>
-                        <td> <button class="btn btn-outline-info" onclick="editRol('{{ rol.name }}', '{{ rol.description }}')">Editar</button></td>
-                        <td><button class="btn btn-outline-danger"> Eliminar</button></td>
+                        <td>{{rol.rol_nombre}}</td>
+                        <td>{{rol.rol_descripcion}}</td>
+
+                        <!--Boton de edicion-->
+                        <form method="get" action="{% url 'edit_rol' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="rol_editID" value="{{rol.rol_cod}}">
+                            <td> <button type="submit" class="btn btn-outline-info" > Editar </button></td>
+                        </form>
+
+                        <!--Boton de borrado-->
+                        <form method="post" action="{% url 'delete_rol' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="rolID" value="{{rol.rol_cod}}">
+                            <td> <button type="submit" class="btn btn-outline-danger" > Eliminar </button></td>
+                        </form>
+
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <button type="button" class="btn btn-success" onclick="createRol('{{rol.name}}')" style = "margin-left: 5px;"> <i class="fa-solid fa-person-circle-plus"></i> Crear Rol </button>
+            
+            <button type="button" class="btn btn-success" onclick= redirectcreateRol() style = "margin-left: 5px;"> <i class="fa-solid fa-person-circle-plus"></i> Crear Rol </button>
+        
         </div>
+
     </div>
+
 </div>
 
 <!--

@@ -22,7 +22,7 @@ class Usuario(AbstractUser):
     user_per_tipo_doc = models.CharField(max_length=10)
     user_numero_doc = models.CharField(max_length=20)
     user_telefono = models.CharField(max_length=20)
-    cod_rol = models.ForeignKey('Rol', on_delete=models.CASCADE)  # Clave foránea a rol
+    cod_rol = models.ForeignKey('Rol', on_delete=models.SET_DEFAULT, default=1)  # Clave foránea a rol
 
 #MODELOS
 class Cargo(models.Model):

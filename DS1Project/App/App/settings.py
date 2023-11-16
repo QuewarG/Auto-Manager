@@ -15,14 +15,14 @@ SECRET_KEY = "django-insecure-g8&627w5bdqxow+sg)g7-@d4_bqi17y+7=_0gn+yd%e02ag)%=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "crispy_forms",
-    "crispy_bootstrap5",
+    #"crispy_bootstrap5", // Genera error
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

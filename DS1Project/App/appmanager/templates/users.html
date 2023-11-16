@@ -6,8 +6,27 @@
 <script src="{% static '/js/editUser.js' %}"></script>
 <script src="{% static '/js/userfunctions.js' %}"></script>
 
+{% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+<div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+</div>
 
-<div class="row">
+<div class="card bg-success text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fas fa-user"></i>
+            <span style="margin-left: 15px;">Usuarios</span>
+        </h2>
+    </div>
+</div>
+
+<!--<div class="row">
     <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
         {% if messages %}
             <ul class="messages">
@@ -17,59 +36,58 @@
             </ul>
         {% endif %}
     </div>
-    
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-11">
-        <h2>Usuarios</h2>
-        <div class="table-responsive py-3">
-            <table class="table table-striped ">
-                <thead>
-                    <tr>
-                        <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
-                        <th>Username</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Tipo Doc</th>
-                        <th>NroDoc</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>Rol</th>
-                        <th colspan="2"> Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
-                    {% for usuario in user %}
-                    <tr>
-                        <td>{{usuario.username}}</td>
-                        <td>{{usuario.first_name}}</td>
-                        <td>{{usuario.last_name}}</td>
-                        <td>{{usuario.user_per_tipo_doc}}</td>
-                        <td>{{usuario.user_numero_doc}}</td>
-                        <td>{{usuario.email}}</td>
-                        <td>{{usuario.user_telefono}}</td>
-                        <td>{{usuario.cod_rol_id}}</td>
-                        
-                        <!--Boton de edicion-->
-                        <form method="get" action="{% url 'edit_usuario' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="editID" value="{{usuario.id}}">
-                            <td> <button type="submit" class="btn btn-outline-info" > Editar </button></td>
-                        </form>
-                        
-                        <!--Boton de borrado-->
-                        <form method="post" action="{% url 'delete_user' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="userID" value="{{usuario.id}}">
-                            <td> <button type="submit" class="btn btn-outline-danger" > Eliminar </button></td>
-                        </form>
-                        
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <button type="button" class="btn btn-success" onclick= redirectcreateUser() style = "margin-left: 5px;"> <i class="fa-solid fa-user-plus"></i> Crear Usuario </button>
-        </div>
-    </div>
+</div>-->
+
+<div class="table-responsive py-2">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
+                <th>Username</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Tipo Doc</th>
+                <th>NroDoc</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Rol</th>
+                <th colspan="2"> Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
+            {% for usuario in user %}
+            <tr>
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.first_name}}</td>
+                <td>{{usuario.last_name}}</td>
+                <td>{{usuario.user_per_tipo_doc}}</td>
+                <td>{{usuario.user_numero_doc}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.user_telefono}}</td>
+                <td>{{usuario.cod_rol_id}}</td>
+
+                <!--Boton de edicion-->
+                <form method="get" action="{% url 'edit_usuario' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="editID" value="{{usuario.id}}">
+                    <td> <button type="submit" class="btn btn-outline-info"> Editar </button></td>
+                </form>
+
+                <!--Boton de borrado-->
+                <form method="post" action="{% url 'delete_user' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="userID" value="{{usuario.id}}">
+                    <td> <button type="submit" class="btn btn-outline-danger"> Eliminar </button></td>
+                </form>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i
+            class="fa-solid fa-user-plus"></i> Crear Usuario </button>
+</div>
 
 </div>
 

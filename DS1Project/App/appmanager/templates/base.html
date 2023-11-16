@@ -27,31 +27,31 @@
         </a>
       </li>
       <li>
-        <a>
+        <a href={% url 'sucursales' %}>
           <i class="fa-solid fa-bars"></i>
           <span>Sucursales</span>
         </a>
       </li>
       <li>
-        <a>
+        <a href={% url 'inventory' %}>
           <i class="fa-solid fa-box"></i>
           <span>Inventario</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'cotizaciones' %}>
           <i class="fa-solid fa-receipt"></i>
           <span>Cotizaciones</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
           <span>Ventas</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'orders' %}>
           <i class="fa-regular fa-file"></i>
           <span>Ordenes</span>
         </a>
@@ -69,8 +69,8 @@
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="fa-solid fa-pen"></i>
+        <a href={% url 'reports' %}>
+          <i class="fa-solid fa-chart-simple"></i>
           <span>Reportes</span>
         </a>
       </li>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div class="container py-4 ml-5">
+    <div class="container py-4 ml-3">
       {% block content %} {% endblock %}
     </div>
 

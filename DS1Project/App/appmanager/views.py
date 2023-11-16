@@ -10,13 +10,19 @@ from django.utils.translation import gettext as _
 
 # FUNCIONES DEL SISTEMA
 
+def home(request):
+    return render(request, "home.html")
+
 @login_required
 def adminpage(request):
     return render(request, 'adminpage.html')
 
 def exit(request):
     logout(request)
-    return redirect('adminpage')
+    return redirect('home')
+
+def sucursales(request):
+    return render(request, 'sucursales.html')
 
 #VISTAS DE PRUEBA
 def roles(request):
@@ -144,7 +150,7 @@ def edit_usuario(request):
 
 
 #funcion para la creacion del usuario por medio de la interfaz inicial
-@login_required
+# @login_required
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
     if request.method == 'GET':
@@ -192,6 +198,21 @@ def signup(request):
             return render(request, 'signup.html',{
                                                 'form': CustomUserCreationForm
                                              })
+        
+def inventory(request):
+    return render(request, 'inventory.html')
+
+def orders(request):
+    return render(request, 'orders.html')
+
+def cotizaciones(request):
+    return render(request, 'cotizaciones.html')
+
+def sales(request):
+    return render(request, 'sales.html')
+
+def reports(request):
+    return render(request, 'reports.html')
 
 
 def create_Cargo(request):

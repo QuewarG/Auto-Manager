@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .models import *
 from .forms import *
@@ -12,11 +12,31 @@ from django.utils.translation import gettext as _
 
 @login_required
 def adminpage(request):
-    return render(request, 'adminpage.html')
+    actual_user = request.user
+    print (actual_user)
+    return render(request, 'adminpage.html', {'actual_user': actual_user})
+
+
+def login_user(request):
+    if request.method == 'GET':
+        messages.get_messages(request)
+        return render(request, 'registration/login.html')
+    else:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username = username, password = password)
+        if user is not None:
+            login(request, user)
+            return redirect('adminpage')
+
+        else:
+            msg =_('Ocurrio un error iniciando sesión. Intente nuevamente...')
+            messages.success(request, msg)
+            return redirect('login')
 
 def exit(request):
     logout(request)
-    return redirect('adminpage')
+    return redirect('login')
 
 #VISTAS DE PRUEBA
 def roles(request):
@@ -33,6 +53,9 @@ def create_rol(request):
                                              })
     else:
         form = RolForm(request.POST)
+        
+        del form.fields['rol_cod']
+        print(request.POST)
         if form.is_valid():
             new_rol = Rol(
                             rol_nombre = form.cleaned_data['rol_nombre'],
@@ -43,6 +66,7 @@ def create_rol(request):
             messages.success(request, msg)
             return redirect('roles')
         else:
+            print(form.errors)
             return render(request, 'new_rol.html',{
                                                 'form': RolForm
                                              })
@@ -90,9 +114,17 @@ def delete_rol(request):
 
 @login_required
 def users(request):
+    if request.user.is_authenticated:
+        print('autenticado')
+        usuario_actual = request.user
+    else:
+        print('no autenticado')
+        # Acceder a la información del usuario
+
     user = Usuario.objects.all()
     messages.get_messages(request)
-    return render(request, 'users.html', {'user' : user})
+    return render(request, 'users.html', {'user' : user,
+                                          'usuario_actual': usuario_actual})
 
 @login_required
 def delete_Usuario(request):
@@ -147,6 +179,7 @@ def edit_usuario(request):
 @login_required
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
+    print (request.session.get('username', None))
     if request.method == 'GET':
         messages.get_messages(request)
         return render(request, 'signup.html',{

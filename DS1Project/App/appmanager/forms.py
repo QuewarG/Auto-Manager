@@ -110,7 +110,6 @@ class RolForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         # Añadir un campo oculto y no editable
         self.fields['rol_cod'] = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}))
 

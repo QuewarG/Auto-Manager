@@ -12,4 +12,5 @@ urlpatterns = [
     path('roles/edit_rol/', edit_rol, name='edit_rol'),
     path('roles/delete_rol/', delete_rol, name='delete_rol'),
     path('logout/', exit, name='exit'),
+    path('appmanager/login_user/', login_user, name='login'),
 ]

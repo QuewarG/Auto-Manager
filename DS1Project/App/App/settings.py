@@ -79,7 +79,7 @@ DATABASES = {
         "PORT": '5433',
         "NAME": 'automanager',
         "USER": 'postgres',
-        "PASSWORD": '123456',
+        "PASSWORD": '12345678',
     }
 }
 
@@ -129,7 +129,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # VARIBALES DE REDIRECCION DE LOGIN Y LOGOUT
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'adminpage'
+LOGOUT_REDIRECT_URL = 'appmanager/login_user/'
 
 AUTH_USER_MODEL = 'appmanager.Usuario'
+
+# Configuración de sesión
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_NAME = 'mi_sesion'
+SESSION_COOKIE_AGE = 1209600  # Tiempo de vida de la sesión en segundos (por defecto, 2 semanas)

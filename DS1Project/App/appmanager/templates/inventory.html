@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="card bg-success text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fa-solid fa-box"></i>
+            <span style="margin-left: 15px;">Inventario</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th colspan="2"> Opciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- CICLO FOR PARA MOSTRAR LOS DATOS-->
+            <!--for-->
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            
+                <!--Boton de edicion-->
+                <form method="" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="" value="">
+                    <td> <button type="" class="btn btn-outline-info"> Editar </button></td>
+                </form>
+
+                <!--Boton de borrado-->
+                <form method="" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="" value="">
+                    <td> <button type="" class="btn btn-outline-danger"> Eliminar </button></td>
+                </form>
+            </tr>
+            <!--endfor-->
+
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-success" onclick="" style="margin-left: 5px;"> 
+        <i class="fa-solid fa-cart-flatbed"></i> Añadir Producto
+    </button>
+</div>
+
+{% endblock %}

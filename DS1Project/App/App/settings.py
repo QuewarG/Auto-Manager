@@ -130,7 +130,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # VARIBALES DE REDIRECCION DE LOGIN Y LOGOUT
 LOGIN_REDIRECT_URL = 'adminpage'
-LOGOUT_REDIRECT_URL = 'appmanager/login_user/'
+LOGOUT_REDIRECT_URL = 'home'
 
 AUTH_USER_MODEL = 'appmanager.Usuario'
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <h1>Crear Usuario</h1>
+    <h1>{% trans "Crear Usuario" %}</h1>
 
     {% if messages %}
             <ul class="messages">
@@ -28,7 +28,7 @@
         {% csrf_token %}
         {{form.as_p}}
 
-        <button>Registrarme</button>
+        <button>{% trans "Registrar" %}</button>
     </form>
         
 </body>

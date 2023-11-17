@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-15 11:09-0500\n"
+"POT-Creation-Date: 2023-11-17 14:38-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,25 +18,290 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\App\settings.py:112
+#: .\App\settings.py:110
 msgid "English"
 msgstr ""
 
-#: .\App\settings.py:113
+#: .\App\settings.py:111
 msgid "Spanish"
 msgstr ""
 
-#: .\appmanager\forms.py:23
-msgid ""
-"Tu contraseña no puede ser demasiado similar a tu otra información personal. "
-"Debe contener al menos 8 caracteres y no puede ser una contraseña común o "
-"completamente numérica."
+#: .\appmanager\forms.py:15 .\appmanager\forms.py:96
+#: .\appmanager\templates\users.html:47
+msgid "Username"
 msgstr ""
 
-#: .\appmanager\views.py:105
+#: .\appmanager\forms.py:24
+msgid "Nombre de usuario muy largo."
+msgstr "Very long user name."
+
+#: .\appmanager\forms.py:35 .\appmanager\forms.py:124
+msgid "La contraseña debe tener al menos 8 caracteres."
+msgstr "The password must be at least 8 characters long."
+
+#: .\appmanager\forms.py:40
+msgid "La contraseña debe contener al menos un carácter especial."
+msgstr "The password must contain at least one special character."
+
+#: .\appmanager\forms.py:51
+msgid "Las contraseñas no coinciden."
+msgstr "Passwords do not match."
+
+#: .\appmanager\forms.py:67 .\appmanager\forms.py:83
+#: .\appmanager\templates\inventory.html:20
+#: .\appmanager\templates\roles.html:34 .\appmanager\templates\users.html:48
+msgid "Nombre"
+msgstr "Name"
+
+#: .\appmanager\forms.py:68 .\appmanager\forms.py:84
+#: .\appmanager\templates\users.html:49
+msgid "Apellido"
+msgstr "Last name"
+
+#: .\appmanager\forms.py:69 .\appmanager\forms.py:85
+msgid "Ingrese una dirección de correo valida"
+msgstr "Enter a valid email address"
+
+#: .\appmanager\forms.py:69 .\appmanager\forms.py:85
+msgid "Correo Electrónico"
+msgstr "E-mail address"
+
+#: .\appmanager\forms.py:70 .\appmanager\forms.py:86
+msgid "Seleccione su tipo de documento"
+msgstr "Select your document type"
+
+#: .\appmanager\forms.py:70 .\appmanager\forms.py:86
+msgid "Tipo Documento"
+msgstr "Document Type"
+
+#: .\appmanager\forms.py:71 .\appmanager\forms.py:87
+msgid "Número Documento"
+msgstr "Document Number"
+
+#: .\appmanager\forms.py:72 .\appmanager\forms.py:88
+msgid "Número Telefónico"
+msgstr "Telephone Number"
+
+#: .\appmanager\forms.py:73
+msgid "Roles disponibles"
+msgstr "Roles available"
+
+#: .\appmanager\forms.py:117
+msgid "Nombre del Rol"
+msgstr "Role Name"
+
+#: .\appmanager\forms.py:118
+msgid "Descripción del Rol"
+msgstr "Role Description"
+
+#: .\appmanager\templates\base.html:38 .\appmanager\templates\sucursales.html:7
+msgid "Sucursales"
+msgstr "Branches"
+
+#: .\appmanager\templates\base.html:44 .\appmanager\templates\base.html:88
+#: .\appmanager\templates\inventory.html:11
+msgid "Inventario"
+msgstr "Inventory"
+
+#: .\appmanager\templates\base.html:50 .\appmanager\templates\base.html:95
+#: .\appmanager\templates\base.html:131
+#: .\appmanager\templates\cotizaciones.html:5
+msgid "Cotizaciones"
+msgstr "Quotations"
+
+#: .\appmanager\templates\base.html:56 .\appmanager\templates\base.html:102
+#: .\appmanager\templates\sales.html:12
+msgid "Ventas"
+msgstr "Sales"
+
+#: .\appmanager\templates\base.html:62 .\appmanager\templates\base.html:109
+#: .\appmanager\templates\base.html:138 .\appmanager\templates\orders.html:5
+msgid "Ordenes"
+msgstr "Orders"
+
+#: .\appmanager\templates\base.html:68 .\appmanager\templates\roles.html:24
+msgid "Roles"
+msgstr "Roles"
+
+#: .\appmanager\templates\base.html:74 .\appmanager\templates\base.html:116
+#: .\appmanager\templates\users.html:25
+msgid "Usuarios"
+msgstr "Users"
+
+#: .\appmanager\templates\base.html:80 .\appmanager\templates\base.html:123
+#: .\appmanager\templates\reports.html:11
+msgid "Reportes"
+msgstr "Reports"
+
+#: .\appmanager\templates\base.html:144
+msgid "SESION NO VALIDA"
+msgstr "INVALID SESSION"
+
+#: .\appmanager\templates\base.html:151
+msgid "Salir"
+msgstr "Exit"
+
+#: .\appmanager\templates\base.html:171
+msgid "Admin"
+msgstr ""
+
+#: .\appmanager\templates\edit_rol.html:18
+msgid "Editar Rol"
+msgstr "Edit Role"
+
+#: .\appmanager\templates\edit_rol.html:32
+#: .\appmanager\templates\new_rol.html:33
+#: .\appmanager\templates\signupEdit.html:31
+msgid "Guardar"
+msgstr "Save"
+
+#: .\appmanager\templates\home.html:33
+msgid "Home"
+msgstr ""
+
+#: .\appmanager\templates\home.html:36
+msgid "Iniciar Sesión"
+msgstr "Login"
+
+#: .\appmanager\templates\inventory.html:21
+msgid "Categoría"
+msgstr "Category"
+
+#: .\appmanager\templates\inventory.html:22
+#: .\appmanager\templates\roles.html:35
+msgid "Descripción"
+msgstr "Description"
+
+#: .\appmanager\templates\inventory.html:23
+msgid "Precio"
+msgstr "Price"
+
+#: .\appmanager\templates\inventory.html:24
+#: .\appmanager\templates\reports.html:23 .\appmanager\templates\roles.html:36
+#: .\appmanager\templates\sales.html:26 .\appmanager\templates\users.html:55
+msgid "Opciones"
+msgstr "Options"
+
+#: .\appmanager\templates\inventory.html:42
+#: .\appmanager\templates\reports.html:39 .\appmanager\templates\roles.html:49
+#: .\appmanager\templates\sales.html:44 .\appmanager\templates\users.html:75
+msgid "Editar"
+msgstr "Edit"
+
+#: .\appmanager\templates\inventory.html:49
+#: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:56
+#: .\appmanager\templates\sales.html:51 .\appmanager\templates\users.html:82
+msgid "Eliminar"
+msgstr "Delete"
+
+#: .\appmanager\templates\inventory.html:57
+msgid "Añadir Producto"
+msgstr "Add Product"
+
+#: .\appmanager\templates\new_rol.html:17 .\appmanager\templates\roles.html:65
+msgid "Crear Rol"
+msgstr "Create Role"
+
+#: .\appmanager\templates\registration\login.html:17
+msgid "Bienvenido"
+msgstr "Welcome"
+
+#: .\appmanager\templates\registration\login.html:41
+msgid "Ingresar"
+msgstr "Enter"
+
+#: .\appmanager\templates\reports.html:20 .\appmanager\templates\sales.html:21
+msgid "Usuario"
+msgstr "User"
+
+#: .\appmanager\templates\reports.html:21 .\appmanager\templates\sales.html:22
+msgid "Fecha de registro"
+msgstr "Date of registration"
+
+#: .\appmanager\templates\reports.html:22 .\appmanager\templates\sales.html:25
+msgid "Total"
+msgstr "Total"
+
+#: .\appmanager\templates\reports.html:53
+msgid "Nuevo Reporte"
+msgstr "New Report"
+
+#: .\appmanager\templates\reports.html:54
+msgid "Exportar a Excel"
+msgstr "Export to Excel"
+
+#: .\appmanager\templates\sales.html:23
+msgid "Producto"
+msgstr "Product"
+
+#: .\appmanager\templates\sales.html:24
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: .\appmanager\templates\sales.html:58
+msgid "Añadir Venta"
+msgstr "Add Sale"
+
+#: .\appmanager\templates\signup.html:17 .\appmanager\templates\users.html:90
+msgid "Crear Usuario"
+msgstr "Create User"
+
+#: .\appmanager\templates\signup.html:31
+msgid "Registrar"
+msgstr "Register"
+
+#: .\appmanager\templates\signupEdit.html:17
+msgid "Editar Usuario"
+msgstr "Edit User"
+
+#: .\appmanager\templates\users.html:50
+msgid "Tipo Doc"
+msgstr "Doc Type"
+
+#: .\appmanager\templates\users.html:51
+msgid "NroDoc"
+msgstr ""
+
+#: .\appmanager\templates\users.html:52
+msgid "Email"
+msgstr ""
+
+#: .\appmanager\templates\users.html:53
+msgid "Teléfono"
+msgstr "Telephone"
+
+#: .\appmanager\templates\users.html:54
+msgid "Rol"
+msgstr "Role"
+
+#: .\appmanager\views.py:38
+msgid "Ocurrió un error iniciando sesión. Intente nuevamente..."
+msgstr "An error occurred while logging in. Please try again..."
+
+#: .\appmanager\views.py:71
+msgid "Rol creado con éxito."
+msgstr "Role successfully created."
+
+#: .\appmanager\views.py:103
+msgid "Rol actualizado."
+msgstr "Updated role."
+
+#: .\appmanager\views.py:115
+msgid "Rol eliminado con éxito."
+msgstr "Role successfully eliminated."
+
+#: .\appmanager\views.py:139
+msgid "Usuario eliminado con éxito."
+msgstr "User successfully deleted."
+
+#: .\appmanager\views.py:174
+msgid "La información del usuario ha sido actualizada."
+msgstr "User information has been updated."
+
+#: .\appmanager\views.py:207
 msgid "Usuario creado con éxito."
-msgstr ""
+msgstr "User successfully created."
 
-#: .\appmanager\views.py:114
+#: .\appmanager\views.py:216
 msgid "La contraseña no coincide."
-msgstr ""
+msgstr "The password does not match."

@@ -11,6 +11,10 @@ class CustomUserCreationForm(UserCreationForm):
         model = Usuario
         fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name', 'tipo_doc', 'num_doc', 'num_tel', 'rol')
         
+        labels ={
+             'username': _('Username'),
+        }
+        
     def clean_username(self):
         # Añade validaciones personalizadas al campo password1
         username = self.cleaned_data.get('username')
@@ -19,12 +23,6 @@ class CustomUserCreationForm(UserCreationForm):
         if len(username) >= 150:
             msg =_("Nombre de usuario muy largo.")
             raise ValidationError(msg)
-
-        # Asegúrate de que la contraseña contenga al menos un carácter especial
-        # if not any(char in "!@#$%^&*()-_=+[]{};:'\",.<>?/\\|`~" for char in username):
-        #     msg = _("La contraseña debe contener al menos un carácter especial.")
-        #     raise ValidationError(msg)
-
         return username
 
 
@@ -66,13 +64,25 @@ class CustomUserCreationForm(UserCreationForm):
     ]
 
 
-    first_name = forms.CharField(max_length=150, required=True, label='Nombre')
-    last_name = forms.CharField(max_length=150, required=True, label='Apellido')
-    email = forms.EmailField(required=True, help_text='Ingrese una dirección de correo valida', label='Correo Electronico')
-    tipo_doc = forms.ChoiceField(choices=tipo_docs, help_text='Seleccione su tipo de documento', label='Tipo Documento')
-    num_doc = forms.CharField(max_length=20, required=True, label='Numero Documento')
-    num_tel = forms.CharField(max_length=20, required=False, label='Numero Telefonico')
-    rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label='Roles disponibles')
+    first_name = forms.CharField(max_length=150, required=True, label = _('Nombre') )
+    last_name = forms.CharField(max_length=150, required=True, label = _('Apellido') )
+    email = forms.EmailField(required=True, help_text = _('Ingrese una dirección de correo valida'), label = _('Correo Electrónico'))
+    tipo_doc = forms.ChoiceField(choices=tipo_docs, help_text = _('Seleccione su tipo de documento'), label= _('Tipo Documento'))
+    num_doc = forms.CharField(max_length=20, required=True, label = _('Número Documento') )
+    num_tel = forms.CharField(max_length=20, required=False, label = _('Número Telefónico') )
+    rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label = _('Roles disponibles') )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].label = _('Nombre')
+        self.fields['last_name'].label = _('Apellido')
+        self.fields['email'].label = _('Correo Electrónico')
+        self.fields['tipo_doc'].label = _('Tipo Documento')
+        self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
+        self.fields['tipo_doc'].help_text =  _('Seleccione su tipo de documento')
+        self.fields['num_doc'].label = _('Número Documento')
+        self.fields['num_tel'].label = _('Número Telefónico')
+        self.fields['rol'].label = _("Roles disponibles")
     
 
 class CustomUserEditForm(UserChangeForm):
@@ -82,18 +92,21 @@ class CustomUserEditForm(UserChangeForm):
         ('OTRO', 'OTRO'),
     ]
    
-    first_name = forms.CharField(max_length=150, required=True, label='Nombre')
-    last_name = forms.CharField(max_length=150, required=True, label='Apellido')
-    email = forms.EmailField(required=True, help_text='Ingrese una dirección de correo valida', label='Correo Electronico')
-    user_per_tipo_doc = forms.ChoiceField(choices=tipo_docs, help_text='Seleccione su tipo de documento', label='Tipo Documento')
-    user_numero_doc = forms.CharField(max_length=20, required=True, label='Numero Documento')
-    user_telefono = forms.CharField(max_length=20, required=False, label='Numero Telefonico')
+    first_name = forms.CharField(max_length=150, required=True)
+    last_name = forms.CharField(max_length=150, required=True )
+    email = forms.EmailField(required=True )
+    user_per_tipo_doc = forms.ChoiceField(choices=tipo_docs )
+    user_Número_doc = forms.CharField(max_length=20, required=True )
+    user_telefono = forms.CharField(max_length=20, required=False )
     cod_rol = forms.ModelChoiceField (queryset=Rol.objects.all(), empty_label=None)
     
     
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol']
+        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_Número_doc', 'user_telefono', 'cod_rol']
+        labels ={
+             'username': _('Username'),
+        }
 
     def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -101,17 +114,30 @@ class CustomUserEditForm(UserChangeForm):
             # Excluye los campos de contraseña del formulario
             self.fields.pop('password')
 
+            self.fields['first_name'].label = _('Nombre')
+            self.fields['last_name'].label = _('Apellido')
+            self.fields['email'].label = _('Correo Electrónico')
+            self.fields['user_per_tipo_doc'].label = _('Tipo Documento')
+            self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
+            self.fields['user_per_tipo_doc'].help_text =  _('Seleccione su tipo de documento')
+            self.fields['user_Número_doc'].label = _('Número Documento')
+            self.fields['user_telefono'].label = _('Número Telefónico')
+            self.fields['cod_rol'].label = _("Cambiar Rol")
+
 
 class RolForm(forms.ModelForm):
 
     class Meta:
          model = Rol
          fields = ['rol_nombre', 'rol_descripcion'] 
+         
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Añadir un campo oculto y no editable
         self.fields['rol_cod'] = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}))
+        self.fields['rol_nombre'].label = _("Nombre del Rol")
+        self.fields['rol_descripcion'].label = _("Descripción del Rol")
 
     def clean_nombre_rol(self):
         nombre_rol = self.cleaned_data['rol_nombre']

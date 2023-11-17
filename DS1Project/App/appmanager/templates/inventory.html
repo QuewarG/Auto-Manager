@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -8,7 +8,7 @@
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-box"></i>
-            <span style="margin-left: 15px;">Inventario</span>
+            <span style="margin-left: 15px;">{% trans "Inventario" %}</span>
         </h2>
     </div>
 </div>
@@ -17,11 +17,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th colspan="2"> Opciones</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Categoría" %}</th>
+                <th>{% trans "Descripción" %}</th>
+                <th>{% trans "Precio" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
 
             </tr>
         </thead>
@@ -39,14 +39,14 @@
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-info"> Editar </button></td>
+                    <td> <button type="" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-danger"> Eliminar </button></td>
+                    <td> <button type="" class="btn btn-outline-danger">{% trans "Eliminar" %}  </button></td>
                 </form>
             </tr>
             <!--endfor-->
@@ -54,7 +54,7 @@
         </tbody>
     </table>
     <button type="button" class="btn btn-success" onclick="" style="margin-left: 5px;"> 
-        <i class="fa-solid fa-cart-flatbed"></i> Añadir Producto
+        <i class="fa-solid fa-cart-flatbed"></i> {% trans "Añadir Producto" %}
     </button>
 </div>
 

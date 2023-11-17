@@ -26,32 +26,36 @@
           <span>Automanager</span>
         </a>
       </li>
+      
+  {% if request.user.is_authenticated %}
+
+    {% if request.user.cod_rol.obtener_codigo_rol == 2 %} 
       <li>
-        <a>
+        <a href={% url 'sucursales' %}>
           <i class="fa-solid fa-bars"></i>
           <span>Sucursales</span>
         </a>
       </li>
       <li>
-        <a>
+        <a href={% url 'inventory' %}>
           <i class="fa-solid fa-box"></i>
           <span>Inventario</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'cotizaciones' %}>
           <i class="fa-solid fa-receipt"></i>
           <span>Cotizaciones</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
           <span>Ventas</span>
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href={% url 'orders' %}>
           <i class="fa-regular fa-file"></i>
           <span>Ordenes</span>
         </a>
@@ -69,25 +73,91 @@
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="fa-solid fa-pen"></i>
+        <a href={% url 'reports' %}>
+          <i class="fa-solid fa-chart-simple"></i>
           <span>Reportes</span>
         </a>
       </li>
- <!--     <li class="settings">
-        <a href="#">
-          <i class="fa-solid fa-gear"></i>
-          <span>Configuración</span>
+
+    {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
+      <li>
+        <a href={% url 'inventory' %}>
+          <i class="fa-solid fa-box"></i>
+          <span>Inventario</span>
         </a>
-      </li>-->
-      {% if request.user.is_authenticated %}
+      </li>
+
+      <li>
+        <a href={% url 'cotizaciones' %}>
+          <i class="fa-solid fa-receipt"></i>
+          <span>Cotizaciones</span>
+        </a>
+      </li>
+
+      <li>
+        <a href={% url 'sales' %}>
+          <i class="fa-solid fa-dollar-sign"></i>
+          <span>Ventas</span>
+        </a>
+      </li>
+
+      <li>
+        <a href={% url 'orders' %}>
+          <i class="fa-regular fa-file"></i>
+          <span>Ordenes</span>
+        </a>
+      </li>
+
+      <li>
+        <a href={% url 'users' %}>
+          <i class="fas fa-user"></i>
+          <span>Usuarios</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href={% url 'reports' %}>
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Reportes</span>
+        </a>
+      </li>
+
+    {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+    <li>
+      <a href={% url 'cotizaciones' %}>
+        <i class="fa-solid fa-receipt"></i>
+        <span>Cotizaciones</span>
+      </a>
+    </li>
+      
+    <li>
+      <a href={% url 'orders' %}>
+        <i class="fa-regular fa-file"></i>
+        <span>Ordenes</span>
+      </a>
+    </li>
+
+    {% else %}
+    <!-- Código para la opción por defecto o manejo de errores -->
+    <p>SESION NO VALIDA</p>
+    {% endif %}
+
+      
       <li class="logout">
         <a href={% url 'exit' %}>
           <i class="fas fa-sign-out-alt"></i>
           <span>Salir</span>
         </a>
-        {% endif %}
+  {% endif %}
       </li>
+
+      <!--     <li class="settings">
+        <a href="#">
+          <i class="fa-solid fa-gear"></i>
+          <span>Configuración</span>
+        </a>
+      </li>-->
+
     </ul>
 
   </div>
@@ -108,7 +178,7 @@
       </div>
     </div>
 
-    <div class="container py-4 ml-5">
+    <div class="container py-4 ml-3">
       {% block content %} {% endblock %}
     </div>
 

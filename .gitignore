@@ -6,6 +6,20 @@ __pycache__
 db.sqlite3
 media
 
+# Ignorar archivos y directorios generados por Python
+__pycache__/
+
+# Ignorar archivos .pyc (caché de Python)
+*.pyc
+
+# Ignorar archivos .pyo (archivos compilados optimizados de Python)
+*.pyo
+
+# Ignorar el directorio de entorno virtual (si usas uno)
+venv/
+
+
+
 # Carpeta de archivos de caché de Django
 *.py[cod]
 *.db

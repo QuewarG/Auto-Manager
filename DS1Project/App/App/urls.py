@@ -23,10 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('appmanager.urls')),
     path("admin/", admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('users/signup/', views.signup, name='signup'),
-    path('users/edit_user/', views.edit_usuario, name='edit_usuario'),
-    path('users/delete_user/', views.delete_Usuario, name='delete_user'),
+    path('appmanager/', include('django.contrib.auth.urls')),
+    path('appmanager/login_user/', views.login_user, name='login'),
     
 ]
 

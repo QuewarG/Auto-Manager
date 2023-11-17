@@ -1,6 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+class Rol(models.Model):
+    rol_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
+    rol_nombre = models.CharField(max_length=50, null=False)  # NOT NULL en SQL se traduce a null=False en Django
+    rol_descripcion = models.TextField(null=True, blank=True)  # Puede ser NULL en la base de datos
+    rol_vigente = models.BooleanField(default=True)  # Valor predeterminado True para rol_vigente
+    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
+    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
+    def __str__(self):
+        return self.rol_nombre
+    
+    def obtener_codigo_rol(self):
+        return self.rol_cod
+    
+    class Meta:
+        ordering = ['rol_cod']
+
 class Usuario(AbstractUser):
     user_per_tipo_doc = models.CharField(max_length=10)
     user_numero_doc = models.CharField(max_length=20)
@@ -15,20 +32,6 @@ class Cargo(models.Model):
     cargo_vigente = models.BooleanField(default=True)  # Valor predeterminado True para cargo_vigente
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
-    
-class Rol(models.Model):
-    rol_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    rol_nombre = models.CharField(max_length=50, null=False)  # NOT NULL en SQL se traduce a null=False en Django
-    rol_descripcion = models.TextField(null=True, blank=True)  # Puede ser NULL en la base de datos
-    rol_vigente = models.BooleanField(default=True)  # Valor predeterminado True para rol_vigente
-    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
-
-    def __str__(self):
-        return self.rol_nombre
-    
-    class Meta:
-        ordering = ['rol_cod']
     
 class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django

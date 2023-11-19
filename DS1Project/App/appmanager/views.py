@@ -1,27 +1,29 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .models import *
 from .forms import *
 from django.db import IntegrityError
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, activate
+from django.conf import settings
 
 # FUNCIONES DEL SISTEMA
 
 def home(request):
+    print (request.LANGUAGE_CODE)
     return render(request, "home.html")
 
 @login_required
 def adminpage(request):
     actual_user = request.user
-    print (actual_user)
     return render(request, 'adminpage.html', {'actual_user': actual_user})
 
 
 def login_user(request):
     if request.method == 'GET':
+        print (request.LANGUAGE_CODE)
         messages.get_messages(request)
         return render(request, 'registration/login.html')
     else:
@@ -33,7 +35,7 @@ def login_user(request):
             return redirect('adminpage')
 
         else:
-            msg =_('Ocurrio un error iniciando sesión. Intente nuevamente...')
+            msg =_('Ocurrió un error iniciando sesión. Intente nuevamente...')
             messages.success(request, msg)
             return redirect('login')
 
@@ -50,6 +52,8 @@ def roles(request):
 @login_required
 def create_rol(request):
     if request.method == 'GET':
+        activate(request.LANGUAGE_CODE)
+        print (request.LANGUAGE_CODE)
         messages.get_messages(request)
         return render(request, 'new_rol.html',{
                                                 'form': RolForm
@@ -58,7 +62,6 @@ def create_rol(request):
         form = RolForm(request.POST)
         
         del form.fields['rol_cod']
-        print(request.POST)
         if form.is_valid():
             new_rol = Rol(
                             rol_nombre = form.cleaned_data['rol_nombre'],
@@ -120,8 +123,6 @@ def users(request):
     if request.user.is_authenticated:
         print('autenticado')
         usuario_actual = request.user
-    else:
-        print('no autenticado')
         # Acceder a la información del usuario
 
     user = Usuario.objects.all()
@@ -174,7 +175,6 @@ def edit_usuario(request):
             messages.success(request, msg)
             return redirect('users')
 
-        print(request.POST)
         return render(request, 'signupEdit.html', {'form': form, 'usuario': usuario})
 
 
@@ -182,7 +182,6 @@ def edit_usuario(request):
 # @login_required
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
-    print (request.session.get('username', None))
     if request.method == 'GET':
         messages.get_messages(request)
         return render(request, 'signup.html',{
@@ -513,3 +512,12 @@ def delete_Factura(request, fac_id):
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 #FIN SECCION BORRADOS
+
+def cambiar_idioma(request, idioma):
+    if idioma in dict(settings.LANGUAGES):
+        activate(idioma)
+        response = HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        response.set_cookie('django_language', idioma)
+        return response
+    else:
+        return HttpResponseRedirect('/')

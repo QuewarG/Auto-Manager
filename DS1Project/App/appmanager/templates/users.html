@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -21,7 +21,7 @@
     <div class="card-header">
         <h2 class="">
             <i class="fas fa-user"></i>
-            <span style="margin-left: 15px;">Usuarios</span>
+            <span style="margin-left: 15px;">{% trans "Usuarios" %}</span>
         </h2>
     </div>
 </div>
@@ -43,15 +43,15 @@
         <thead>
             <tr>
                 <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
-                <th>Username</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Tipo Doc</th>
-                <th>NroDoc</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Rol</th>
-                <th colspan="2"> Opciones</th>
+                <th>{% trans "Username" %}</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Apellido" %}</th>
+                <th>{% trans "Tipo Doc" %}</th>
+                <th>{% trans "NroDoc" %}</th>
+                <th>{% trans "Email" %}</th>
+                <th>{% trans "Teléfono" %}</th>
+                <th>{% trans "Rol" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -71,14 +71,14 @@
                 <form method="get" action="{% url 'edit_usuario' %}">
                     {% csrf_token %}
                     <input type="hidden" name="editID" value="{{usuario.id}}">
-                    <td> <button type="submit" class="btn btn-outline-info"> Editar </button></td>
+                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
                 <form method="post" action="{% url 'delete_user' %}">
                     {% csrf_token %}
                     <input type="hidden" name="userID" value="{{usuario.id}}">
-                    <td> <button type="submit" class="btn btn-outline-danger"> Eliminar </button></td>
+                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
                 </form>
 
             </tr>
@@ -86,7 +86,7 @@
         </tbody>
     </table>
     <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i
-            class="fa-solid fa-user-plus"></i> Crear Usuario </button>
+            class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}</button>
 </div>
 
 </div>

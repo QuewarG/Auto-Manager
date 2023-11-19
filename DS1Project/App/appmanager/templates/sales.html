@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% load static %}
 
@@ -8,7 +9,7 @@
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-dollar-sign"></i>
-            <span style="margin-left: 15px;">Ventas</span>
+            <span style="margin-left: 15px;">{% trans "Ventas" %}</span>
         </h2>
     </div>
 </div>
@@ -17,12 +18,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col"> Usuario </th>
-                <th scope="col"> Fecha de registro </th>
-                <th scope="col"> Producto </th>
-                <th scope="col"> Subtotal </th>
-                <th scope="col"> Total </th>
-                <th colspan="2"> Opciones</th>
+                <th scope="col">{% trans "Usuario" %}</th>
+                <th scope="col">{% trans "Fecha de registro" %}</th>
+                <th scope="col">{% trans "Producto" %}</th>
+                <th scope="col">{% trans "Subtotal" %}</th>
+                <th scope="col">{% trans "Total" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -40,21 +41,21 @@
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-info"> Editar </button></td>
+                    <td> <button type="" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
                 </form>
     
                 <!--Boton de borrado-->
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-danger"> Eliminar </button></td>
+                    <td> <button type="" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
                 </form>
             </tr>
             <!--endfor-->
 
         </tbody>
     </table>
-    <button onclick="addSale()" type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> Añadir Venta
+    <button onclick="addSale()" type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Venta" %}
     </button>
 </div>
 

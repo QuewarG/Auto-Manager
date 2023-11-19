@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -8,7 +8,7 @@
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-chart-simple"></i>
-            <span style="margin-left: 15px;">Reportes</span>
+            <span style="margin-left: 15px;">{% trans "Reportes" %}</span>
         </h2>
     </div>
 </div>
@@ -17,10 +17,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col"> Usuario </th>
-                <th scope="col"> Fecha de registro </th>
-                <th scope="col"> Total </th>
-                <th colspan="2"> Opciones</th>
+                <th scope="col">{% trans "Usuario" %}</th>
+                <th scope="col">{% trans "Fecha de registro" %}</th>
+                <th scope="col">{% trans "Total" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -36,24 +36,22 @@
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-info"> Editar </button></td>
+                    <td> <button type="" class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-danger"> Eliminar </button></td>
+                    <td> <button type="" class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
                 </form>
             </tr>
             <!--endfor-->
 
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" style="margin-left: 5px;"> <i class="fa-solid fa-plus" onclick=""></i> Nuevo Reporte
-    </button>
-    <button type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-file-csv"></i> Exportar a
-        Excel </button>
+    <button type="button" class="btn btn-primary" style="margin-left: 5px;"> <i class="fa-solid fa-plus" onclick=""></i> {% trans "Nuevo Reporte" %}</button>
+    <button type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-file-csv"></i> {% trans "Exportar a Excel" %}</button>
 </div>
 
 {% endblock %}

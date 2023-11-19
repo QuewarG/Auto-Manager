@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +23,7 @@
     <div class="logo"></div>
     <ul class="menu">
       <li class="activate">
-        <a class="button-link" href={% url 'adminpage' %}>
+        <a class="button-link" href={% url 'login' %}>
           <i class="fa-solid fa-a"></i>
           <span>Automanager</span>
         </a>
@@ -33,49 +35,49 @@
       <li>
         <a href={% url 'sucursales' %}>
           <i class="fa-solid fa-bars"></i>
-          <span>Sucursales</span>
+          <span>{% trans "Sucursales" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'inventory' %}>
           <i class="fa-solid fa-box"></i>
-          <span>Inventario</span>
+          <span>{% trans "Inventario" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'cotizaciones' %}>
           <i class="fa-solid fa-receipt"></i>
-          <span>Cotizaciones</span>
+          <span>{% trans "Cotizaciones" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
-          <span>Ventas</span>
+          <span>{% trans "Ventas" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'orders' %}>
           <i class="fa-regular fa-file"></i>
-          <span>Ordenes</span>
+          <span>{% trans "Ordenes" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'roles' %}>
           <i class="fa-regular fa-address-book"></i>
-          <span>Roles</span>
+          <span>{% trans "Roles" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'users' %}>
           <i class="fas fa-user"></i>
-          <span>Usuarios</span>
+          <span>{% trans "Usuarios" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'reports' %}>
           <i class="fa-solid fa-chart-simple"></i>
-          <span>Reportes</span>
+          <span>{% trans "Reportes" %}</span>
         </a>
       </li>
 
@@ -83,42 +85,42 @@
       <li>
         <a href={% url 'inventory' %}>
           <i class="fa-solid fa-box"></i>
-          <span>Inventario</span>
+          <span>{% trans "Inventario" %}</span>
         </a>
       </li>
 
       <li>
         <a href={% url 'cotizaciones' %}>
           <i class="fa-solid fa-receipt"></i>
-          <span>Cotizaciones</span>
+          <span>{% trans "Cotizaciones" %}</span>
         </a>
       </li>
 
       <li>
         <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
-          <span>Ventas</span>
+          <span>{% trans "Ventas" %}</span>
         </a>
       </li>
 
       <li>
         <a href={% url 'orders' %}>
           <i class="fa-regular fa-file"></i>
-          <span>Ordenes</span>
+          <span>{% trans "Ordenes" %}</span>
         </a>
       </li>
 
       <li>
         <a href={% url 'users' %}>
           <i class="fas fa-user"></i>
-          <span>Usuarios</span>
+          <span>{% trans "Usuarios" %}</span>
         </a>
       </li>
       
       <li>
         <a href={% url 'reports' %}>
           <i class="fa-solid fa-chart-simple"></i>
-          <span>Reportes</span>
+          <span>{% trans "Reportes" %}</span>
         </a>
       </li>
 
@@ -126,27 +128,27 @@
     <li>
       <a href={% url 'cotizaciones' %}>
         <i class="fa-solid fa-receipt"></i>
-        <span>Cotizaciones</span>
+        <span>{% trans "Cotizaciones" %}</span>
       </a>
     </li>
       
     <li>
       <a href={% url 'orders' %}>
         <i class="fa-regular fa-file"></i>
-        <span>Ordenes</span>
+        <span>{% trans "Ordenes" %}</span>
       </a>
     </li>
 
     {% else %}
     <!-- Código para la opción por defecto o manejo de errores -->
-    <p>SESION NO VALIDA</p>
+    <p>{% trans "SESION NO VALIDA" %}</p>
     {% endif %}
 
       
       <li class="logout">
         <a href={% url 'exit' %}>
           <i class="fas fa-sign-out-alt"></i>
-          <span>Salir</span>
+          <span>{% trans "Salir" %}</span>
         </a>
   {% endif %}
       </li>
@@ -166,7 +168,7 @@
   <div class="main--content">
     <div class="header--wrapper">
       <div class="header--title">
-        <span>Admin</span>
+        <span>{% trans "Admin" %}</span>
         <h2>Dashboard</h2>
       </div>
       <div class="user--info">

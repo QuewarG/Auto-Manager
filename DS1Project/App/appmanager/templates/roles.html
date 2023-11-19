@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -20,7 +20,7 @@
     <div class="card-header">
         <h2 class="">
             <i class="fa-regular fa-address-book"></i>
-            <span style="margin-left: 15px;">Roles</span>
+            <span style="margin-left: 15px;">{% trans "Roles" %}</span>
         </h2>
     </div>
 </div>
@@ -30,9 +30,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th colspan="2"> Opciones</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Descripción" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -45,14 +45,14 @@
                 <form method="get" action="{% url 'edit_rol' %}">
                     {% csrf_token %}
                     <input type="hidden" name="rol_editID" value="{{rol.rol_cod}}">
-                    <td> <button type="submit" class="btn btn-outline-info"> Editar </button></td>
+                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
                 <form method="post" action="{% url 'delete_rol' %}">
                     {% csrf_token %}
                     <input type="hidden" name="rolID" value="{{rol.rol_cod}}">
-                    <td> <button type="submit" class="btn btn-outline-danger"> Eliminar </button></td>
+                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
                 </form>
 
             </tr>
@@ -61,7 +61,7 @@
     </table>
 
     <button type="button" class="btn btn-success" onclick=redirectcreateRol() style="margin-left: 5px;"> <i
-            class="fa-solid fa-person-circle-plus"></i> Crear Rol </button>
+            class="fa-solid fa-person-circle-plus"></i> {% trans "Crear Rol" %}</button>
 
 </div>
 

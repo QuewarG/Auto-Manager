@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -9,13 +10,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles/signup.css' %}">
 
     <title>automanager</title>
 </head>
 <body>
-
-    <h1>{% trans "Crear Usuario" %}</h1>
-
     {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -24,14 +23,30 @@
             </ul>
     {% endif %}
 
-    <form method="post">    
-        {% csrf_token %}
-        {{form.as_p}}
-
-        <button>{% trans "Registrar" %}</button>
-    </form>
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card border-light mb-3">                
+                <div class="card-body">
+                    <h1 class="card-title">{% trans "Crear Usuario" %}</h1>
+                    
+                    <hr>
+                
+                    <form method="post" class="form-group">    
         
+                        {% csrf_token %}
+                
+                        {{ form | crispy }}
+                        
+                        <div class="d-flex">
+                            <button class="btn btn-success">{% trans "Registrar" %}</button>
+                            &nbsp;
+                            <a href={% url 'users' %} class="btn btn-secondary"> {% trans "Cancelar" %} </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
 </body>
 </html>
 {% endblock %}
-

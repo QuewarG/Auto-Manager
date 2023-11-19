@@ -31,55 +31,55 @@
       
   {% if request.user.is_authenticated %}
 
-    {% if request.user.cod_rol.obtener_codigo_rol == 2 %} 
-      <li>
-        <a href={% url 'sucursales' %}>
-          <i class="fa-solid fa-bars"></i>
-          <span>{% trans "Sucursales" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'inventory' %}>
-          <i class="fa-solid fa-box"></i>
-          <span>{% trans "Inventario" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'cotizaciones' %}>
-          <i class="fa-solid fa-receipt"></i>
-          <span>{% trans "Cotizaciones" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'sales' %}>
-          <i class="fa-solid fa-dollar-sign"></i>
-          <span>{% trans "Ventas" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'orders' %}>
-          <i class="fa-regular fa-file"></i>
-          <span>{% trans "Ordenes" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'roles' %}>
-          <i class="fa-regular fa-address-book"></i>
-          <span>{% trans "Roles" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'users' %}>
-          <i class="fas fa-user"></i>
-          <span>{% trans "Usuarios" %}</span>
-        </a>
-      </li>
-      <li>
-        <a href={% url 'reports' %}>
-          <i class="fa-solid fa-chart-simple"></i>
-          <span>{% trans "Reportes" %}</span>
-        </a>
-      </li>
+    {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2%} 
+    <li>
+      <a href={% url 'sucursales' %}>
+        <i class="fa-regular fa-building"></i>
+        <span>{% trans "Sucursales" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'inventory' %}>
+        <i class="fa-solid fa-box"></i>
+        <span>{% trans "Inventario" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'cotizaciones' %}>
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Cotizaciones" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'sales' %}>
+        <i class="fa-solid fa-dollar-sign"></i>
+        <span>{% trans "Ventas" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'orders' %}>
+        <i class="fa-regular fa-file"></i>
+        <span>{% trans "Ordenes" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'roles' %}>
+        <i class="fa-regular fa-address-book"></i>
+        <span>{% trans "Roles" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'users' %}>
+        <i class="fas fa-user"></i>
+        <span>{% trans "Usuarios" %}</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'reports' %}>
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>{% trans "Reportes" %}</span>
+      </a>
+    </li>
 
     {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
       <li>
@@ -124,7 +124,7 @@
         </a>
       </li>
 
-    {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+    {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
     <li>
       <a href={% url 'cotizaciones' %}>
         <i class="fa-solid fa-receipt"></i>
@@ -172,15 +172,25 @@
         <h2>Dashboard</h2>
       </div>
       <div class="user--info">
-        <div class="search--box">
+        <div class="lenguage--box">
+          <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
+          <select class="select" name="idioma" id="idioma">
+            <option value="es">{% trans "Español" %}</option>
+            <option value="en">{% trans "Inglés" %}</option>
+            <option value="pt">{% trans "Portugues" %}</option>
+
+          </select>
+        </div>
+        
+        <!--<div class="search--box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="search">
-        </div>
+        </div>-->
         <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
       </div>
     </div>
 
-    <div class="container py-4 ml-3">
+    <div class="py-3">
       {% block content %} {% endblock %}
     </div>
 

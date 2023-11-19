@@ -3,11 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .models import *
-from .forms import *
 from django.db import IntegrityError
 from django.utils.translation import gettext as _, activate
 from django.conf import settings
+from .models import *
+from .forms import *
 
 # FUNCIONES DEL SISTEMA
 
@@ -22,22 +22,33 @@ def adminpage(request):
 
 
 def login_user(request):
-    if request.method == 'GET':
-        print (request.LANGUAGE_CODE)
-        messages.get_messages(request)
-        return render(request, 'registration/login.html')
-    else:
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
-        if user is not None:
-            login(request, user)
-            return redirect('adminpage')
-
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('adminpage')
+            else:
+                messages.error(request, _('Incorrect username or password.'))
+                return redirect('login')
+            
         else:
-            msg =_('Ocurrió un error iniciando sesión. Intente nuevamente...')
-            messages.success(request, msg)
-            return redirect('login')
+            # Verifica los errores específicos del formulario
+
+            captcha_errors = ['Este campo é obrigatório.', 'Este campo es obligatorio.',  'This field is required.']
+            if 'captcha' in form.errors:
+                captcha_error = _("You must pass the reCAPTCHA test")
+                messages.error(request, captcha_error)
+            else:
+                for error in form.errors.values():
+                    messages.error(request, _(error))
+    else:
+        form = LoginForm()
+
+    return render(request, 'registration/login.html', {'form': form})
 
 def exit(request):
     logout(request)
@@ -244,8 +255,9 @@ def reports(request):
     return render(request, 'reports.html')
 
 def sucursales(request):
-    return render(request, 'sucursales.html')
-
+    sucursales = Sucursal.objects.all()
+    messages.get_messages(request)
+    return render(request, 'sucursales.html', {'sucursales' : sucursales})
 
 def create_Cargo(request):
     new_cargo = Cargo(
@@ -258,16 +270,16 @@ def create_Cargo(request):
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 
-def create_Sucursal(request):
-    new_sucursal = Sucursal(
-                        sucursal_nombre = request.POST['surcursal_nombre'],
-                        sucursal_ubicacion = request.POST['surcursal_ubicacion'],
-                        sucursal_cod_gerente = request.POST['surcursal_gerente'],
-                        sucursal_vigente = True
-                        )
-    new_sucursal.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+def create_sucursal(request):
+    if request.method == 'POST':
+        form = SucursalForm(request.POST)
+        if form.is_valid():
+            sucursal = form.save()
+            return redirect('sucursales.html')
+    else:
+        form = SucursalForm()
+    
+    return render(request, 'sucursales.html', {'form': form})
 
 def create_PersonaxCargo(request):
     new_personaxcargo = PersonaXCargo(

@@ -8,6 +8,8 @@ urlpatterns = [
     path('adminpage/', adminpage, name='adminpage'),
     path('cambiar_idioma/<str:idioma>/', cambiar_idioma, name='cambiar_idioma'),
     path('sucursales/', sucursales, name='sucursales'),
+    path('sucursales/edit_sucursal', edit_sucursal, name='edit_sucursal'),
+    path('sucursales/delete_sucursal', delete_Sucursal, name='delete_sucursal'),
     path('crear_sucursal/', create_sucursal, name='crear_sucursal'),
     path('users/', users, name='users'),
     path('users/signup/', signup, name='signup'),
@@ -24,4 +26,5 @@ urlpatterns = [
     path('reports/', reports, name='reports'),
     path('logout/', exit, name='exit'),
     path('appmanager/login_user/', login_user, name='login'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

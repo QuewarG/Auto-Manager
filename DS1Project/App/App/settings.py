@@ -63,6 +63,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -78,10 +79,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
         "HOST": 'localhost',
-        "PORT": '5432',
-        "NAME": 'automanagerprueba',
+        "PORT": '5433',
+        "NAME": 'automanager',
         "USER": 'postgres',
-        "PASSWORD": 'camilo12345',
+        "PASSWORD": '12345678',
     }
 }
 

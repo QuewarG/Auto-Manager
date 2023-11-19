@@ -1,10 +1,87 @@
 {% extends 'base.html' %}
-
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 
-<h2>{% trans "Sucursales" %}</h2>
+
+{% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+<div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+<div class="card bg-success text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fa-regular fa-building"></i>
+            <span style="margin-left: 15px;">{% trans "Sucursales" %}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <!--INFORMACIÓN DE LA TABLA-->
+                <th>{% trans "Campo1" %}</th>
+                <th>{% trans "Campo2" %}</th>
+                <th>{% trans "Campo3" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--INFORMACIÓN DE BASE DE DATOS-->
+            <!--for-->
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><button class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
+                <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
+
+                <!--Boton de edicion
+                <form method="get" action="url">
+                    {% csrf_token %}
+                    <input type="hidden" name="editID" value="{{sucursal.id}}">
+                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                </form>-->
+
+                <!--Boton de borrado
+                <form method="post" action="url">
+                    {% csrf_token %}
+                    <input type="hidden" name="userID" value="{{sucursal.id}}">
+                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
+                </form>-->
+
+            </tr>
+            <!--endfor-->
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Sucursual" %}</button>
+</div>
+</div>
+
+<!--
+        <div class="form--container">
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="boton">Crear Usuario</button>
+            </form>
+        </div>
+    -->
+
+</div>
 
 {% endblock %}
+</body>
+
+</html>
 

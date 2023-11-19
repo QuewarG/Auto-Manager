@@ -31,10 +31,10 @@
       
   {% if request.user.is_authenticated %}
 
-    {% if request.user.cod_rol.obtener_codigo_rol == 2 %} 
+    {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
       <li>
         <a href={% url 'sucursales' %}>
-          <i class="fa-solid fa-bars"></i>
+          <i class="fa-regular fa-building"></i>
           <span>{% trans "Sucursales" %}</span>
         </a>
       </li>
@@ -172,15 +172,25 @@
         <h2>Dashboard</h2>
       </div>
       <div class="user--info">
-        <div class="search--box">
+        <div class="lenguage--box">
+          <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
+          <select class="select" name="idioma" id="idioma">
+            <option value="es">{% trans "Español" %}</option>
+            <option value="en">{% trans "Inglés" %}</option>
+            <option value="pt">{% trans "Portugues" %}</option>
+
+          </select>
+        </div>
+        
+        <!--<div class="search--box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="search">
-        </div>
+        </div>-->
         <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
       </div>
     </div>
 
-    <div class="container py-4 ml-3">
+    <div class="py-3">
       {% block content %} {% endblock %}
     </div>
 

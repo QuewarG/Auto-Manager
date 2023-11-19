@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-17 14:38-0500\n"
+"POT-Creation-Date: 2023-11-19 15:00-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,83 +18,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\App\settings.py:110
+#: .\App\settings.py:113
 msgid "English"
 msgstr ""
 
-#: .\App\settings.py:111
+#: .\App\settings.py:114
 msgid "Spanish"
 msgstr ""
 
-#: .\appmanager\forms.py:15 .\appmanager\forms.py:96
-#: .\appmanager\templates\users.html:47
+#: .\appmanager\forms.py:22 .\appmanager\forms.py:126
+#: .\appmanager\templates\users.html:52
 msgid "Username"
 msgstr ""
 
-#: .\appmanager\forms.py:24
+#: .\appmanager\forms.py:31
 msgid "Nombre de usuario muy largo."
 msgstr "Very long user name."
 
-#: .\appmanager\forms.py:35 .\appmanager\forms.py:124
+#: .\appmanager\forms.py:42 .\appmanager\forms.py:164
 msgid "La contraseña debe tener al menos 8 caracteres."
 msgstr "The password must be at least 8 characters long."
 
-#: .\appmanager\forms.py:40
+#: .\appmanager\forms.py:47
 msgid "La contraseña debe contener al menos un carácter especial."
 msgstr "The password must contain at least one special character."
 
-#: .\appmanager\forms.py:51
+#: .\appmanager\forms.py:58
 msgid "Las contraseñas no coinciden."
 msgstr "Passwords do not match."
 
-#: .\appmanager\forms.py:67 .\appmanager\forms.py:83
+#: .\appmanager\forms.py:74 .\appmanager\forms.py:95 .\appmanager\forms.py:135
 #: .\appmanager\templates\inventory.html:20
-#: .\appmanager\templates\roles.html:34 .\appmanager\templates\users.html:48
+#: .\appmanager\templates\roles.html:40
+#: .\appmanager\templates\sucursales.html:34
+#: .\appmanager\templates\users.html:53
 msgid "Nombre"
 msgstr "Name"
 
-#: .\appmanager\forms.py:68 .\appmanager\forms.py:84
-#: .\appmanager\templates\users.html:49
+#: .\appmanager\forms.py:75 .\appmanager\forms.py:96 .\appmanager\forms.py:136
+#: .\appmanager\templates\users.html:54
 msgid "Apellido"
 msgstr "Last name"
 
-#: .\appmanager\forms.py:69 .\appmanager\forms.py:85
+#: .\appmanager\forms.py:76 .\appmanager\forms.py:99 .\appmanager\forms.py:139
 msgid "Ingrese una dirección de correo valida"
 msgstr "Enter a valid email address"
 
-#: .\appmanager\forms.py:69 .\appmanager\forms.py:85
+#: .\appmanager\forms.py:76 .\appmanager\forms.py:97 .\appmanager\forms.py:137
 msgid "Correo Electrónico"
 msgstr "E-mail address"
 
-#: .\appmanager\forms.py:70 .\appmanager\forms.py:86
+#: .\appmanager\forms.py:77 .\appmanager\forms.py:100 .\appmanager\forms.py:140
 msgid "Seleccione su tipo de documento"
 msgstr "Select your document type"
 
-#: .\appmanager\forms.py:70 .\appmanager\forms.py:86
+#: .\appmanager\forms.py:77 .\appmanager\forms.py:98 .\appmanager\forms.py:138
 msgid "Tipo Documento"
 msgstr "Document Type"
 
-#: .\appmanager\forms.py:71 .\appmanager\forms.py:87
+#: .\appmanager\forms.py:78 .\appmanager\forms.py:101 .\appmanager\forms.py:141
 msgid "Número Documento"
 msgstr "Document Number"
 
-#: .\appmanager\forms.py:72 .\appmanager\forms.py:88
+#: .\appmanager\forms.py:79 .\appmanager\forms.py:102 .\appmanager\forms.py:142
 msgid "Número Telefónico"
 msgstr "Telephone Number"
 
-#: .\appmanager\forms.py:73
+#: .\appmanager\forms.py:80 .\appmanager\forms.py:103
 msgid "Roles disponibles"
 msgstr "Roles available"
 
-#: .\appmanager\forms.py:117
+#: .\appmanager\forms.py:143
+msgid "Cambiar Rol"
+msgstr "Change Role"
+
+#: .\appmanager\forms.py:157
 msgid "Nombre del Rol"
 msgstr "Role Name"
 
-#: .\appmanager\forms.py:118
+#: .\appmanager\forms.py:158
 msgid "Descripción del Rol"
 msgstr "Role Description"
 
-#: .\appmanager\templates\base.html:38 .\appmanager\templates\sucursales.html:7
+#: .\appmanager\forms.py:182
+#, fuzzy
+#| msgid "Editar Sucursal"
+msgid "Nombre sucursal"
+msgstr "Edit Branch"
+
+#: .\appmanager\forms.py:183
+msgid "Dirección de la sucursal"
+msgstr "Branch address"
+
+#: .\appmanager\forms.py:184
+msgid "Gerente encargado"
+msgstr "Manager in charge"
+
+#: .\appmanager\templates\base.html:38
+#: .\appmanager\templates\sucursales.html:24
 msgid "Sucursales"
 msgstr "Branches"
 
@@ -105,7 +126,7 @@ msgstr "Inventory"
 
 #: .\appmanager\templates\base.html:50 .\appmanager\templates\base.html:95
 #: .\appmanager\templates\base.html:131
-#: .\appmanager\templates\cotizaciones.html:5
+#: .\appmanager\templates\cotizaciones.html:24
 msgid "Cotizaciones"
 msgstr "Quotations"
 
@@ -119,12 +140,12 @@ msgstr "Sales"
 msgid "Ordenes"
 msgstr "Orders"
 
-#: .\appmanager\templates\base.html:68 .\appmanager\templates\roles.html:24
+#: .\appmanager\templates\base.html:68 .\appmanager\templates\roles.html:30
 msgid "Roles"
 msgstr "Roles"
 
 #: .\appmanager\templates\base.html:74 .\appmanager\templates\base.html:116
-#: .\appmanager\templates\users.html:25
+#: .\appmanager\templates\users.html:30
 msgid "Usuarios"
 msgstr "Users"
 
@@ -145,21 +166,82 @@ msgstr "Exit"
 msgid "Admin"
 msgstr ""
 
-#: .\appmanager\templates\edit_rol.html:18
+#: .\appmanager\templates\base.html:178 .\appmanager\templates\home.html:18
+msgid "Idioma: "
+msgstr "Language: "
+
+#: .\appmanager\templates\cotizaciones.html:34
+msgid "Campo1"
+msgstr ""
+
+#: .\appmanager\templates\cotizaciones.html:35
+msgid "Campo2"
+msgstr ""
+
+#: .\appmanager\templates\cotizaciones.html:36
+msgid "Campo3"
+msgstr ""
+
+#: .\appmanager\templates\cotizaciones.html:37
+#: .\appmanager\templates\inventory.html:24
+#: .\appmanager\templates\reports.html:23 .\appmanager\templates\roles.html:42
+#: .\appmanager\templates\sales.html:26
+#: .\appmanager\templates\sucursales.html:37
+#: .\appmanager\templates\users.html:60
+msgid "Opciones"
+msgstr "Options"
+
+#: .\appmanager\templates\cotizaciones.html:47
+#: .\appmanager\templates\cotizaciones.html:54
+#: .\appmanager\templates\inventory.html:42
+#: .\appmanager\templates\reports.html:39 .\appmanager\templates\roles.html:55
+#: .\appmanager\templates\sales.html:44
+#: .\appmanager\templates\sucursales.html:53
+#: .\appmanager\templates\users.html:80
+msgid "Editar"
+msgstr "Edit"
+
+#: .\appmanager\templates\cotizaciones.html:48
+#: .\appmanager\templates\cotizaciones.html:61
+#: .\appmanager\templates\inventory.html:49
+#: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:62
+#: .\appmanager\templates\sales.html:51
+#: .\appmanager\templates\sucursales.html:60
+#: .\appmanager\templates\users.html:87
+msgid "Eliminar"
+msgstr "Delete"
+
+#: .\appmanager\templates\cotizaciones.html:68
+msgid "Añadir Cotización"
+msgstr "Add Quote"
+
+#: .\appmanager\templates\edit_rol.html:31
 msgid "Editar Rol"
 msgstr "Edit Role"
 
-#: .\appmanager\templates\edit_rol.html:32
-#: .\appmanager\templates\new_rol.html:33
-#: .\appmanager\templates\signupEdit.html:31
+#: .\appmanager\templates\edit_rol.html:42
+#: .\appmanager\templates\edit_sucursal.html:20
+#: .\appmanager\templates\new_rol.html:41
+#: .\appmanager\templates\new_sucursal.html:20
+#: .\appmanager\templates\signupEdit.html:43
 msgid "Guardar"
 msgstr "Save"
 
-#: .\appmanager\templates\home.html:33
+#: .\appmanager\templates\edit_rol.html:44
+#: .\appmanager\templates\new_rol.html:43 .\appmanager\templates\signup.html:43
+#: .\appmanager\templates\signupEdit.html:45
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\appmanager\templates\edit_sucursal.html:16
+msgid "Editar Sucursal"
+msgstr "Edit Branch"
+
+#: .\appmanager\templates\home.html:35
 msgid "Home"
 msgstr ""
 
-#: .\appmanager\templates\home.html:36
+#: .\appmanager\templates\home.html:38
 msgid "Iniciar Sesión"
 msgstr "Login"
 
@@ -168,7 +250,7 @@ msgid "Categoría"
 msgstr "Category"
 
 #: .\appmanager\templates\inventory.html:22
-#: .\appmanager\templates\roles.html:35
+#: .\appmanager\templates\roles.html:41
 msgid "Descripción"
 msgstr "Description"
 
@@ -176,37 +258,23 @@ msgstr "Description"
 msgid "Precio"
 msgstr "Price"
 
-#: .\appmanager\templates\inventory.html:24
-#: .\appmanager\templates\reports.html:23 .\appmanager\templates\roles.html:36
-#: .\appmanager\templates\sales.html:26 .\appmanager\templates\users.html:55
-msgid "Opciones"
-msgstr "Options"
-
-#: .\appmanager\templates\inventory.html:42
-#: .\appmanager\templates\reports.html:39 .\appmanager\templates\roles.html:49
-#: .\appmanager\templates\sales.html:44 .\appmanager\templates\users.html:75
-msgid "Editar"
-msgstr "Edit"
-
-#: .\appmanager\templates\inventory.html:49
-#: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:56
-#: .\appmanager\templates\sales.html:51 .\appmanager\templates\users.html:82
-msgid "Eliminar"
-msgstr "Delete"
-
 #: .\appmanager\templates\inventory.html:57
 msgid "Añadir Producto"
 msgstr "Add Product"
 
-#: .\appmanager\templates\new_rol.html:17 .\appmanager\templates\roles.html:65
+#: .\appmanager\templates\new_rol.html:30 .\appmanager\templates\roles.html:71
 msgid "Crear Rol"
 msgstr "Create Role"
+
+#: .\appmanager\templates\new_sucursal.html:16
+msgid "Crear Nueva Sucursal"
+msgstr "Create New Branch"
 
 #: .\appmanager\templates\registration\login.html:17
 msgid "Bienvenido"
 msgstr "Welcome"
 
-#: .\appmanager\templates\registration\login.html:41
+#: .\appmanager\templates\registration\login.html:42
 msgid "Ingresar"
 msgstr "Enter"
 
@@ -242,66 +310,99 @@ msgstr "Subtotal"
 msgid "Añadir Venta"
 msgstr "Add Sale"
 
-#: .\appmanager\templates\signup.html:17 .\appmanager\templates\users.html:90
+#: .\appmanager\templates\signup.html:30 .\appmanager\templates\users.html:96
 msgid "Crear Usuario"
 msgstr "Create User"
 
-#: .\appmanager\templates\signup.html:31
+#: .\appmanager\templates\signup.html:41
 msgid "Registrar"
 msgstr "Register"
 
-#: .\appmanager\templates\signupEdit.html:17
+#: .\appmanager\templates\signupEdit.html:32
 msgid "Editar Usuario"
 msgstr "Edit User"
 
-#: .\appmanager\templates\users.html:50
+#: .\appmanager\templates\sucursales.html:35
+msgid "Ubicacion"
+msgstr "Location"
+
+#: .\appmanager\templates\sucursales.html:36
+msgid "Gerente"
+msgstr "Manager"
+
+#: .\appmanager\templates\sucursales.html:70
+msgid "Añadir Sucursal"
+msgstr "Add Branch"
+
+#: .\appmanager\templates\users.html:55
 msgid "Tipo Doc"
 msgstr "Doc Type"
 
-#: .\appmanager\templates\users.html:51
+#: .\appmanager\templates\users.html:56
 msgid "NroDoc"
 msgstr ""
 
-#: .\appmanager\templates\users.html:52
+#: .\appmanager\templates\users.html:57
 msgid "Email"
 msgstr ""
 
-#: .\appmanager\templates\users.html:53
+#: .\appmanager\templates\users.html:58
 msgid "Teléfono"
 msgstr "Telephone"
 
-#: .\appmanager\templates\users.html:54
+#: .\appmanager\templates\users.html:59
 msgid "Rol"
 msgstr "Role"
 
-#: .\appmanager\views.py:38
-msgid "Ocurrió un error iniciando sesión. Intente nuevamente..."
-msgstr "An error occurred while logging in. Please try again..."
+#: .\appmanager\views.py:35
+msgid "Username o contraseña incorrecta."
+msgstr "Incorrect username or password."
 
-#: .\appmanager\views.py:71
+#: .\appmanager\views.py:43
+msgid "Debe superar la prueba reCAPTCHA"
+msgstr "Must pass reCAPTCHA test"
+
+#: .\appmanager\views.py:80
 msgid "Rol creado con éxito."
 msgstr "Role successfully created."
 
-#: .\appmanager\views.py:103
+#: .\appmanager\views.py:112
 msgid "Rol actualizado."
 msgstr "Updated role."
 
-#: .\appmanager\views.py:115
+#: .\appmanager\views.py:124
 msgid "Rol eliminado con éxito."
 msgstr "Role successfully eliminated."
 
-#: .\appmanager\views.py:139
+#: .\appmanager\views.py:147
 msgid "Usuario eliminado con éxito."
 msgstr "User successfully deleted."
 
-#: .\appmanager\views.py:174
+#: .\appmanager\views.py:182
 msgid "La información del usuario ha sido actualizada."
 msgstr "User information has been updated."
 
-#: .\appmanager\views.py:207
+#: .\appmanager\views.py:216
 msgid "Usuario creado con éxito."
 msgstr "User successfully created."
 
-#: .\appmanager\views.py:216
+#: .\appmanager\views.py:227
 msgid "La contraseña no coincide."
 msgstr "The password does not match."
+
+#: .\appmanager\views.py:273
+msgid "Sucursal creada con éxito."
+msgstr "Branch successfully created."
+
+#: .\appmanager\views.py:311
+#, fuzzy
+#| msgid "Sucursal actualizado."
+msgid "Sucursal actualizada."
+msgstr "Updated branch."
+
+#: .\appmanager\views.py:327
+msgid "Sucursal eliminada con éxito."
+msgstr "Branch successfully eliminated."
+
+#~ msgid "Ocurrió un error iniciando sesión. Intente nuevamente..."
+#~ msgstr "An error occurred while logging in. Please try again..."

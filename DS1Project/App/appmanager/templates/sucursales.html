@@ -44,28 +44,32 @@
                 <td>{{ sucursal.sucursal_nombre }}</td>
                 <td>{{ sucursal.sucursal_ubicacion }}</td>
                 <td>{{ sucursal.sucursal_cod_gerente.username }}</td>
-                <td><button class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
-                <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
-
-                <!--Boton de edicion
-                <form method="get" action="url">
+        
+                <!--Boton de edicion-->
+                <form method="get" action="{% url 'edit_sucursal' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="editID" value="{{sucursal.id}}">
+                    <input type="hidden" name="sucursal_editID" value="{{sucursal.sucursal_cod}}">
                     <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
-                </form>-->
+                </form>
 
-                <!--Boton de borrado
-                <form method="post" action="url">
+                <!--Boton de borrado-->
+                <form method="post" action="{% url 'delete_sucursal' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="userID" value="{{sucursal.id}}">
+                    <input type="hidden" name="delete_sucursalID" value="{{sucursal.sucursal_cod}}">
                     <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
-                </form>-->
+                </form>
 
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Sucursual" %}</button>
+
+    <a href="{% url 'crear_sucursal' %}">
+        <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> 
+            <i class="fa-solid fa-plus"></i> {% trans "Añadir Sucursal" %}
+        </button>
+    </a>
+    
 </div>
 </div>
 

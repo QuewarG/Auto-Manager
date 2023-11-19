@@ -1,5 +1,5 @@
 ﻿Django==4.2.7
-django-captcha==3.0.0
+django-captcha
 django_recaptcha == 4.0.0
 django-crispy-forms==2.0
 django-filter==23.3

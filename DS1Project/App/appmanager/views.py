@@ -32,7 +32,7 @@ def login_user(request):
                 login(request, user)
                 return redirect('adminpage')
             else:
-                messages.error(request, _('Incorrect username or password.'))
+                messages.error(request, _('Username o contraseña incorrecta.'))
                 return redirect('login')
             
         else:
@@ -40,7 +40,7 @@ def login_user(request):
 
             captcha_errors = ['Este campo é obrigatório.', 'Este campo es obligatorio.',  'This field is required.']
             if 'captcha' in form.errors:
-                captcha_error = _("You must pass the reCAPTCHA test")
+                captcha_error = _("Debe superar la prueba reCAPTCHA")
                 messages.error(request, captcha_error)
             else:
                 for error in form.errors.values():
@@ -63,8 +63,6 @@ def roles(request):
 @login_required
 def create_rol(request):
     if request.method == 'GET':
-        activate(request.LANGUAGE_CODE)
-        print (request.LANGUAGE_CODE)
         messages.get_messages(request)
         return render(request, 'new_rol.html',{
                                                 'form': RolForm
@@ -132,7 +130,6 @@ def delete_rol(request):
 @login_required
 def users(request):
     if request.user.is_authenticated:
-        print('autenticado')
         usuario_actual = request.user
         # Acceder a la información del usuario
 
@@ -190,53 +187,57 @@ def edit_usuario(request):
 
 
 #funcion para la creacion del usuario por medio de la interfaz inicial
-# @login_required
+@login_required
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
     if request.method == 'GET':
+        form = CustomUserCreationForm(request.POST or None, user=request.user)
         messages.get_messages(request)
         return render(request, 'signup.html',{
-                                                'form': CustomUserCreationForm
+                                                'form': form
                                              })
     else:
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST or None, user=request.user)
         if form.is_valid():
             if form.cleaned_data['password1'] == form.cleaned_data['password2']:
                 try:
                     new_user = Usuario.objects.create_user(
-                        username=form.cleaned_data['username'],
-                        password=form.cleaned_data['password1'],
-                        first_name=form.cleaned_data['first_name'],
-                        last_name=form.cleaned_data['last_name'],
-                        email=form.cleaned_data['email'],
-                        user_per_tipo_doc=form.cleaned_data['tipo_doc'],
-                        user_numero_doc=form.cleaned_data['num_doc'],
-                        user_telefono=form.cleaned_data['num_tel'],
-                        cod_rol=Rol.objects.get(rol_cod=form.cleaned_data['rol'])
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password1'],
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    email=form.cleaned_data['email'],
+                    user_per_tipo_doc=form.cleaned_data['tipo_doc'],
+                    user_numero_doc=form.cleaned_data['num_doc'],
+                    user_telefono=form.cleaned_data['num_tel'],
+                    cod_rol=Rol.objects.get(rol_cod=form.cleaned_data['rol'])
                     )
                     new_user.save()
                     msg =_('Usuario creado con éxito.')
                     messages.success(request, msg)
                     return redirect('users')
                 except IntegrityError:
+                    form = CustomUserCreationForm(request.POST or None, user=request.user)
                     messages.warning(request, 'Nombre de usuario ya existe.')
                     return render(request, 'signup.html',{
-                                                'form': CustomUserCreationForm
+                                                'form': form
                                              })
             else:
+                form = CustomUserCreationForm(request.POST or None, user=request.user)
                 msg = _('La contraseña no coincide.')
                 messages.warning(request, msg)
                 return render(request, 'signup.html',{
-                                                'form': CustomUserCreationForm
+                                                'form': form
                                              })
         else:
+            form = CustomUserCreationForm(request.POST or None, user=request.user)
             # Captura los errores del formulario y procesa según tus necesidades
             errors = form.errors
             for field, error_list in errors.items():
                 for error in error_list:
                     messages.warning(request, f'{field}: {error}')
             return render(request, 'signup.html',{
-                                                'form': CustomUserCreationForm
+                                                'form': form
                                              })
         
 def inventory(request):
@@ -259,6 +260,76 @@ def sucursales(request):
     messages.get_messages(request)
     return render(request, 'sucursales.html', {'sucursales' : sucursales})
 
+def create_sucursal(request):
+    
+    if request.method == 'GET':
+        form = SucursalForm()
+        return render(request, 'new_sucursal.html', {'form': form})
+    
+    else:
+        form = SucursalForm(request.POST)
+        if form.is_valid():
+            form = form.save()
+            msg =_('Sucursal creada con éxito.')
+            messages.success(request, msg)
+            return redirect('sucursales')
+            
+        else:
+            # Captura los errores del formulario
+            errors = form.errors
+            for field, error_list in errors.items():
+                for error in error_list:
+                    messages.warning(request, f'{field}: {error}')
+                    
+            return render(request, 'sucursales.html',{
+                                                'form': form
+                                             })
+            
+def edit_sucursal(request):
+    if request.method == 'GET':
+        sucursal = Sucursal.objects.get( sucursal_cod = request.GET['sucursal_editID'])
+        
+        valores_por_defecto = {
+            'sucursal_cod': sucursal.sucursal_cod,
+            'sucursal_nombre': sucursal.sucursal_nombre,
+            'sucursal_ubicacion': sucursal.sucursal_ubicacion,
+            'sucursal_cod_gerente': sucursal.sucursal_cod_gerente,
+        }
+
+        editform = SucursalForm(initial=valores_por_defecto)
+
+        return render(request, 'edit_sucursal.html',{
+                                                'form': editform
+                                             })
+    else:
+        print (request.POST)
+        sucursal = Sucursal.objects.get( sucursal_cod = request.POST['sucursal_cod'])
+        form = SucursalForm(request.POST, instance=sucursal)
+        if form.is_valid():
+            # Guarda los cambios en el usuario
+            form.save()
+            msg = _('Sucursal actualizada.')
+            messages.success(request, msg)
+            return redirect( 'sucursales' )
+        else:
+            errors = form.errors
+            for field, error_list in errors.items():
+                for error in error_list:
+                    messages.warning(request, f'{field}: {error}')
+                
+            return render(request, 'edit_sucursal.html', {'form': form, 'sucursal': sucursal}) 
+            
+def delete_Sucursal(request):
+    if request.method == 'GET':
+        sucursales(request)
+    else:
+        sucursal = Sucursal.objects.get( sucursal_cod = request.POST['delete_sucursalID'])
+        msg = _('Sucursal eliminada con éxito.')
+        messages.success(request, msg)
+        sucursal.delete()
+
+    return redirect( 'sucursales' ) 
+         
 def create_Cargo(request):
     new_cargo = Cargo(
                         cargo_nombre = request.POST['cargo_nombre'],
@@ -268,18 +339,6 @@ def create_Cargo(request):
     new_cargo.save()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-
-def create_sucursal(request):
-    if request.method == 'POST':
-        form = SucursalForm(request.POST)
-        if form.is_valid():
-            sucursal = form.save()
-            return redirect('sucursales.html')
-    else:
-        form = SucursalForm()
-    
-    return render(request, 'sucursales.html', {'form': form})
 
 def create_PersonaxCargo(request):
     new_personaxcargo = PersonaXCargo(
@@ -437,17 +496,9 @@ def create_Factura(request):
 #FIN SECCION DE INSERCIONES
 
 #SECCION DE BORRADOS EN LAS TABLAS DE LA BD
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
 def delete_Cargo(request, cargo_id):
     cargo = Cargo.objects.get( cargo_cod = cargo_id)
     cargo.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def delete_Sucursal(request, sucursal_id):
-    sucursal = Sucursal.objects.get( sucursal_cod = sucursal_id)
-    sucursal.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 

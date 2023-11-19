@@ -173,13 +173,20 @@
       </div>
       <div class="user--info">
         <div class="lenguage--box">
-          <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
-          <select class="select" name="idioma" id="idioma">
-            <option value="es">{% trans "Español" %}</option>
-            <option value="en">{% trans "Inglés" %}</option>
-            <option value="pt">{% trans "Portugues" %}</option>
+          
+          <form action="{% url 'set_language' %}" method="post" class="language-form">
+            <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <select name="language" id="id_language" onchange="this.form.submit()">
+                {% for lang_code, lang_name in LANGUAGES %}
+                    <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                        {{ lang_name }}
+                    </option>
+                {% endfor %}
+            </select>
 
-          </select>
+          </form>
         </div>
         
         <!--<div class="search--box">

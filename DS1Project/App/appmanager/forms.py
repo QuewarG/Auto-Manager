@@ -80,7 +80,18 @@ class CustomUserCreationForm(UserCreationForm):
     rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label = _('Roles disponibles') )
 
     def __init__(self, *args, **kwargs):
+        
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+        
+        #selecciona los roles dependiendo del usuario registrado
+        if self.user and self.user.cod_rol.rol_cod == 2:
+            self.fields['rol'].queryset = Rol.objects.all()
+        elif self.user and self.user.cod_rol.rol_cod == 3:
+            self.fields['rol'].queryset = Rol.objects.filter(rol_cod = 5)
+        else:
+            self.fields['rol'].queryset = Rol.objects.none()
+            
         self.fields['first_name'].label = _('Nombre')
         self.fields['last_name'].label = _('Apellido')
         self.fields['email'].label = _('Correo Electrónico')
@@ -159,19 +170,16 @@ class RolForm(forms.ModelForm):
 class SucursalForm(forms.ModelForm):
     class Meta:
         model = Sucursal
-        fields = ['sucursal_nombre', 'sucursal_ubicacion', 'sucursal_cod_gerente', 'sucursal_vigente']
+        fields = ['sucursal_nombre', 'sucursal_ubicacion', 'sucursal_cod_gerente']
+        
+        sucursal_cod_gerente = forms.ModelChoiceField( queryset=Usuario.objects.filter(cod_rol_id = 2) )
+        
 
     def __init__(self, *args, **kwargs):
-        super(SucursalForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+        self.fields['sucursal_cod'] = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}))
         
-        # Obtén los IDs de los roles de superadministrador y gerente
-        roles_permitidos = Cargo.objects.filter(cargo_nombre__in=['Superadministrador', 'Gerente']).values_list('cargo_cod', flat=True)
-        
-        # Filtra los usuarios que tienen roles de superadministrador o gerente
-        usuarios_permitidos = Usuario.objects.filter(cod_rol__in=roles_permitidos)
-        
-        # Crea una lista de tuplas con los ID y nombres de usuarios para usar en la lista desplegable
-        choices = [(usuario.id, usuario.username) for usuario in usuarios_permitidos]
-        
-        # Asigna las opciones al campo de selección de usuarios
-        self.fields['sucursal_cod_gerente'].choices = choices
+        self.fields['sucursal_nombre'].label = _('Nombre sucursal')
+        self.fields['sucursal_ubicacion'].label = _('Dirección de la sucursal')
+        self.fields['sucursal_cod_gerente'].label = _('Gerente encargado')
+        self.fields['sucursal_cod_gerente'].empty_label = None

@@ -37,7 +37,7 @@ class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     sucursal_nombre = models.CharField(max_length=50)
     sucursal_ubicacion = models.CharField(max_length=100)
-    sucursal_cod_gerente = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a la tabla Persona OjO
+    sucursal_cod_gerente = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a la tabla Uusuario
     sucursal_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
@@ -51,17 +51,6 @@ class PersonaXCargo(models.Model):
     perxcargo_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
-
-'''
-class PersonaXCargo(models.Model):
-    perxcargo_cod = models.AutoField(primary_key=True)
-    perxcargo_persona_cod = models.ForeignKey('Persona', on_delete=models.CASCADE)
-    perxcargo_cargo_cod = models.ForeignKey(Cargo, on_delete=models.CASCADE)
-    perxcargo_sucursal_cod = models.ForeignKey('Sucursal', on_delete=models.CASCADE)
-    perxcargo_vigente = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-'''
 
 class Menu(models.Model):
     menu_id = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django

@@ -110,7 +110,7 @@ class CustomUserEditForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-
+            
             # Excluye los campos de contraseña del formulario
             self.fields.pop('password')
 

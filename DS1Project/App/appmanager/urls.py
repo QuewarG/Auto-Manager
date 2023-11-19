@@ -1,11 +1,14 @@
 from django.urls import path, include
+from captcha import views as captcha_views
 from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
+    path('captcha/', include('captcha.urls')),
     path('adminpage/', adminpage, name='adminpage'),
     path('cambiar_idioma/<str:idioma>/', cambiar_idioma, name='cambiar_idioma'),
     path('sucursales/', sucursales, name='sucursales'),
+    path('crear_sucursal/', create_sucursal, name='crear_sucursal'),
     path('users/', users, name='users'),
     path('users/signup/', signup, name='signup'),
     path('users/edit_user/', edit_usuario, name='edit_usuario'),

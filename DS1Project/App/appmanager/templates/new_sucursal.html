@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
+
+    <title>automanager</title>
+</head>
+<body>
+    <h1>{% trans "Crear Nueva Sucursal" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% trans "Guardar" %}</button>
+    </form>
+</body>
+
+
+</html>
+{% endblock %}

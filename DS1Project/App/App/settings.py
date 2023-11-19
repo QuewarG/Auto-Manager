@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_recaptcha",
+    "captcha",
     "appmanager",
 ]
 
@@ -76,10 +78,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
         "HOST": 'localhost',
-        "PORT": '5433',
-        "NAME": 'automanager',
+        "PORT": '5432',
+        "NAME": 'automanagerprueba',
         "USER": 'postgres',
-        "PASSWORD": '12345678',
+        "PASSWORD": 'camilo12345',
     }
 }
 
@@ -139,3 +141,8 @@ AUTH_USER_MODEL = 'appmanager.Usuario'
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_NAME = 'mi_sesion'
 SESSION_COOKIE_AGE = 1209600  # Tiempo de vida de la sesión en segundos (por defecto, 2 semanas)
+
+
+
+RECAPTCHA_PUBLIC_KEY = '6LewjxMpAAAAALEkAWvKRj-33lg1VM6OBmrdnzc7'
+RECAPTCHA_PRIVATE_KEY = '6LewjxMpAAAAAD8zH1U1mboETeUaWZRfR01AZRF6'

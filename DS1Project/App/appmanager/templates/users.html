@@ -70,7 +70,7 @@
                 <td>{{usuario.user_numero_doc}}</td>
                 <td>{{usuario.email}}</td>
                 <td>{{usuario.user_telefono}}</td>
-                <td>{{usuario.cod_rol_id}}</td>
+                <td>{{usuario.cod_rol.rol_nombre}}</td>
 
                 <!--Boton de edicion-->
                 <form method="get" action="{% url 'edit_usuario' %}">

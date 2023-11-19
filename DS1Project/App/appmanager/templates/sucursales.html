@@ -30,19 +30,20 @@
         <thead>
             <tr>
                 <!--INFORMACIÓN DE LA TABLA-->
-                <th>{% trans "Campo1" %}</th>
-                <th>{% trans "Campo2" %}</th>
-                <th>{% trans "Campo3" %}</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Ubicacion" %}</th>
+                <th>{% trans "Gerente" %}</th>
                 <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
             <!--INFORMACIÓN DE BASE DE DATOS-->
             <!--for-->
+            {% for sucursal in sucursales %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ sucursal.sucursal_nombre }}</td>
+                <td>{{ sucursal.sucursal_ubicacion }}</td>
+                <td>{{ sucursal.sucursal_cod_gerente.username }}</td>
                 <td><button class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
                 <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
 
@@ -61,7 +62,7 @@
                 </form>-->
 
             </tr>
-            <!--endfor-->
+            {% endfor %}
         </tbody>
     </table>
     <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Sucursual" %}</button>
@@ -84,4 +85,3 @@
 </body>
 
 </html>
-

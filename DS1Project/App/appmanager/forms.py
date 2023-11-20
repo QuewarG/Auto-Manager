@@ -114,14 +114,14 @@ class CustomUserEditForm(UserChangeForm):
     last_name = forms.CharField(max_length=150, required=True )
     email = forms.EmailField(required=True )
     user_per_tipo_doc = forms.ChoiceField(choices=tipo_docs )
-    user_Número_doc = forms.CharField(max_length=20, required=True )
+    user_numero_doc = forms.CharField(max_length=20, required=True )
     user_telefono = forms.CharField(max_length=20, required=False )
     cod_rol = forms.ModelChoiceField (queryset=Rol.objects.all(), empty_label=None)
     
     
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_Número_doc', 'user_telefono', 'cod_rol']
+        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol']
         labels ={
              'username': _('Username'),
         }
@@ -138,9 +138,15 @@ class CustomUserEditForm(UserChangeForm):
             self.fields['user_per_tipo_doc'].label = _('Tipo Documento')
             self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
             self.fields['user_per_tipo_doc'].help_text =  _('Seleccione su tipo de documento')
-            self.fields['user_Número_doc'].label = _('Número Documento')
+            self.fields['user_numero_doc'].label = _('Número Documento')
             self.fields['user_telefono'].label = _('Número Telefónico')
             self.fields['cod_rol'].label = _("Cambiar Rol")
+            # Obtener el rol actual del usuario y establecerlo como valor inicial
+            usuario = kwargs.get('instance')
+            
+            if usuario:
+                self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
+
 
 
 class RolForm(forms.ModelForm):
@@ -183,3 +189,41 @@ class SucursalForm(forms.ModelForm):
         self.fields['sucursal_ubicacion'].label = _('Dirección de la sucursal')
         self.fields['sucursal_cod_gerente'].label = _('Gerente encargado')
         self.fields['sucursal_cod_gerente'].empty_label = None
+
+
+class CrearProductoForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(queryset=CategoriaInventario.objects.all(), empty_label=None)
+    sucursal = forms.ModelChoiceField(queryset=Sucursal.objects.all(), empty_label=None, label='Sucursal', to_field_name='sucursal_nombre')
+    existencias = forms.IntegerField(label='Existencias')
+
+    class Meta:
+        model = Inventario
+        fields = ['inv_nombre', 'inv_descripcion', 'inv_precioneto', 'categoria']
+        labels = {
+            'inv_nombre': 'Nombre',
+            'inv_descripcion': 'Descripción',
+            'inv_precioneto': 'Precio Neto',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CrearProductoForm, self).__init__(*args, **kwargs)
+        self.fields['categoria'].label = 'Categoría'
+
+    def save(self, commit=True):
+        producto = super().save(commit=False)
+        if commit:
+            producto.save()
+
+            # Obtener los datos del formulario
+            sucursal = self.cleaned_data.get('sucursal')
+            existencias = self.cleaned_data.get('existencias')
+
+            # Guardar en InventarioPorSucursal
+            inventario_por_sucursal, _ = InventarioPorSucursal.objects.get_or_create(
+                invsus_codigo_inventario=producto,
+                invsus_sucursal=sucursal,
+                defaults={'invsus_existencias': existencias}
+            )
+            inventario_por_sucursal.invsus_existencias = existencias
+            inventario_por_sucursal.save()
+        return producto

@@ -241,7 +241,21 @@ def signup(request):
                                              })
         
 def inventory(request):
-    return render(request, 'inventory.html')
+    inventario = Inventario.objects.all()
+
+    # Obtener datos adicionales de InventarioPorSucursal para cada elemento de Inventario
+    for producto in inventario:
+        producto.sucursal = None
+        producto.existencias = None
+
+        # Suponiendo una relación de ForeignKey entre Inventario e InventarioPorSucursal
+        relaciones = InventarioPorSucursal.objects.filter(invsus_codigo_inventario=producto)
+        if relaciones.exists():
+            producto.sucursal = relaciones.first().invsus_sucursal
+            producto.existencias = relaciones.first().invsus_existencias
+
+    messages.get_messages(request)
+    return render(request, 'inventory.html', {'inventario': inventario})
 
 def orders(request):
     return render(request, 'orders.html')
@@ -340,17 +354,6 @@ def create_Cargo(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_PersonaxCargo(request):
-    new_personaxcargo = PersonaXCargo(
-                                        perxcargo_persona_cod = request.POST['perxcargo_persona'],
-                                        perxcargo_cargo_cod =  request.POST['perxcargo_cargo'],
-                                        perxcargo_sucursal_cod = request.POST['perxcargo_sucursal'],
-                                        perxcargo_vigente = True
-                                    )
-    new_personaxcargo.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
 def create_Menu(request):
     new_menu = Menu(
                     menu_nombre = request.POST['menu_nombre'],
@@ -416,17 +419,34 @@ def create_OrdenTrabajo(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_Inventario(request):
-    new_inventario = Inventario(
-                                    inv_nombre = request.POST['inv_nombre'],
-                                    inv_categoria = request.POST['inv_categoria'],
-                                    inv_descripcion = request.POST['inv_descripcion'],
-                                    inv_precioneto = request.POST['inv_precioneto'],
-                                    inv_vigente = True
-                                )
-    new_inventario.save()
+def create_product(request):
+    if request.method == 'POST':
+        form = CrearProductoForm(request.POST)
+        if form.is_valid():
+            nuevo_producto = form.save(commit=False)
+            categoria_seleccionada = form.cleaned_data['categoria']
 
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+            # Asignar la categoría seleccionada al nuevo producto
+            nuevo_producto.inv_categoria = categoria_seleccionada
+            nuevo_producto.save()
+
+            # Obtener la sucursal seleccionada del formulario
+            sucursal_seleccionada = form.cleaned_data['sucursal']
+
+            # Crear o actualizar la entrada en InventarioPorSucursal
+            InventarioPorSucursal.objects.update_or_create(
+                invsus_codigo_inventario=nuevo_producto,
+                invsus_sucursal=sucursal_seleccionada,
+                defaults={'invsus_existencias': form.cleaned_data['existencias']}
+            )
+
+            # Redirigir a alguna página de éxito
+            return redirect('inventory')  # Reemplaza 'inventory' con la vista o URL a la que quieres redirigir
+
+    else:
+        form = CrearProductoForm()
+    
+    return render(request, 'new_sucursal.html', {'form': form})
 
 def create_InventarioPorSucursal(request):
     new_inventarioporsucursal = InventarioPorSucursal(
@@ -538,11 +558,16 @@ def delete_OrdenTrabajo(request, orden_id):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def delete_Inventario(request, inventario_id):
-    inventario = Inventario.objects.get( inv_cod = inventario_id)
-    inventario.delete()
+def delete_product(request):
+    if request.method == 'GET':
+        inventory(request)
+    else:
+        product = Inventario.objects.get(inv_cod = request.POST['delete_productID'])
+        msg = _('Producto eliminado con éxito.')
+        messages.success(request, msg)
+        product.delete()
 
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+    return redirect( 'inventory' )
 
 def delete_InventarioPorSucursal(request, inventarioSurcursal_id):
     inventarioporsucursal = InventarioPorSucursal.objects.get( invsus_cod = inventarioSurcursal_id)

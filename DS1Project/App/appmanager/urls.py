@@ -1,10 +1,8 @@
 from django.urls import path, include
-from captcha import views as captcha_views
 from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
-    path('captcha/', include('captcha.urls')),
     path('adminpage/', adminpage, name='adminpage'),
     path('cambiar_idioma/<str:idioma>/', cambiar_idioma, name='cambiar_idioma'),
     path('sucursales/', sucursales, name='sucursales'),
@@ -20,6 +18,9 @@ urlpatterns = [
     path('roles/edit_rol/', edit_rol, name='edit_rol'),
     path('roles/delete_rol/', delete_rol, name='delete_rol'),
     path('inventory/', inventory, name='inventory'),
+    path('inventory/create_product/', create_product, name='new_product'),
+    path('inventory/edit_product/', delete_product, name='delete_product'), #edit_product
+    path('inventory/delete_product/', delete_product, name='delete_product'), #delete_product
     path('orders/', orders, name='orders'),
     path('cotizaciones/', cotizaciones, name='cotizaciones'),
     path('sales/', sales, name='sales'),

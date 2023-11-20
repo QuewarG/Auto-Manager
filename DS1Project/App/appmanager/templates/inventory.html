@@ -21,6 +21,8 @@
                 <th>{% trans "Categoría" %}</th>
                 <th>{% trans "Descripción" %}</th>
                 <th>{% trans "Precio" %}</th>
+                <th>{% trans "Sucursal" %}</th>
+                <th>{% trans "Existencias" %}</th>
                 <th colspan="2">{% trans "Opciones" %}</th>
 
             </tr>
@@ -28,12 +30,14 @@
         <tbody>
             <!-- CICLO FOR PARA MOSTRAR LOS DATOS-->
             <!--for-->
-            
+            {% for producto in inventario %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ producto.inv_nombre }}</td>
+                <td>{{ producto.inv_categoria }}</td>
+                <td>{{ producto.inv_descripcion }}</td>
+                <td>{{ producto.inv_precioneto }}</td>
+                <td>{{ producto.sucursal}}</td>
+                <td>{{ producto.existencias }}</td>
             
                 <!--Boton de edicion-->
                 <form method="" action="">
@@ -43,19 +47,24 @@
                 </form>
 
                 <!--Boton de borrado-->
-                <form method="" action="">
+                <form method="post" action="{% url 'delete_product' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-danger">{% trans "Eliminar" %}  </button></td>
+                    <input type="hidden" name="delete_productID" value={{ producto.inv_cod }}>
+                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}  </button></td>
                 </form>
             </tr>
+            {% endfor %}
             <!--endfor-->
 
         </tbody>
     </table>
-    <button type="button" class="btn btn-success" onclick="" style="margin-left: 5px;"> 
-        <i class="fa-solid fa-cart-flatbed"></i> {% trans "Añadir Producto" %}
-    </button>
+
+    <a href="{% url 'new_product' %}">
+        <button type="button" class="btn btn-success" onclick="" style="margin-left: 5px;"> 
+            <i class="fa-solid fa-cart-flatbed"></i> {% trans "Añadir Producto" %}
+        </button>
+    </a>
+
 </div>
 
 {% endblock %}

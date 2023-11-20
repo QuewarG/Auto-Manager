@@ -79,10 +79,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
         "HOST": 'localhost',
-        "PORT": '5433',
-        "NAME": 'automanager',
+        "PORT": '5432',
+        "NAME": 'automanagerprueba',
         "USER": 'postgres',
-        "PASSWORD": '12345678',
+        "PASSWORD": 'camilo12345',
     }
 }
 

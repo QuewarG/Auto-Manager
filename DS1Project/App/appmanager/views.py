@@ -155,19 +155,8 @@ def delete_Usuario(request):
 def edit_usuario(request):
     if request.method == 'GET':
         usuario = Usuario.objects.get( id = request.GET['editID'])
-        
 
-        valores_por_defecto = {
-            'username': usuario.username,
-            'email': usuario.email,
-            'first_name': usuario.first_name,
-            'last_name': usuario.last_name,
-            'user_per_tipo_doc': usuario.user_per_tipo_doc,
-            'user_numero_doc': usuario.user_numero_doc,
-            'user_telefono': usuario.user_telefono,
-        }
-
-        editform = CustomUserEditForm(initial=valores_por_defecto)
+        editform = CustomUserEditForm(instance = usuario)
 
         return render(request, 'signupEdit.html',{
                                                 'form': editform

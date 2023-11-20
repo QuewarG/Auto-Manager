@@ -13,17 +13,19 @@
 </head>
 <body>
 
+
+
 <div class="container">
   <h2>{% trans "Bienvenido" %}</h2>
-
   {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-          {% trans message.message %}
-        </li>
-      {% endfor %}
-    </ul>
+  <div class="alerts">
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% trans message.message %}</li>
+              {% endfor %}
+      </ul>
+  </div>
   {% endif %}
 
   <form action="" method="POST">
@@ -40,7 +42,6 @@
       {{ form.captcha }}
     </div>
     <button type="submit" value="Enviar">{% trans "Ingresar" %}</button>
-
 
   </form>
 

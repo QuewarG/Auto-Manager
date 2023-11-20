@@ -80,7 +80,8 @@ class CustomUserCreationForm(UserCreationForm):
     rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label = _('Roles disponibles') )
 
     def __init__(self, *args, **kwargs):
-        
+        # Obtener el rol actual del usuario y establecerlo como valor inicial
+        #         
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         
@@ -101,6 +102,7 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['num_doc'].label = _('Número Documento')
         self.fields['num_tel'].label = _('Número Telefónico')
         self.fields['rol'].label = _("Roles disponibles")
+
     
 
 class CustomUserEditForm(UserChangeForm):
@@ -126,8 +128,8 @@ class CustomUserEditForm(UserChangeForm):
              'username': _('Username'),
         }
 
-    def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+    def _init_(self, *args, **kwargs):
+            super()._init_(*args, **kwargs)
             
             # Excluye los campos de contraseña del formulario
             self.fields.pop('password')
@@ -141,12 +143,12 @@ class CustomUserEditForm(UserChangeForm):
             self.fields['user_numero_doc'].label = _('Número Documento')
             self.fields['user_telefono'].label = _('Número Telefónico')
             self.fields['cod_rol'].label = _("Cambiar Rol")
+            
             # Obtener el rol actual del usuario y establecerlo como valor inicial
             usuario = kwargs.get('instance')
             
             if usuario:
                 self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
-
 
 
 class RolForm(forms.ModelForm):

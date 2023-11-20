@@ -23,14 +23,14 @@ body {
     padding: 0 1.7rem;
     color: #fff;
     overflow: hidden;
-    transition: all 0.5s linear;
+    /*transition: all 0.5s linear;*/
     background: rgb(22, 33, 52);
 }
 
-.sidebar:hover {
+/*.sidebar:hover {
     width: 250px;
     transition: 0.5s;
-}
+}*/
 
 .sidebar a {
     text-decoration: none;

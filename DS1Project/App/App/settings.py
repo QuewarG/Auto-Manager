@@ -1,6 +1,9 @@
-import os
+import os, ssl
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+
+# Deshabilitar la verificación SSL
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,13 +25,15 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "crispy_forms",
-    #"crispy_bootstrap5", // Genera error
+    "crispy_bootstrap5", 
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_recaptcha",
+    "captcha",
     "appmanager",
 ]
 
@@ -61,6 +66,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -76,10 +82,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
         "HOST": 'localhost',
-        "PORT": '5433',
-        "NAME": 'automanager',
+        "PORT": '5432',
+        "NAME": 'automanagerprueba',
         "USER": 'postgres',
-        "PASSWORD": '12345678',
+        "PASSWORD": 'camilo12345',
     }
 }
 
@@ -100,8 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -111,10 +115,13 @@ USE_TZ = True
 LANGUAGES = [
     ('en', _('English')),
     ('es', _('Spanish')),
+    ('pt', 'Português'),
 ]
 
+LANGUAGE_CODE = "es"
+
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'locale'), # Directorio para archivos de traducción personalizados
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -129,7 +136,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # VARIBALES DE REDIRECCION DE LOGIN Y LOGOUT
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'adminpage'
 LOGOUT_REDIRECT_URL = 'home'
 
 AUTH_USER_MODEL = 'appmanager.Usuario'
+
+# Configuración de sesión
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_NAME = 'mi_sesion'
+SESSION_COOKIE_AGE = 1209600  # Tiempo de vida de la sesión en segundos (por defecto, 2 semanas)
+
+
+
+RECAPTCHA_PUBLIC_KEY = '6LewjxMpAAAAALEkAWvKRj-33lg1VM6OBmrdnzc7'
+RECAPTCHA_PRIVATE_KEY = '6LewjxMpAAAAAD8zH1U1mboETeUaWZRfR01AZRF6'

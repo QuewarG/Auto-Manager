@@ -1,39 +1,51 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  {% block content %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'styles/style_login.css' %}">
   <title>automanager</title>
+  <script src='https://www.google.com/recaptcha/api.js'></script>  <!-- Agregar el script del captcha de Google -->
 </head>
 <body>
 
-  <div class="container">
-    <h2>Bienvenido</h2>
-    <form action="" method="POST">
-      {% csrf_token %}
-  
-        <div class="user">
-            <input type="text"  id="username" name="username" required>
-            <label> Username </label>
-        </div>
-        <div class="user">
-            <input type="password"  id="password" name="password" required>
-            <label> Password </label>
-        </div>
-        
-        
-          <button type="submit" value="Enviar">
-              Ingresar
-          </button>
-    </form>
+
+
+<div class="container">
+  <h2>{% trans "Bienvenido" %}</h2>
+  {% if messages %}
+  <div class="alerts">
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% trans message.message %}</li>
+              {% endfor %}
+      </ul>
   </div>
-  
+  {% endif %}
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="user">
+        {{ form.username }}
+        <label>Username</label>
+    </div>
+    <div class="user">
+        {{ form.password }}
+        <label>Password</label>
+    </div>
+    <div>
+      {{ form.captcha }}
+    </div>
+    <button type="submit" value="Enviar">{% trans "Ingresar" %}</button>
+
+  </form>
+
+</div>
+
 </body>
 </html>
-
-{% endblock %}

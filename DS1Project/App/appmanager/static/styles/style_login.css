@@ -97,3 +97,26 @@ body{
 }
 
 
+div.alerts {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto; 
+    padding: 15px;
+    background-color: #f8d7da; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 5px; 
+    box-sizing: border-box; 
+  }
+  
+ul.messages {
+    color: #721c24; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+  
+
+ul.messages li {
+    margin: 5px 0;
+}
+  

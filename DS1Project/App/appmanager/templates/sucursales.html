@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+
+{% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+<div>
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
+</div>
+
+<div class="card bg-success text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fa-regular fa-building"></i>
+            <span style="margin-left: 15px;">{% trans "Sucursales" %}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <!--INFORMACIÓN DE LA TABLA-->
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Ubicacion" %}</th>
+                <th>{% trans "Gerente" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--INFORMACIÓN DE BASE DE DATOS-->
+            <!--for-->
+            {% for sucursal in sucursales %}
+            <tr>
+                <td>{{ sucursal.sucursal_nombre }}</td>
+                <td>{{ sucursal.sucursal_ubicacion }}</td>
+                <td>{{ sucursal.sucursal_cod_gerente.username }}</td>
+        
+                <!--Boton de edicion-->
+                <form method="get" action="{% url 'edit_sucursal' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="sucursal_editID" value="{{sucursal.sucursal_cod}}">
+                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                </form>
+
+                <!--Boton de borrado-->
+                <form method="post" action="{% url 'delete_sucursal' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_sucursalID" value="{{sucursal.sucursal_cod}}">
+                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
+                </form>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'crear_sucursal' %}">
+        <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> 
+            <i class="fa-solid fa-plus"></i> {% trans "Añadir Sucursal" %}
+        </button>
+    </a>
+    
+</div>
+</div>
+
+<!--
+        <div class="form--container">
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="boton">Crear Usuario</button>
+            </form>
+        </div>
+    -->
+
+</div>
+
+{% endblock %}
+</body>
+
+</html>

@@ -131,12 +131,54 @@ def delete_rol(request):
 def users(request):
     if request.user.is_authenticated:
         usuario_actual = request.user
-        # Acceder a la información del usuario
 
-    user = Usuario.objects.all()
+        if usuario_actual.cod_rol.rol_cod == 3:
+            listado_usuarios = Usuario.objects.filter(cod_rol_id = 5)
+
+            for usuario in listado_usuarios:
+            # Obtén el objeto PersonaXCargo relacionado con el usuario actual
+                persona_cargo = PersonaXCargo.objects.filter(perxcargo_persona_cod=usuario).first()
+
+                # Verifica si se encontró un objeto PersonaXCargo
+                if persona_cargo:
+                    # Accede a los campos que necesitas (rol_cod y cargo_cod)
+                    sucursal_cod = persona_cargo.perxcargo_sucursal_cod.sucursal_nombre
+                    cargo_cod = persona_cargo.perxcargo_cargo_cod.cargo_nombre
+
+                    # Agrega estos valores al contexto del usuario
+                    usuario.sucursal_cod = sucursal_cod
+                    usuario.cargo_cod = cargo_cod
+                else:
+                    # Si no se encuentra una entrada en PersonaXCargo, establece valores predeterminados o maneja la situación según sea necesario
+                    usuario.sucursal_cod = None
+                    usuario.cargo_cod = None
+
+        else:
+            listado_usuarios = Usuario.objects.all()
+
+            for usuario in listado_usuarios:
+        # Obtén el objeto PersonaXCargo relacionado con el usuario actual
+                persona_cargo = PersonaXCargo.objects.filter(perxcargo_persona_cod=usuario).first()
+
+                # Verifica si se encontró un objeto PersonaXCargo
+                if persona_cargo:
+                    # Accede a los campos que necesitas (rol_cod y cargo_cod)
+                    sucursal_cod = persona_cargo.perxcargo_sucursal_cod.sucursal_nombre
+                    cargo_cod = persona_cargo.perxcargo_cargo_cod.cargo_nombre
+
+                    # Agrega estos valores al contexto del usuario
+                    usuario.sucursal_cod = sucursal_cod
+                    usuario.cargo_cod = cargo_cod
+                else:
+                    # Si no se encuentra una entrada en PersonaXCargo, establece valores predeterminados o maneja la situación según sea necesario
+                    usuario.sucursal_cod = None
+                    usuario.cargo_cod = None
+
+
+
     messages.get_messages(request)
-    return render(request, 'users.html', {'user' : user,
-                                          'usuario_actual': usuario_actual})
+    return render(request, 'users.html', {'listado_usuarios' : listado_usuarios,
+                                          'usuario_actual': request.user})
 
 @login_required
 def delete_Usuario(request):
@@ -156,7 +198,19 @@ def edit_usuario(request):
     if request.method == 'GET':
         usuario = Usuario.objects.get( id = request.GET['editID'])
 
-        editform = CustomUserEditForm(instance = usuario)
+        if request.user and (request.user.cod_rol.rol_cod == 2 or request.user.cod_rol.rol_cod == 1):
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.all()
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.all()
+        elif request.user and request.user.cod_rol.rol_cod == 3:
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.filter(rol_cod = 5)
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.filter( cargo_cod = 4)
+        else:
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.none()
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
+
+        editform = CustomUserEditForm(instance=usuario)
+
+        editform.fields.pop('password') #elimina el campos de password porque no se utiliza
 
         return render(request, 'signupEdit.html',{
                                                 'form': editform
@@ -164,6 +218,16 @@ def edit_usuario(request):
     else:
 
         usuario = Usuario.objects.get( username = request.POST['username'])
+
+        if request.user and (request.user.cod_rol.rol_cod == 2 or request.user.cod_rol.rol_cod == 1):
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.all()
+        elif request.user and request.user.cod_rol.rol_cod == 3:
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.filter( cargo_cod = 4)
+        else:
+            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
+
+        CustomUserEditForm.base_fields['cod_sucursal'].initial = request.POST.get('cod_sucursal', None)
+
         form = CustomUserEditForm(request.POST, instance=usuario)
         if form.is_valid():
             # Guarda los cambios en el usuario
@@ -180,13 +244,13 @@ def edit_usuario(request):
 def signup(request):
     #El GET se invoca al ingresar por primera vez a la pagina y envia el formulario
     if request.method == 'GET':
-        form = CustomUserCreationForm(request.POST or None, user=request.user)
+        form = CustomUserCreationForm(request.POST or None, user = request.user)
         messages.get_messages(request)
         return render(request, 'signup.html',{
                                                 'form': form
                                              })
     else:
-        form = CustomUserCreationForm(request.POST or None, user=request.user)
+        form = CustomUserCreationForm(request.POST or None, user = request.user)
         if form.is_valid():
             if form.cleaned_data['password1'] == form.cleaned_data['password2']:
                 try:

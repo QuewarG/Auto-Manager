@@ -31,7 +31,10 @@ class Cargo(models.Model):
     cargo_descripcion = models.TextField()
     cargo_vigente = models.BooleanField(default=True)  # Valor predeterminado True para cargo_vigente
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+    update_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.cargo_nombre   # auto_now actualiza el valor cada vez que se guarda el objeto
     
 class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
@@ -50,7 +53,6 @@ class PersonaXCargo(models.Model):
     perxcargo_persona_cod = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     perxcargo_cargo_cod = models.ForeignKey('Cargo', on_delete=models.CASCADE)
     perxcargo_sucursal_cod = models.ForeignKey('Sucursal', on_delete=models.CASCADE)
-    #perxcargo_rol_cod = models.ForeignKey('Rol', on_delete=models.CASCADE, default=00)
     perxcargo_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -194,22 +196,4 @@ class CategoriaInventario(models.Model):
 
     def __str__(self):
         return self.categoriainv_nombre
-
-'''
-class Factura(models.Model):
-    codfac = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    codfac_cliente = models.ForeignKey('Persona', on_delete=models.CASCADE)  # Clave foránea a Persona
-    codfac_vendedor = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
-    codfac_cotizacion_vehiculonuevo = models.ForeignKey('CotizacionVehiculo', on_delete=models.CASCADE)  # Clave foránea a CotizacionVehiculo
-    codfac_reparacion = models.ForeignKey('CotizacionReparacion', on_delete=models.CASCADE)  # Clave foránea a CotizacionReparacion
-    codfac_repuestos = models.ForeignKey('CotizacionRepuestos', on_delete=models.CASCADE)  # Clave foránea a CotizacionRepuestos
-    codfac_subtotal = models.DecimalField(max_digits=15, decimal_places=2)
-    codfac_iva = models.DecimalField(max_digits=15, decimal_places=2)
-    codfac_descuento = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    codfac_precioTotal = models.DecimalField(max_digits=15, decimal_places=2)
-    codfac_fecharealizada = models.DateField()
-    codfac_vigente = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
-'''
    

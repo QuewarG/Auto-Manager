@@ -83,10 +83,11 @@ class CustomUserCreationForm(UserCreationForm):
         # Obtener el rol actual del usuario y establecerlo como valor inicial
         #         
         self.user = kwargs.pop('user', None)
+        print (self.user)
         super().__init__(*args, **kwargs)
         
         #selecciona los roles dependiendo del usuario registrado
-        if self.user and self.user.cod_rol.rol_cod == 2:
+        if self.user and (self.user.cod_rol.rol_cod == 2 or self.user.cod_rol.rol_cod == 1):
             self.fields['rol'].queryset = Rol.objects.all()
         elif self.user and self.user.cod_rol.rol_cod == 3:
             self.fields['rol'].queryset = Rol.objects.filter(rol_cod = 5)
@@ -119,36 +120,66 @@ class CustomUserEditForm(UserChangeForm):
     user_numero_doc = forms.CharField(max_length=20, required=True )
     user_telefono = forms.CharField(max_length=20, required=False )
     cod_rol = forms.ModelChoiceField (queryset=Rol.objects.all(), empty_label=None)
+    cod_cargo = forms.ModelChoiceField (queryset=Cargo.objects.all(), empty_label=None)
+    cod_sucursal = forms.ModelChoiceField (queryset=Sucursal.objects.all(), empty_label=None)
     
     
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol']
+        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol', 'cod_cargo', 'cod_sucursal']
         labels ={
              'username': _('Username'),
         }
 
-    def _init_(self, *args, **kwargs):
-            super()._init_(*args, **kwargs)
-            
-            # Excluye los campos de contraseña del formulario
-            self.fields.pop('password')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
 
-            self.fields['first_name'].label = _('Nombre')
-            self.fields['last_name'].label = _('Apellido')
-            self.fields['email'].label = _('Correo Electrónico')
-            self.fields['user_per_tipo_doc'].label = _('Tipo Documento')
-            self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
-            self.fields['user_per_tipo_doc'].help_text =  _('Seleccione su tipo de documento')
-            self.fields['user_numero_doc'].label = _('Número Documento')
-            self.fields['user_telefono'].label = _('Número Telefónico')
-            self.fields['cod_rol'].label = _("Cambiar Rol")
-            
-            # Obtener el rol actual del usuario y establecerlo como valor inicial
-            usuario = kwargs.get('instance')
-            
-            if usuario:
-                self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
+        self.fields['first_name'].label = _('Nombre')
+        self.fields['last_name'].label = _('Apellido')
+        self.fields['email'].label = _('Correo Electrónico')
+        self.fields['user_per_tipo_doc'].label = _('Tipo Documento')
+        self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
+        self.fields['user_per_tipo_doc'].help_text =  _('Seleccione su tipo de documento')
+        self.fields['user_numero_doc'].label = _('Número Documento')
+        self.fields['user_telefono'].label = _('Número Telefónico')
+        self.fields['cod_rol'].label = _("Cambiar Rol")
+
+        self.fields['cod_cargo'].label = _("Asignar cargo a desempeñar")
+        self.fields['cod_sucursal'].label = _("Asignar sucursal")
+
+
+        #SECCION DONDE SE ASIGNA LA SUCURSAL AL USUARIO
+        
+        # Obtener el rol actual del usuario y establecerlo como valor inicial
+        usuario = kwargs.get('instance')
+        
+        if usuario:
+            self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
+
+    def save(self, commit=True):
+        # Guardar el usuario
+        user = super().save(commit)
+
+        persona_cargo = PersonaXCargo.objects.filter(perxcargo_persona_cod=user).first()
+
+        if persona_cargo:
+            # Si existe, actualiza los campos
+            persona_cargo.perxcargo_cargo_cod = self.cleaned_data.get('cod_cargo')
+            persona_cargo.perxcargo_sucursal_cod = self.cleaned_data.get('cod_sucursal')
+            persona_cargo.save()
+        else:
+            # Si no existe, crea un nuevo registro
+            persona_cargo = PersonaXCargo(
+                perxcargo_persona_cod=user,
+                perxcargo_cargo_cod = self.cleaned_data.get('cod_cargo'),
+                perxcargo_sucursal_cod = self.cleaned_data.get('cod_sucursal'),
+                perxcargo_vigente=True,
+            )
+            persona_cargo.save()
+
+        return user
+
 
 
 class RolForm(forms.ModelForm):
@@ -195,21 +226,22 @@ class SucursalForm(forms.ModelForm):
 
 class CrearProductoForm(forms.ModelForm):
     categoria = forms.ModelChoiceField(queryset=CategoriaInventario.objects.all(), empty_label=None)
-    sucursal = forms.ModelChoiceField(queryset=Sucursal.objects.all(), empty_label=None, label='Sucursal', to_field_name='sucursal_nombre')
-    existencias = forms.IntegerField(label='Existencias')
+    sucursal = forms.ModelChoiceField(queryset=Sucursal.objects.all(), empty_label=None, to_field_name='sucursal_nombre')
+    existencias = forms.IntegerField()
 
     class Meta:
         model = Inventario
         fields = ['inv_nombre', 'inv_descripcion', 'inv_precioneto', 'categoria']
-        labels = {
-            'inv_nombre': 'Nombre',
-            'inv_descripcion': 'Descripción',
-            'inv_precioneto': 'Precio Neto',
-        }
+       
 
     def __init__(self, *args, **kwargs):
         super(CrearProductoForm, self).__init__(*args, **kwargs)
-        self.fields['categoria'].label = 'Categoría'
+        self.fields['categoria'].label = _('Categoría')
+        self.fields['inv_nombre'].label = _('Nombre')
+        self.fields['inv_descripcion'].label = _('Descripción')
+        self.fields['inv_precioneto'].label = _('Precio Neto')
+        self.fields['sucursal'].label = _('Sucursal')
+        self.fields['existencias'].label = _('Existencias')
 
     def save(self, commit=True):
         producto = super().save(commit=False)

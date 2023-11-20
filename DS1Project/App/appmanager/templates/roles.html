@@ -15,9 +15,16 @@
         </button>
         <ul class="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
                 {% endfor %}
         </ul>
+        <script>
+            window.setTimeout(function () {
+                $(".alert").fadeTo(500, 0).slideUp(1000, function () {
+                    $(this).remove();
+                });
+            }, 1500);
+        </script>
         {% endif %}
     </div>
 </div>
@@ -32,7 +39,6 @@
 </div>
 
 <div class="table-responsive py-4">
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -58,16 +64,17 @@
                 <form method="post" action="{% url 'delete_rol' %}">
                     {% csrf_token %}
                     <input type="hidden" name="rolID" value="{{rol.rol_cod}}">
-                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
+                    <td> <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Eliminar">{% trans "Eliminar" %}</button></td>
                 </form>
-
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <button type="button" class="btn btn-success" onclick=redirectcreateRol() style="margin-left: 5px;"> <i
-            class="fa-solid fa-person-circle-plus"></i> {% trans "Crear Rol" %}</button>
+            class="fa-solid fa-person-circle-plus"></i> {% trans "Crear Rol" %}
+    </button>
+
 
 </div>
 

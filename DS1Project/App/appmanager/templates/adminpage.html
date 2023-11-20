@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block content %}
 
-<section class="section--card">
-    <article class="article--card">
-        <i class="fa-solid fa-user"></i>
-        <h2>Usuarios</h2>
-    </article>
+<link rel="stylesheet" href="{% static 'styles/automanager.css' %}">
 
-</section>
-
-<section class="section--card">
-    <article class="article--card">
-        <h2>{{ user.username }}</h2>
-        {{ user.cod_rol }}
-        
-    </article>
-
-</section>
+<div class="card-container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">{% trans "Usuarios" %}</h3>
+            <h1><i class="fa-solid fa-user"></i></h1>
+            <p class="card-text">Holi amigos.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">{% trans "Holita" %}</h3>
+            <h1><i class="fa-solid fa-user"></i></h1>
+            <p class="card-text">jijijijijjij.</p>
+        </div>
+    </div>
 </div>
+
 
 {% endblock %}

@@ -80,7 +80,8 @@ class CustomUserCreationForm(UserCreationForm):
     rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label = _('Roles disponibles') )
 
     def __init__(self, *args, **kwargs):
-        
+        # Obtener el rol actual del usuario y establecerlo como valor inicial
+        #         
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         
@@ -101,6 +102,7 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['num_doc'].label = _('Número Documento')
         self.fields['num_tel'].label = _('Número Telefónico')
         self.fields['rol'].label = _("Roles disponibles")
+
     
 
 class CustomUserEditForm(UserChangeForm):
@@ -114,20 +116,20 @@ class CustomUserEditForm(UserChangeForm):
     last_name = forms.CharField(max_length=150, required=True )
     email = forms.EmailField(required=True )
     user_per_tipo_doc = forms.ChoiceField(choices=tipo_docs )
-    user_Número_doc = forms.CharField(max_length=20, required=True )
+    user_numero_doc = forms.CharField(max_length=20, required=True )
     user_telefono = forms.CharField(max_length=20, required=False )
     cod_rol = forms.ModelChoiceField (queryset=Rol.objects.all(), empty_label=None)
     
     
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_Número_doc', 'user_telefono', 'cod_rol']
+        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol']
         labels ={
              'username': _('Username'),
         }
 
-    def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+    def _init_(self, *args, **kwargs):
+            super()._init_(*args, **kwargs)
             
             # Excluye los campos de contraseña del formulario
             self.fields.pop('password')
@@ -138,9 +140,15 @@ class CustomUserEditForm(UserChangeForm):
             self.fields['user_per_tipo_doc'].label = _('Tipo Documento')
             self.fields['email'].help_text = _("Ingrese una dirección de correo valida")
             self.fields['user_per_tipo_doc'].help_text =  _('Seleccione su tipo de documento')
-            self.fields['user_Número_doc'].label = _('Número Documento')
+            self.fields['user_numero_doc'].label = _('Número Documento')
             self.fields['user_telefono'].label = _('Número Telefónico')
             self.fields['cod_rol'].label = _("Cambiar Rol")
+            
+            # Obtener el rol actual del usuario y establecerlo como valor inicial
+            usuario = kwargs.get('instance')
+            
+            if usuario:
+                self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
 
 
 class RolForm(forms.ModelForm):

@@ -97,42 +97,26 @@ body{
 }
 
 
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-/* Estilos para los mensajes de Django */
+div.alerts {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto; 
+    padding: 15px;
+    background-color: #f8d7da; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 5px; 
+    box-sizing: border-box; 
+  }
+  
 ul.messages {
+    color: #721c24; 
     list-style: none;
     padding: 0;
     margin: 0;
 }
+  
 
-ul.messages li.message {
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+ul.messages li {
+    margin: 5px 0;
 }
-
-/* Estilos para diferentes tipos de mensajes */
-ul.messages li.message.success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-ul.messages li.message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-ul.messages li.message.warning {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-ul.messages li.message.info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-}
+  

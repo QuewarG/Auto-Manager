@@ -15,11 +15,18 @@
         </button>
         <ul class="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
                 {% endfor %}
         </ul>
         {% endif %}
     </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
 </div>
 
 <div class="card bg-success text-white">
@@ -30,18 +37,6 @@
         </h2>
     </div>
 </div>
-
-<!--<div class="row">
-    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
-</div>-->
 
 <div class="table-responsive py-4">
     <table class="table table-striped ">
@@ -98,3 +93,16 @@
 </div>
 
 {% endblock %}
+
+
+<!--<div class="row">
+    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>-->

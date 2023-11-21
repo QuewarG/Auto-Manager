@@ -210,14 +210,14 @@ class SucursalForm(forms.ModelForm):
     class Meta:
         model = Sucursal
         fields = ['sucursal_nombre', 'sucursal_ubicacion', 'sucursal_cod_gerente']
-        
         sucursal_cod_gerente = forms.ModelChoiceField( queryset=Usuario.objects.filter(cod_rol_id = 2) )
+        
         
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['sucursal_cod'] = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}))
-        
+        self.fields['sucursal_cod_gerente'].queryset = Usuario.objects.filter(cod_rol_id = 2)
         self.fields['sucursal_nombre'].label = _('Nombre sucursal')
         self.fields['sucursal_ubicacion'].label = _('Dirección de la sucursal')
         self.fields['sucursal_cod_gerente'].label = _('Gerente encargado')

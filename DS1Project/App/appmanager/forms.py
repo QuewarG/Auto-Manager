@@ -269,8 +269,8 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
     vehrep_marca = forms.CharField(max_length=30)
     vehrep_color = forms.CharField(max_length=30)
     vehrep_enReparacion = forms.BooleanField(required=False)
-    orden_encargado = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id__in=[1, 2]))
-    orden_dueño = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id=5))
+    orden_encargado = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id = 4), empty_label=None)
+    orden_dueño = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id=5), empty_label=None)
 
     class Meta:
         model = OrdenTrabajo
@@ -282,6 +282,10 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
         self.fields['orden_dueño'].label = _('Dueño')
         self.fields['orden_observacion'].label = _('Observaciones')
         self.fields['orden_estado'].label = _('Estado')
+        self.fields['vehrep_placa'].label = _('Placa del vehículo')
+        self.fields['vehrep_marca'].label = _('Marca del vehículo')
+        self.fields['vehrep_color'].label = _('Color del vehículo')
+        self.fields['vehrep_enReparacion'].label = _('¿En reparación?')
     
 
     def save(self, commit=True):

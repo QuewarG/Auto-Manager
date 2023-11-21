@@ -49,7 +49,13 @@
                 <td>{{ order.orden_encargado }}</td>
                 <td>{{ order.orden_dueño }}</td>
                 <td>{{ order.orden_observacion }}</td>
-                <td>{{ order.orden_estado }}</td>
+                <td>
+                    {% if order.orden_vehiculoreparacion.vehrep_enReparacion %}
+                        {% trans "Reparando" %}
+                    {% else %}
+                        {% trans "Reparado" %}
+                    {% endif %}
+                </td>
 
                 <!-- Boton de edición -->
                 <form method="get" action="">

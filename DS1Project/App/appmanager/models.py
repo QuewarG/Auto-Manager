@@ -81,6 +81,7 @@ class VehiculoReparacion(models.Model):
     vehrep_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+    
     def __str__(self):
         return self.vehrep_placa
 

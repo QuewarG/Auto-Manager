@@ -321,7 +321,9 @@ def inventory(request):
     return render(request, 'inventory.html', {'inventario': inventario})
 
 def orders(request):
+
     orders = OrdenTrabajo.objects.all()
+
     vehicle_repair = VehiculoReparacion.objects.all()
     
     # Crear un diccionario para mapear los dueños por orden de trabajo

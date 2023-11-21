@@ -358,6 +358,9 @@ def create_sucursal(request):
     
     else:
         form = SucursalForm(request.POST)
+
+        form.fields.pop('sucursal_cod', None)
+
         if form.is_valid():
             form = form.save()
             msg =_('Sucursal creada con éxito.')
@@ -499,7 +502,7 @@ def create_product(request):
     else:
         form = CrearProductoForm()
     
-    return render(request, 'new_sucursal.html', {'form': form})
+    return render(request, 'new_product.html', {'form': form})
 
 def create_InventarioPorSucursal(request):
     new_inventarioporsucursal = InventarioPorSucursal(

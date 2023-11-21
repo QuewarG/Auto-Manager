@@ -49,56 +49,13 @@
         </div>
     </nav>
 </header>
-  <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">{% trans "Home" %}<span class="sr-only">(current)</span></a>
-      </li>
-
-      <span class="nav-link">
-        <div class="lenguage--box">
-          
-          <form action="{% url 'set_language' %}" method="post" class="language-form">
-            <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}">
-            <select name="language" id="id_language" onchange="this.form.submit()">
-                {% for lang_code, lang_name in LANGUAGES %}
-                    <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
-                        {{ lang_name }}
-                    </option>
-                {% endfor %}
-            </select>
-      
-          </form>
-        </div>
-        
-      </span>
-
-      <li class="nav-item">
-        <a class="nav-link" href={% url 'login' %}>{% trans "Iniciar Sesión" %}</a>
-      </li>
-    </ul>
-  </div>
-
-</nav>-->
-
+  
 <div class="hero">
 
   <div class="text">
     <h4>Automanager</h4>
-    <h1>Lo mejor <br> <span> Del MUNDO JIJIJA</span></h1>
-    <p>compranos a nosotros jejej</p>
-    <a href="{% url 'login' %}" class="btn">Iniciar Sesión</a>
+    <h1><span>{% trans "TU VIAJE PERFECTO COMIENZA AQUÍ" %}</span></h1>
+    <a href="{% url 'login' %}" class="btn">{% trans "Iniciar Sesión" %}</a>
   </div>
 </div>
 

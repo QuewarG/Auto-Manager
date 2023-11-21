@@ -57,26 +57,6 @@ class PersonaXCargo(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
-class Menu(models.Model):
-    menu_id = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    menu_nombre = models.CharField(max_length=30, null=False)  # NOT NULL en SQL se traduce a null=False en Django
-    menu_descripcion = models.TextField(null=True, blank=True)  # Puede ser NULL en la base de datos
-    menu_estado = models.BooleanField(default=True)
-    menu_vigente = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
-    
-class Permiso(models.Model):
-    permiso_id = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    permiso_cod_menu = models.ForeignKey('Menu', on_delete=models.CASCADE)  # Clave foránea a menu
-    permiso_cod_rol = models.ForeignKey('Rol', on_delete=models.CASCADE)  # Clave foránea a rol
-    permiso_read = models.BooleanField(default=False)
-    permiso_write = models.BooleanField(default=False)
-    permiso_update = models.BooleanField(default=False)
-    permiso_delete = models.BooleanField(default=False)
-    permiso_vigente = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
-    update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
 class VehiculoVenta(models.Model):
     vehvnt_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
@@ -97,15 +77,19 @@ class VehiculoReparacion(models.Model):
     vehrep_marca = models.CharField(max_length=30)
     vehrep_color = models.CharField(max_length=30)
     vehrep_enReparacion = models.BooleanField(default=False)
-    vehrep_dueño = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a persona OjO
+    vehrep_dueño = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a persona OjO
     vehrep_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+    
+    def __str__(self):
+        return self.vehrep_placa
+
 
 class OrdenTrabajo(models.Model):
     orden_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     orden_vehiculoreparacion = models.ForeignKey('VehiculoReparacion', on_delete=models.CASCADE)  # Clave foránea a VehiculoReparacion
-    orden_encargado = models.ForeignKey('PersonaXCargo', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
+    orden_encargado = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
     orden_observacion = models.TextField()
     orden_estado = models.BooleanField(default=True)
     orden_fecha_creacion = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación

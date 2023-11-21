@@ -68,7 +68,13 @@
                 <td>{{usuario.email}}</td>
                 <td>{{usuario.user_telefono}}</td>
                 <td>{{usuario.cod_rol.rol_nombre}}</td>
-                <td>{{usuario.sucursal_cod}}</td>
+                <td>
+                    {% if usuario.sucursal_cod %}
+                        {{usuario.sucursal_cod}}
+                    {% else %}
+                        {% trans "No asignada" %}
+                    {% endif %}
+                </td>
 
                 <!--Boton de edicion-->
                 <form method="get" action="{% url 'edit_usuario' %}">

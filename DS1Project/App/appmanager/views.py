@@ -18,7 +18,17 @@ def home(request):
 @login_required
 def adminpage(request):
     actual_user = request.user
-    return render(request, 'adminpage.html', {'actual_user': actual_user})
+    users_count = Usuario.objects.count()
+    products_count = Inventario.objects.count()
+    branches_count = Sucursal.objects.count()
+
+    return render(request, 'adminpage.html', {
+        'actual_user': actual_user, 
+        'users_count': users_count, 
+        'products_count': products_count, 
+        'branches_count': branches_count
+        }
+    )
 
 
 def login_user(request):
@@ -311,7 +321,20 @@ def inventory(request):
     return render(request, 'inventory.html', {'inventario': inventario})
 
 def orders(request):
-    return render(request, 'orders.html')
+
+    orders = OrdenTrabajo.objects.all()
+
+    vehicle_repair = VehiculoReparacion.objects.all()
+    
+    # Crear un diccionario para mapear los dueños por orden de trabajo
+    owners = {vehicle.vehrep_cod: vehicle.vehrep_dueño.username for vehicle in vehicle_repair}
+    
+    # Asociar los dueños de los vehículos a cada orden de trabajo
+    for order in orders:
+        order.orden_dueño = owners.get(order.orden_vehiculoreparacion_id)
+    
+    messages.get_messages(request)
+    return render(request, 'orders.html', {'orders': orders})
 
 def cotizaciones(request):
     return render(request, 'cotizaciones.html')
@@ -407,30 +430,6 @@ def create_Cargo(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_Menu(request):
-    new_menu = Menu(
-                    menu_nombre = request.POST['menu_nombre'],
-                    menu_descripcion = request.POST['menu_descripcion'],
-                    menu_estado = request.POST['menu_estado'],
-                    menu_vigente = True
-                    )
-    new_menu.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def create_Permiso(request):
-    new_permiso = Permiso(
-                        permiso_cod_menu = request.POST['permiso_menu'],
-                        permiso_cod_rol = request.POST['permiso_rol'],
-                        permiso_read = request.POST['permiso_read'],
-                        permiso_write = request.POST['permiso_write'],
-                        permiso_update = request.POST['permiso_update'],
-                        permiso_delete = request.POST['permiso_delete'],
-                        permiso_vigente = True 
-                        )
-    new_permiso.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 def create_VehiculoVenta(request):
     new_vehiculoventa = VehiculoVenta(
@@ -460,17 +459,18 @@ def create_VehiculoReparacion(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_OrdenTrabajo(request):
-    new_ordentrabajo = OrdenTrabajo(
-                                        orden_vehiculoreparacion = request.POST['orden_vehiculoreparacion'],
-                                        orden_encargado = request.POST['orden_encargado'],
-                                        orden_observacion = request.POST['orden_observacion'],
-                                        orden_estado = request.POST['orden_estado'],
-                                        orden_vigente = True
-                                    )
-    new_ordentrabajo.save()
+def create_order(request):
+    if request.method == 'POST':
+        form = OrdenTrabajoVehiculoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirigir a alguna página de éxito o a donde desees
+            return redirect('orders')
 
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+    else:
+        form = OrdenTrabajoVehiculoForm()
+
+    return render(request, 'new_order.html', {'form': form})
 
 def create_product(request):
     if request.method == 'POST':
@@ -581,17 +581,6 @@ def delete_PersonaxCargo(request, personaxcarg_id):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def delete_Menu(request, menuid):
-    menu = Menu.objects.get( menu_id = menuid)
-    menu.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def delete_Permiso(request, permisoid):
-    permiso = Permiso.objects.get( permiso_id = permisoid)
-    permiso.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 def delete_VehiculoVenta(request, vehiculoventa_id):
     vehiculoventa = VehiculoVenta.objects.get( vehvnt_cod = vehiculoventa_id)
@@ -662,3 +651,10 @@ def cambiar_idioma(request, idioma):
         return response
     else:
         return HttpResponseRedirect('/')
+    
+
+def data_adminpage(request):
+    users_count = Usuario.objects.count()
+    products_count = Inventario.objects.count()
+
+    return render(request, 'adminpage.html', {'users_count': users_count, 'products_count': products_count})

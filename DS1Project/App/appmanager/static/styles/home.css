@@ -87,15 +87,18 @@ nav .social a i:hover{
     line-height: 1;
     margin-bottom: 30px;
 }
+
 .hero .text h1 span{
     color: #1576EE;
     font-size: 40px;
     font-weight: bold;
 }
+
 .hero .text p{
     color: #fff;
     margin-bottom: 30px;
 }
+
 .hero .text .btn{
     padding: 10px 30px;
     background-color: #1576EE;

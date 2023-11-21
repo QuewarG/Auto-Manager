@@ -261,3 +261,42 @@ class CrearProductoForm(forms.ModelForm):
             inventario_por_sucursal.invsus_existencias = existencias
             inventario_por_sucursal.save()
         return producto
+    
+
+
+class OrdenTrabajoVehiculoForm(forms.ModelForm):
+    vehrep_placa = forms.CharField(max_length=20)
+    vehrep_marca = forms.CharField(max_length=30)
+    vehrep_color = forms.CharField(max_length=30)
+    vehrep_enReparacion = forms.BooleanField(required=False)
+    orden_encargado = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id__in=[1, 2]))
+    orden_dueño = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id=5))
+
+    class Meta:
+        model = OrdenTrabajo
+        fields = ['orden_encargado', 'orden_dueño', 'orden_observacion', 'orden_estado']
+
+    def __init__(self, *args, **kwargs):
+        super(OrdenTrabajoVehiculoForm, self).__init__(*args, **kwargs)
+        self.fields['orden_encargado'].label = _('Encargado')
+        self.fields['orden_dueño'].label = _('Dueño')
+        self.fields['orden_observacion'].label = _('Observaciones')
+        self.fields['orden_estado'].label = _('Estado')
+    
+
+    def save(self, commit=True):
+        vehiculo_data = {
+            'vehrep_placa': self.cleaned_data['vehrep_placa'],
+            'vehrep_marca': self.cleaned_data['vehrep_marca'],
+            'vehrep_color': self.cleaned_data['vehrep_color'],
+            'vehrep_enReparacion': self.cleaned_data['vehrep_enReparacion'],
+            'vehrep_dueño': self.cleaned_data['orden_dueño'],  
+        }
+        vehiculo = VehiculoReparacion.objects.create(**vehiculo_data)
+
+        orden_trabajo = super().save(commit=False)
+        orden_trabajo.orden_vehiculoreparacion = vehiculo
+        if commit:
+            orden_trabajo.save()
+        return orden_trabajo
+

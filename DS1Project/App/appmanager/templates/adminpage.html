@@ -11,14 +11,21 @@
         <div class="card-body">
             <h3 class="card-title text-center">{% trans "Usuarios" %}</h3>
             <h1><i class="fa-solid fa-user"></i></h1>
-            <p class="card-text">Holi amigos.</p>
+            <p class="card-text">{% trans "Cantidad de usuarios: " %} {{ users_count }}</p>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
-            <h3 class="card-title text-center">{% trans "Holita" %}</h3>
-            <h1><i class="fa-solid fa-user"></i></h1>
-            <p class="card-text">jijijijijjij.</p>
+            <h3 class="card-title text-center">{% trans "Inventario" %}</h3>
+            <h1><i class="fa-solid fa-boxes"></i></h1>
+            <p class="card-text">{% trans "Cantidad de inventario: " %} {{ products_count }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">{% trans "Sucursales" %}</h3>
+            <h1><i class="fa-solid fa-store"></i></h1>
+            <p class="card-text">{% trans "Cantidad de sucursales: " %} {{ branches_count }}</p>
         </div>
     </div>
 </div>

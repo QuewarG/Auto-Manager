@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 09:04-0500\n"
+"POT-Creation-Date: 2023-11-21 09:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -234,11 +234,19 @@ msgstr "SESSÃO NÃO VÁLIDA"
 msgid "Salir"
 msgstr "Sair"
 
-#: .\appmanager\templates\base.html:163
+#: .\appmanager\templates\base.html:166
 msgid "Admin"
 msgstr "Administrador"
 
-#: .\appmanager\templates\base.html:169 .\appmanager\templates\home.html:18
+#: .\appmanager\templates\base.html:169
+msgid "Vendedor"
+msgstr "Vendedor"
+
+#: .\appmanager\templates\base.html:172
+msgid "Jefe de Taller"
+msgstr "Diretor de oficina"
+
+#: .\appmanager\templates\base.html:182 .\appmanager\templates\home.html:27
 msgid "Idioma: "
 msgstr "Língua: "
 
@@ -307,20 +315,28 @@ msgstr "Salvar"
 #: .\appmanager\templates\new_order.html:19
 #: .\appmanager\templates\new_rol.html:44
 #: .\appmanager\templates\new_sucursal.html:32
-#: .\appmanager\templates\signup.html:43
+#: .\appmanager\templates\signup.html:53
 #: .\appmanager\templates\signupEdit.html:45
 msgid "Cancelar"
-msgstr ""
+msgstr "Cancelar"
 
 #: .\appmanager\templates\edit_sucursal.html:21
 msgid "Editar Sucursal"
 msgstr "Editar ramo"
 
-#: .\appmanager\templates\home.html:35
+#: .\appmanager\templates\home.html:21
 msgid "Home"
 msgstr "Home"
 
-#: .\appmanager\templates\home.html:38
+#: .\appmanager\templates\home.html:22
+msgid "Sobre Nosotros"
+msgstr "Sobre a empresa"
+
+#: .\appmanager\templates\home.html:57
+msgid "TU VIAJE PERFECTO COMIENZA AQUÍ"
+msgstr "A SUA VIAGEM PERFEITA COMEÇA AQUI"
+
+#: .\appmanager\templates\home.html:58
 msgid "Iniciar Sesión"
 msgstr "Iniciar sessão"
 
@@ -416,11 +432,19 @@ msgstr "Subtotal"
 msgid "Añadir Venta"
 msgstr "Adicionar venda"
 
-#: .\appmanager\templates\signup.html:30 .\appmanager\templates\users.html:100
+#: .\appmanager\templates\signup.html:23
+msgid "Hubo un error"
+msgstr "Houve um erro"
+
+#: .\appmanager\templates\signup.html:24
+msgid "Revisa los campos nuevamente"
+msgstr "Verificar novamente os campos"
+
+#: .\appmanager\templates\signup.html:40 .\appmanager\templates\users.html:100
 msgid "Crear Usuario"
 msgstr "Criar utilizador"
 
-#: .\appmanager\templates\signup.html:41
+#: .\appmanager\templates\signup.html:51
 msgid "Registrar"
 msgstr "Registo"
 

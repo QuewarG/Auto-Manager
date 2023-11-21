@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 09:04-0500\n"
+"POT-Creation-Date: 2023-11-21 09:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -234,11 +234,19 @@ msgstr "INVALID SESSION"
 msgid "Salir"
 msgstr "Exit"
 
-#: .\appmanager\templates\base.html:163
+#: .\appmanager\templates\base.html:166
 msgid "Admin"
 msgstr ""
 
-#: .\appmanager\templates\base.html:169 .\appmanager\templates\home.html:18
+#: .\appmanager\templates\base.html:169
+msgid "Seller"
+msgstr ""
+
+#: .\appmanager\templates\base.html:172
+msgid "Jefe de Taller"
+msgstr "Workshop Manager"
+
+#: .\appmanager\templates\base.html:182 .\appmanager\templates\home.html:27
 msgid "Idioma: "
 msgstr "Language: "
 
@@ -307,7 +315,7 @@ msgstr "Save"
 #: .\appmanager\templates\new_order.html:19
 #: .\appmanager\templates\new_rol.html:44
 #: .\appmanager\templates\new_sucursal.html:32
-#: .\appmanager\templates\signup.html:43
+#: .\appmanager\templates\signup.html:53
 #: .\appmanager\templates\signupEdit.html:45
 msgid "Cancelar"
 msgstr "Cancel"
@@ -316,11 +324,19 @@ msgstr "Cancel"
 msgid "Editar Sucursal"
 msgstr "Edit Branch"
 
-#: .\appmanager\templates\home.html:35
+#: .\appmanager\templates\home.html:21
 msgid "Home"
 msgstr ""
 
-#: .\appmanager\templates\home.html:38
+#: .\appmanager\templates\home.html:22
+msgid "Sobre Nosotros"
+msgstr "About Us"
+
+#: .\appmanager\templates\home.html:57
+msgid "TU VIAJE PERFECTO COMIENZA AQUÍ"
+msgstr "YOUR PERFECT JOURNEY STARTS HERE"
+
+#: .\appmanager\templates\home.html:58
 msgid "Iniciar Sesión"
 msgstr "Login"
 
@@ -416,11 +432,19 @@ msgstr "Subtotal"
 msgid "Añadir Venta"
 msgstr "Add Sale"
 
-#: .\appmanager\templates\signup.html:30 .\appmanager\templates\users.html:100
+#: .\appmanager\templates\signup.html:23
+msgid "Hubo un error"
+msgstr "There was an error"
+
+#: .\appmanager\templates\signup.html:24
+msgid "Revisa los campos nuevamente"
+msgstr "Check the fields again"
+
+#: .\appmanager\templates\signup.html:40 .\appmanager\templates\users.html:100
 msgid "Crear Usuario"
 msgstr "Create User"
 
-#: .\appmanager\templates\signup.html:41
+#: .\appmanager\templates\signup.html:51
 msgid "Registrar"
 msgstr "Register"
 
@@ -461,8 +485,8 @@ msgid "Rol"
 msgstr "Role"
 
 #: .\appmanager\templates\users.html:76
-msgid "Not assigned"
-msgstr ""
+msgid "No asignada"
+msgstr "Not assigned"
 
 #: .\appmanager\views.py:45
 msgid "Username o contraseña incorrecta."

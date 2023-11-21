@@ -16,7 +16,7 @@
     {% endif %}
 </div>
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-receipt"></i>
@@ -43,7 +43,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><button class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
+                <td><button class="btn btn-outline-primary"> {% trans "Editar" %}</button></td>
                 <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
 
                 <!--Boton de edicion
@@ -64,7 +64,7 @@
             <!--endfor-->
         </tbody>
     </table>
-    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button>
+    <button type="button" class="btn btn-secondary" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button>
 </div>
 
 {% endblock %}

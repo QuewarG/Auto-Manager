@@ -28,7 +28,7 @@
     </script>
 </div>
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fa-regular fa-building"></i>
@@ -61,7 +61,7 @@
                 <form method="get" action="{% url 'edit_sucursal' %}">
                     {% csrf_token %}
                     <input type="hidden" name="sucursal_editID" value="{{sucursal.sucursal_cod}}">
-                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->

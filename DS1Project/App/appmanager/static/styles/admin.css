@@ -24,7 +24,8 @@ body {
     color: #fff;
     overflow: hidden;
     /*transition: all 0.5s linear;*/
-    background: rgb(22, 33, 52);
+    /*rg(22, 33, 52);*/
+    background: #32383E;
 }
 
 /*.sidebar:hover {
@@ -124,7 +125,7 @@ body {
 }
 
 .header--title {
-    color: rgb(36, 59, 84);
+    color: #32383E;
 }
 
 .user--info {

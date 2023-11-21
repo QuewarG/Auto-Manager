@@ -29,7 +29,7 @@
     </script>
 </div>
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fas fa-user"></i>
@@ -74,7 +74,7 @@
                 <form method="get" action="{% url 'edit_usuario' %}">
                     {% csrf_token %}
                     <input type="hidden" name="editID" value="{{usuario.id}}">
-                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
@@ -89,7 +89,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;">
+    <button type="button" class="btn btn-secondary" onclick=redirectcreateUser() style="margin-left: 5px;">
          <i class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}
     </button>
     

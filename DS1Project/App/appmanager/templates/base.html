@@ -203,15 +203,15 @@
         {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
 
         <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-primary">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
         <img src="{% static 'imgs/vendedor.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-primary">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
         <img src="{% static 'imgs/jefe_taller.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-primary">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% endif %}
         {% endif %}

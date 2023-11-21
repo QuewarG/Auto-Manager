@@ -39,12 +39,12 @@ class CustomUserCreationForm(UserCreationForm):
 
         # Ejemplo: Asegura que la contraseña tenga al menos 3 caracteres
         if len(password1) < 8:
-            msg = _("La contraseña debe tener al menos 8 caracteres.")
+            msg =  ("La contraseña debe tener al menos 8 caracteres.")
             raise ValidationError(msg)
 
         # Asegúrate de que la contraseña contenga al menos un carácter especial
         if not any(char in "!@#$%^&*()-_=+[]{};:'\",.<>?/\\|`~" for char in password1):
-            msg = _("La contraseña debe contener al menos un carácter especial.")
+            msg = ("La contraseña debe contener al menos un carácter especial.")
             raise ValidationError(msg)
 
         return password1
@@ -54,9 +54,11 @@ class CustomUserCreationForm(UserCreationForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
 
+        
         if password1 and password2 and password1 != password2:
-            msg =_("Las contraseñas no coinciden.")
+            msg = ("Las contraseñas no coinciden.")
             raise ValidationError(msg)
+        
 
         return password2
     

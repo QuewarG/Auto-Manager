@@ -8,12 +8,21 @@
 {% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
 <div>
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="alert alert-success" role="alert">
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
 </div>
 
 <div class="card bg-primary text-white">

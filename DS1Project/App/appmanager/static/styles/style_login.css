@@ -7,7 +7,7 @@ body{
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(#141e30, #243b55);
-    background-image: url('../imgs/image_background.jpg'); /* Ruta a tu imagen de fondo */
+    background-image: url('../imgs/bg.jpg'); /* Ruta a tu imagen de fondo */
     background-size: cover; /* Ajusta el tamaño para cubrir todo el fondo */
     background-repeat: no-repeat; /* Evita la repetición de la imagen */
 }
@@ -63,7 +63,7 @@ body{
 .container .user input:valid ~ label{
     top: -20px;
     left: 0;
-    color: #03e9f4;
+    color: #1576EE;
     font-size: 12px;
 }
 
@@ -74,7 +74,7 @@ body{
     background: black;
     border-color: #fff;
     padding: 10px 20px;
-    color: #03e9f4;
+    color: #1576EE;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -87,13 +87,13 @@ body{
 }
 
 .container button:hover{
-    background: #03e9f4;
+    background: #1576EE;
     color: black;
     border-radius: 5px;
-    box-shadow: 0 0 5px #03e9f4,
-                0 0 25px #03e9f4
-                0 0 50px #03e9f4
-                0 0 100px #03e9f4;
+    box-shadow: 0 0 5px #1576EE,
+                0 0 25px #1576EE
+                0 0 50px #1576EE
+                0 0 100px #1576EE;
 }
 
 

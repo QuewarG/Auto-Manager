@@ -104,8 +104,6 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['num_tel'].label = _('Número Telefónico')
         self.fields['rol'].label = _("Roles disponibles")
 
-    
-
 class CustomUserEditForm(UserChangeForm):
     tipo_docs = [
         ('CC', 'C.C'),
@@ -180,8 +178,6 @@ class CustomUserEditForm(UserChangeForm):
 
         return user
 
-
-
 class RolForm(forms.ModelForm):
 
     class Meta:
@@ -205,7 +201,6 @@ class RolForm(forms.ModelForm):
         # Agrega las validaciones necesarias para el campo 'nombre_rol' si es necesario
         return nombre_rol
 
-
 class SucursalForm(forms.ModelForm):
     class Meta:
         model = Sucursal
@@ -222,7 +217,6 @@ class SucursalForm(forms.ModelForm):
         self.fields['sucursal_ubicacion'].label = _('Dirección de la sucursal')
         self.fields['sucursal_cod_gerente'].label = _('Gerente encargado')
         self.fields['sucursal_cod_gerente'].empty_label = None
-
 
 class CrearProductoForm(forms.ModelForm):
     categoria = forms.ModelChoiceField(queryset=CategoriaInventario.objects.all(), empty_label=None)
@@ -262,8 +256,6 @@ class CrearProductoForm(forms.ModelForm):
             inventario_por_sucursal.save()
         return producto
     
-
-
 class OrdenTrabajoVehiculoForm(forms.ModelForm):
     vehrep_placa = forms.CharField(max_length=20)
     vehrep_marca = forms.CharField(max_length=30)
@@ -274,14 +266,13 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
 
     class Meta:
         model = OrdenTrabajo
-        fields = ['orden_encargado', 'orden_dueño', 'orden_observacion', 'orden_estado']
+        fields = ['orden_encargado', 'orden_dueño', 'orden_observacion']
 
     def __init__(self, *args, **kwargs):
         super(OrdenTrabajoVehiculoForm, self).__init__(*args, **kwargs)
         self.fields['orden_encargado'].label = _('Encargado')
         self.fields['orden_dueño'].label = _('Dueño')
         self.fields['orden_observacion'].label = _('Observaciones')
-        self.fields['orden_estado'].label = _('Estado')
         self.fields['vehrep_placa'].label = _('Placa del vehículo')
         self.fields['vehrep_marca'].label = _('Marca del vehículo')
         self.fields['vehrep_color'].label = _('Color del vehículo')
@@ -304,3 +295,29 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
             orden_trabajo.save()
         return orden_trabajo
 
+class CotizacionReparacionForm(forms.ModelForm):
+
+    cotrep_orden_trabajo = forms.ModelChoiceField(queryset=OrdenTrabajo.objects.filter(orden_estado = False ), empty_label=None)
+
+    
+    class Meta:
+        model = CotizacionReparacion
+        fields = ['cotrep_orden_trabajo','cotrep_precioreparacion','cotrep_observaciones']
+        
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['cotrep_orden_trabajo'].widget = forms.Select(attrs={'class': 'select form-select'}, choices=self.get_choices() )
+        self.fields['cotrep_orden_trabajo'].label = _('Orden de trabajo')
+        self.fields['cotrep_precioreparacion'].label = _('Precio Cotizado de la Reparación')
+        self.fields['cotrep_observaciones'].label = _('Observaciones')
+
+    def get_choices(self):
+        # Obtén las opciones para el widget con el formato deseado
+        choices = []
+        for orden in OrdenTrabajo.objects.filter(orden_estado = False ):
+            vehiculo = orden.orden_vehiculoreparacion
+            label = f'{orden.orden_cod} | {vehiculo.vehrep_placa} | {vehiculo.vehrep_dueño.username} | {orden.orden_fecha_creacion.strftime("%d/%m/%Y")}'
+            choices.append((orden.pk, label))
+        return choices

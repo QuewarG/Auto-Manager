@@ -304,18 +304,13 @@ def signup(request):
                                              })
         
 def inventory(request):
-    inventario = Inventario.objects.all()
 
-    # Obtener datos adicionales de InventarioPorSucursal para cada elemento de Inventario
-    for producto in inventario:
-        producto.sucursal = None
-        producto.existencias = None
+    sucursal_usuario = PersonaXCargo.objects.get(perxcargo_persona_cod=request.user)
 
-        # Suponiendo una relación de ForeignKey entre Inventario e InventarioPorSucursal
-        relaciones = InventarioPorSucursal.objects.filter(invsus_codigo_inventario=producto)
-        if relaciones.exists():
-            producto.sucursal = relaciones.first().invsus_sucursal
-            producto.existencias = relaciones.first().invsus_existencias
+    if request.user.cod_rol.rol_cod == 1:
+        inventario = InventarioPorSucursal.objects.all()
+    else:
+        inventario = InventarioPorSucursal.objects.filter(invsus_sucursal = sucursal_usuario.perxcargo_sucursal_cod)
 
     messages.get_messages(request)
     return render(request, 'inventory.html', {'inventario': inventario})
@@ -335,6 +330,24 @@ def orders(request):
     
     messages.get_messages(request)
     return render(request, 'orders.html', {'orders': orders})
+
+def cerrar_orden_trabajo(request):
+
+    orden = OrdenTrabajo.objects.get(orden_cod = request.POST['orden_closeID'])
+
+    # Cambiar el estado de orden_estado
+    orden.orden_estado = not orden.orden_estado  # Cambia el estado a su opuesto
+    orden.save()
+
+    # Cambiar el estado de vehrep_enReparacion
+    vehiculo = orden.orden_vehiculoreparacion
+    vehiculo.vehrep_enReparacion = not vehiculo.vehrep_enReparacion  # Cambia el estado a su opuesto
+    vehiculo.save()
+
+    msg = _('Orden de trabajo finalizada.')
+    messages.success(request, msg)
+
+    return redirect('orders') 
 
 def cotizaciones(request):
     return render(request, 'cotizaciones.html')
@@ -449,19 +462,6 @@ def create_VehiculoVenta(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def create_VehiculoReparacion(request):
-    new_vehiculoreparacion = VehiculoReparacion(
-                                                    vehrep_placa = request.POST['vehrep_placa'],
-                                                    vehrep_marca = request.POST['vehrep_marca'],
-                                                    vehrep_color = request.POST['vehrep_color'],
-                                                    vehrep_enReparacion = request.POST['vehrep_reparado'],
-                                                    vehrep_dueño = request.POST['vehrep_dueño'],
-                                                    vehrep_vigente = True
-                                                )
-    new_vehiculoreparacion.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
 def create_order(request):
     if request.method == 'POST':
         form = OrdenTrabajoVehiculoForm(request.POST)
@@ -504,29 +504,31 @@ def create_product(request):
     
     return render(request, 'new_product.html', {'form': form})
 
-def create_InventarioPorSucursal(request):
-    new_inventarioporsucursal = InventarioPorSucursal(
-                                                        invssus_codigo_inventario = request.POST['invssus_inventario'],
-                                                        invsus_sucursal = request.POST['invsus_sucursal'],
-                                                        invss_existencias = request.POST['invss_existencias'],
-                                                        inv_vigente = True
-                                                    )
-    new_inventarioporsucursal.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
 def create_CotizacionReparacion(request):
-    new_cotizacionreparacion = CotizacionReparacion(
-                                                        cotrep_orden_trabajo = request.POST['cotrep_ordentrabajo'],
-                                                        cotrep_precioreparacion = request.POST['precioreparacion'],
-                                                        cotrep_observaciones = request.POST['observaciones'],
-                                                        cotrep_fecharealizada = request.POST['cotrep_fecharealizada'],
-                                                        cotrep_estado = request.POST['cotrep_estado'],
-                                                        cotrep_vigente = True
-                                                    )
-    new_cotizacionreparacion.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+    #AÑADIR EL RESTO DE LOGICO DEL PROCESAMIENTO DEL FORMULARIO
+    if request.method == 'GET':
+        messages.get_messages(request)
+        return render(request, 'cotizar_reparacion.html',{
+                                                'form': CotizacionReparacionForm
+                                             })
+    else:
+        # form = CotizacionReparacionForm(request.POST)
+        
+        # del form.fields['rol_cod']
+        # if form.is_valid():
+        #     new_rol = Rol(
+        #                     rol_nombre = form.cleaned_data['rol_nombre'],
+        #                     rol_descripcion = form.cleaned_data['rol_descripcion']
+        #     )
+        #     new_rol.save()
+        #     msg =_('Rol creado con éxito.')
+        #     messages.success(request, msg)
+        return redirect('cotizaciones')
+        # else:
+        #     print(form.errors)
+        #     return render(request, 'new_rol.html',{
+        #                                         'form': RolForm
+        #                                      })
 
 def create_RepuestoVenta(request):
     new_repuestoventa = RepuestoVenta(

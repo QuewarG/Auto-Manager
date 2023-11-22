@@ -32,12 +32,12 @@
             <!--for-->
             {% for producto in inventario %}
             <tr>
-                <td>{{ producto.inv_nombre }}</td>
-                <td>{{ producto.inv_categoria }}</td>
-                <td>{{ producto.inv_descripcion }}</td>
-                <td>{{ producto.inv_precioneto }}</td>
-                <td>{{ producto.sucursal}}</td>
-                <td>{{ producto.existencias }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_nombre }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_categoria }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_descripcion }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_precioneto }}</td>
+                <td>{{ producto.invsus_sucursal}}</td>
+                <td>{{ producto.invsus_existencias }}</td>
             
                 <!--Boton de edicion-->
                 <form method="" action="">

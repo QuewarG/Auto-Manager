@@ -57,7 +57,14 @@
                     {% endif %}
                 </td>
 
-                <!-- Boton de edición -->
+                <form method="post" action="{% url 'cerrar_orden_trabajo' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="orden_closeID" value="{{ order.orden_cod }}">
+                    <td>
+                        <button type="submit" class="btn btn-outline-info">{% trans "Cerrar Orden" %}</button>
+                    </td>
+                </form>
+
                 <form method="get" action="">
                     {% csrf_token %}
                     <input type="hidden" name="orden_editID" value="{{ order.orden_cod }}">

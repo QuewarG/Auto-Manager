@@ -97,6 +97,7 @@ class OrdenTrabajo(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
 class Inventario(models.Model):
     inv_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     inv_nombre = models.CharField(max_length=30)
@@ -121,8 +122,7 @@ class CotizacionReparacion(models.Model):
     cotrep_orden_trabajo = models.ForeignKey('OrdenTrabajo', on_delete=models.CASCADE)  # Clave foránea a OrdenTrabajo
     cotrep_precioreparacion = models.DecimalField(max_digits=10, decimal_places=2)
     cotrep_observaciones = models.TextField()
-    cotrep_fecharealizada = models.DateTimeField()
-    cotrep_estado = models.BooleanField(default=True)
+    cotrep_estado = models.BooleanField(default=False)
     cotrep_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
@@ -140,7 +140,7 @@ class CotizacionRepuestos(models.Model):
     cotrepues_repuestocod = models.ForeignKey('RepuestoVenta', on_delete=models.CASCADE)  # Clave foránea a RepuestoVenta
     cotrepues_preciotemporal = models.IntegerField()
     cotrepues_fecharealizada = models.DateTimeField()
-    cotrepues_estado = models.BooleanField(default=True)
+    cotrepues_estado = models.BooleanField(default=False)
     cotrepues_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
@@ -149,7 +149,7 @@ class CotizacionVehiculo(models.Model):
     cotven_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
     cotven_cod_vehiculo_nuevo = models.ForeignKey('VehiculoVenta', on_delete=models.CASCADE)  # Clave foránea a VehiculoVenta
     cotven_fecharealizada = models.DateTimeField()
-    cotven_estado = models.BooleanField(default=True)
+    cotven_estado = models.BooleanField(default=False)
     cotven_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto

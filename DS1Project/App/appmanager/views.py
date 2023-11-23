@@ -350,7 +350,32 @@ def cerrar_orden_trabajo(request):
     return redirect('orders') 
 
 def cotizaciones(request):
-    return render(request, 'cotizaciones.html')
+    if request.user.cod_rol.rol_cod == 5:
+        cotizaciones = CotizacionReparacion.objects.filter(cotrep_orden_trabajo__orden_vehiculoreparacion__vehrep_dueño=request.user)
+    else:
+        cotizaciones = CotizacionReparacion.objects.all()
+
+    return render(request, 'cotizaciones.html', {'cotizaciones': cotizaciones})
+
+@login_required
+def cambiar_estado_cotizacion(request):
+
+    cotizacion = CotizacionReparacion.objects.get(cotrep_cod = request.POST['acept_ID'])
+
+    if request.user == cotizacion.cotrep_orden_trabajo.orden_vehiculoreparacion.vehrep_dueño:
+        # Cambia el estado de la cotización
+        cotizacion.cotrep_estado = not cotizacion.cotrep_estado  # Cambia el estado al contrario del actual
+        cotizacion.save()
+
+        # Mensaje de éxito
+        msg = _('La cotización ha sido aprobada.')
+        messages.success(request, msg)
+        return redirect('cotizaciones')  
+
+    else:
+        msg = _('Algo falló al aprobar la cotización')
+        messages.error(request, msg)
+        return redirect('cotizaciones')
 
 def sales(request):
     return render(request, 'sales.html')
@@ -512,23 +537,20 @@ def create_CotizacionReparacion(request):
                                                 'form': CotizacionReparacionForm
                                              })
     else:
-        # form = CotizacionReparacionForm(request.POST)
+        form = CotizacionReparacionForm(request.POST)
         
-        # del form.fields['rol_cod']
-        # if form.is_valid():
-        #     new_rol = Rol(
-        #                     rol_nombre = form.cleaned_data['rol_nombre'],
-        #                     rol_descripcion = form.cleaned_data['rol_descripcion']
-        #     )
-        #     new_rol.save()
-        #     msg =_('Rol creado con éxito.')
-        #     messages.success(request, msg)
-        return redirect('cotizaciones')
-        # else:
-        #     print(form.errors)
-        #     return render(request, 'new_rol.html',{
-        #                                         'form': RolForm
-        #                                      })
+        # del form.fields['rol_cod'] #elimina un campo del formulario
+
+        if form.is_valid():
+            form.save()
+            msg =_('Cotización creada con éxito.')
+            messages.success(request, msg)
+            return redirect('cotizaciones')
+        else:
+            print(form.errors)
+            return render(request, 'cotizar_reparacion.html',{
+                                                'form': CotizacionReparacionForm
+                                             })
 
 def create_RepuestoVenta(request):
     new_repuestoventa = RepuestoVenta(
@@ -663,3 +685,21 @@ def data_adminpage(request):
     products_count = Inventario.objects.count()
 
     return render(request, 'adminpage.html', {'users_count': users_count, 'products_count': products_count})
+
+def consulta_reparacion_cliente(request):
+    # Suponiendo que tienes un usuario autenticado
+    usuario_actual = request.user
+
+    # Obtener el vehículo más reciente asociado al usuario actual
+    vehiculo_usuario = VehiculoReparacion.objects.filter(vehrep_dueño=usuario_actual).order_by('-create_at').first()
+
+    # Obtener la orden de trabajo asociada al vehículo
+    orden_trabajo = vehiculo_usuario.ordentrabajo_set.first()
+
+    # Verificar si hay una cotización asociada a la orden de trabajo
+    cotizacion = None
+    if orden_trabajo:
+        cotizacion = orden_trabajo.cotizacionreparacion_set.first()
+
+    # Renderizar la plantilla con la información
+    return render(request, 'consulta_reparacion.html', {'usuario': usuario_actual, 'vehiculo': vehiculo_usuario, 'orden_trabajo': orden_trabajo, 'cotizacion': cotizacion})

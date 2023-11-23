@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+{% comment %} <script src="{% static '/js/editUser.js' %}"></script>
+<script src="{% static '/js/userfunctions.js' %}"></script> {% endcomment %}
+
+{% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+<div>
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
+</div>
+
+<div class="card bg-primary text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fas fa-user"></i>
+            <span style="margin-left: 15px;">{% trans "ESTADO DE LA REPARACIÓN DEL VEHÍCULO" %}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4">
+    {{usuario.username}}
+    {{vehiculo.vehrep_placa}}
+    {{vehiculo.vehrep_marca}}
+    {% if vehiculo.vehrep_enReparacion %}
+        {% trans "Su vehículo se encuentra reparado. Acercate a nuestras oficinas para retirarlo." %}
+        <img src="{% static 'imgs/car_done.jpg' %}" alt="car_reparation" class="img-fluid">
+    {% else %}
+        {% trans "Su vehículo aún se encuentra en nuestros talleres siendo reparado." %}
+        <img src="{% static 'imgs/car_reparation.jpg' %}" alt="car_reparation" class="img-fluid">
+    {% endif %}
+    {{orden_trabajo.orden_encargado.username }}
+    {{cotizacion.cotrep_precioreparacion}}
+    {{cotizacion.cotrep_observaciones}}
+    
+</div>
+
+{% endblock %}
+
+
+<!--<div class="row">
+    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-6">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>-->

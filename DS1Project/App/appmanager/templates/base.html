@@ -146,6 +146,21 @@
       </a>
     </li>
 
+    {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+    <li>
+      <a href={% url 'cotizaciones' %}>
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Cotizaciones" %}</span>
+      </a>
+    </li>
+
+    <li>
+      <a href={% url 'consulta_reparacion_cliente' %}>
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Consultar estado del vehiculo" %}</span>
+      </a>
+    </li>
+
     {% else %}
     <!-- Código para la opción por defecto o manejo de errores -->
     <p>{% trans "SESION NO VALIDA" %}</p>
@@ -220,8 +235,12 @@
         <img src="{% static 'imgs/jefe_taller.png' %}" alt="Admin Logo" class="logo">
         <span class="badge badge-primary">{{ user.username }} </span>
 
+        {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+        <img src="{% static 'imgs/jefe_taller.png' %}" alt="Admin Logo" class="logo">
+        <span class="badge badge-primary">{{ user.username }} </span>
+
         {% endif %}
-        {% endif %}
+      {% endif %}
 
       </div>
       

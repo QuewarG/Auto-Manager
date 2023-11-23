@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 16:27-0500\n"
+"POT-Creation-Date: 2023-11-23 11:34-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,19 +142,20 @@ msgstr "Ramo"
 msgid "Existencias"
 msgstr "Acções"
 
-#: .\appmanager\forms.py:273 .\appmanager\templates\orders.html:37
+#: .\appmanager\forms.py:273 .\appmanager\templates\orders.html:36
 msgid "Encargado"
 msgstr "Responsável"
 
-#: .\appmanager\forms.py:274 .\appmanager\templates\orders.html:38
+#: .\appmanager\forms.py:274
 msgid "Dueño"
 msgstr "Proprietário"
 
 #: .\appmanager\forms.py:275 .\appmanager\forms.py:314
+#: .\appmanager\templates\cotizaciones.html:36
 msgid "Observaciones"
 msgstr "Observações"
 
-#: .\appmanager\forms.py:276
+#: .\appmanager\forms.py:276 .\appmanager\templates\orders.html:38
 msgid "Placa del vehículo"
 msgstr "Matrícula do veículo"
 
@@ -206,7 +207,7 @@ msgid "Cantidad de sucursales: "
 msgstr "Número de sucursais: "
 
 #: .\appmanager\templates\base.html:50 .\appmanager\templates\base.html:102
-#: .\appmanager\templates\base.html:138
+#: .\appmanager\templates\base.html:138 .\appmanager\templates\base.html:153
 #: .\appmanager\templates\cotizaciones.html:24
 msgid "Cotizaciones"
 msgstr "Citações"
@@ -234,43 +235,69 @@ msgstr "Funções"
 msgid "Reportes"
 msgstr "Relatórios"
 
-#: .\appmanager\templates\base.html:151
+#: .\appmanager\templates\base.html:160
+msgid "Consultar estado del vehiculo"
+msgstr "Verificar o estado do veículo"
+
+#: .\appmanager\templates\base.html:166
 msgid "SESION NO VALIDA"
 msgstr "SESSÃO NÃO VÁLIDA"
 
-#: .\appmanager\templates\base.html:158
+#: .\appmanager\templates\base.html:173
 msgid "Salir"
 msgstr "Sair"
 
-#: .\appmanager\templates\base.html:173
+#: .\appmanager\templates\base.html:188
 msgid "Admin"
 msgstr "Administrador"
 
-#: .\appmanager\templates\base.html:176
+#: .\appmanager\templates\base.html:191
 msgid "Vendedor"
 msgstr "Vendedor"
 
-#: .\appmanager\templates\base.html:179
+#: .\appmanager\templates\base.html:194
 msgid "Jefe de Taller"
 msgstr "Diretor de oficina"
 
-#: .\appmanager\templates\base.html:189 .\appmanager\templates\home.html:27
+#: .\appmanager\templates\base.html:204 .\appmanager\templates\home.html:27
 msgid "Idioma: "
 msgstr "Língua: "
 
-#: .\appmanager\templates\cotizaciones.html:34
-msgid "Campo1"
+#: .\appmanager\templates\consulta_reparacion.html:38
+msgid "ESTADO DE LA REPARACIÓN DEL VEHÍCULO"
+msgstr "ESTADO DE CONSERVAÇÃO DO VEÍCULO"
+
+#: .\appmanager\templates\consulta_reparacion.html:48
+msgid ""
+"Su vehículo se encuentra reparado. Acercate a nuestras oficinas para "
+"retirarlo."
 msgstr ""
+"O seu veículo foi reparado. Dirija-se aos nossos escritórios para o levantar."
+
+#: .\appmanager\templates\consulta_reparacion.html:51
+msgid "Su vehículo aún se encuentra en nuestros talleres siendo reparado."
+msgstr "O seu veículo ainda se encontra nas nossas oficinas para ser reparado."
+
+#: .\appmanager\templates\cotizaciones.html:34
+#: .\appmanager\templates\orders.html:35
+msgid "Código"
+msgstr "Código"
 
 #: .\appmanager\templates\cotizaciones.html:35
-msgid "Campo2"
-msgstr ""
-
-#: .\appmanager\templates\cotizaciones.html:36
-msgid "Campo3"
-msgstr ""
+#: .\appmanager\templates\inventory.html:23
+msgid "Precio"
+msgstr "Preço"
 
 #: .\appmanager\templates\cotizaciones.html:37
+#: .\appmanager\templates\orders.html:40
+msgid "Estado"
+msgstr "Estado"
+
+#: .\appmanager\templates\cotizaciones.html:38
+msgid "Fecha de Expedición"
+msgstr "Data de emissão"
+
+#: .\appmanager\templates\cotizaciones.html:39
 #: .\appmanager\templates\inventory.html:26
 #: .\appmanager\templates\orders.html:41 .\appmanager\templates\reports.html:23
 #: .\appmanager\templates\roles.html:48 .\appmanager\templates\sales.html:26
@@ -279,8 +306,20 @@ msgstr ""
 msgid "Opciones"
 msgstr "Opções"
 
-#: .\appmanager\templates\cotizaciones.html:47
-#: .\appmanager\templates\cotizaciones.html:54
+#: .\appmanager\templates\cotizaciones.html:51
+msgid "Aprobada"
+msgstr "Aprovada"
+
+#: .\appmanager\templates\cotizaciones.html:53
+msgid "Pendiente"
+msgstr "Pendente"
+
+#: .\appmanager\templates\cotizaciones.html:62
+msgid "Aceptar cotización"
+msgstr "Aceitar a cotação"
+
+#: .\appmanager\templates\cotizaciones.html:65
+#: .\appmanager\templates\cotizaciones.html:72
 #: .\appmanager\templates\inventory.html:46
 #: .\appmanager\templates\orders.html:72 .\appmanager\templates\reports.html:39
 #: .\appmanager\templates\roles.html:61 .\appmanager\templates\sales.html:44
@@ -289,8 +328,8 @@ msgstr "Opções"
 msgid "Editar"
 msgstr "Edição"
 
-#: .\appmanager\templates\cotizaciones.html:48
-#: .\appmanager\templates\cotizaciones.html:61
+#: .\appmanager\templates\cotizaciones.html:66
+#: .\appmanager\templates\cotizaciones.html:79
 #: .\appmanager\templates\inventory.html:53
 #: .\appmanager\templates\orders.html:81 .\appmanager\templates\orders.html:82
 #: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:68
@@ -299,10 +338,6 @@ msgstr "Edição"
 #: .\appmanager\templates\users.html:91
 msgid "Eliminar"
 msgstr "Eliminar"
-
-#: .\appmanager\templates\cotizaciones.html:68
-msgid "Añadir Cotización"
-msgstr "Adicionar orçamento"
 
 #: .\appmanager\templates\cotizar_reparacion.html:31
 msgid "Cotizar Reparación"
@@ -354,10 +389,6 @@ msgstr "A SUA VIAGEM PERFEITA COMEÇA AQUI"
 msgid "Iniciar Sesión"
 msgstr "Iniciar sessão"
 
-#: .\appmanager\templates\inventory.html:23
-msgid "Precio"
-msgstr "Preço"
-
 #: .\appmanager\templates\inventory.html:64
 msgid "Añadir Producto"
 msgstr "Adicionar produto"
@@ -382,21 +413,13 @@ msgstr "Criar nova sucursal"
 msgid "Órdenes de Trabajo"
 msgstr "Ordens de trabalho"
 
-#: .\appmanager\templates\orders.html:35
-msgid "Código"
-msgstr "Código"
-
-#: .\appmanager\templates\orders.html:36
-msgid "Vehículo"
-msgstr "Veículo"
+#: .\appmanager\templates\orders.html:37
+msgid "Dueño del vehículo"
+msgstr "Proprietário do veículo"
 
 #: .\appmanager\templates\orders.html:39
 msgid "Observación"
 msgstr "Observação"
-
-#: .\appmanager\templates\orders.html:40
-msgid "Estado"
-msgstr "Estado"
 
 #: .\appmanager\templates\orders.html:54
 msgid "Reparando"
@@ -550,21 +573,36 @@ msgstr "A palavra-passe não corresponde."
 msgid "Orden de trabajo finalizada."
 msgstr "Ordem de trabalho concluída."
 
-#: .\appmanager\views.py:379
+#: .\appmanager\views.py:371
+msgid "La cotización ha sido aprobada."
+msgstr "A cotação foi aprovada."
+
+#: .\appmanager\views.py:376
+msgid "Algo falló al aprobar la cotización"
+msgstr "Algo correu mal na aprovação da cotação"
+
+#: .\appmanager\views.py:404
 msgid "Sucursal creada con éxito."
 msgstr "Filial criada com sucesso."
 
-#: .\appmanager\views.py:417
+#: .\appmanager\views.py:442
 msgid "Sucursal actualizada."
 msgstr "Filial actualizada."
 
-#: .\appmanager\views.py:433
+#: .\appmanager\views.py:458
 msgid "Sucursal eliminada con éxito."
 msgstr "Ramo removido com êxito."
 
-#: .\appmanager\views.py:613
+#: .\appmanager\views.py:546
+msgid "Cotización creada con éxito."
+msgstr "Citação criada com sucesso."
+
+#: .\appmanager\views.py:635
 msgid "Producto eliminado con éxito."
 msgstr "Produto removido com sucesso."
+
+#~ msgid "Vehículo"
+#~ msgstr "Veículo"
 
 #~ msgid "Ocurrió un error iniciando sesión. Intente nuevamente..."
 #~ msgstr "Ocorreu um erro ao iniciar a sessão. Por favor, tente novamente..."

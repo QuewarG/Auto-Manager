@@ -33,9 +33,9 @@
         <thead>
             <tr>
                 <th>{% trans "Código" %}</th>
-                <th>{% trans "Vehículo" %}</th>
                 <th>{% trans "Encargado" %}</th>
-                <th>{% trans "Dueño" %}</th>
+                <th>{% trans "Dueño del vehículo" %}</th>
+                <th>{% trans "Placa del vehículo" %}</th>
                 <th>{% trans "Observación" %}</th>
                 <th>{% trans "Estado" %}</th>
                 <th colspan="2">{% trans "Opciones" %}</th>
@@ -45,9 +45,9 @@
             {% for order in orders %}
             <tr>
                 <td>{{ order.orden_cod }}</td>
-                <td>{{ order.orden_vehiculoreparacion }}</td>
                 <td>{{ order.orden_encargado }}</td>
                 <td>{{ order.orden_dueño }}</td>
+                <td>{{ order.orden_vehiculoreparacion }}</td>
                 <td>{{ order.orden_observacion }}</td>
                 <td>
                     {% if order.orden_vehiculoreparacion.vehrep_enReparacion %}

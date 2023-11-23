@@ -91,11 +91,14 @@ class OrdenTrabajo(models.Model):
     orden_vehiculoreparacion = models.ForeignKey('VehiculoReparacion', on_delete=models.CASCADE)  # Clave foránea a VehiculoReparacion
     orden_encargado = models.ForeignKey('Usuario', on_delete=models.CASCADE)  # Clave foránea a PersonaXCargo
     orden_observacion = models.TextField()
-    orden_estado = models.BooleanField(default=True)
+    orden_estado = models.BooleanField(default=False)
     orden_fecha_creacion = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     orden_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
+    class Meta:
+        ordering = ['-orden_fecha_creacion']
 
 
 class Inventario(models.Model):

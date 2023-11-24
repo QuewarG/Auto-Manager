@@ -150,8 +150,7 @@ class CotizacionRepuestos(models.Model):
 
 class CotizacionVehiculo(models.Model):
     cotven_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
-    cotven_cod_vehiculo_nuevo = models.ForeignKey('VehiculoVenta', on_delete=models.CASCADE)  # Clave foránea a VehiculoVenta
-    cotven_fecharealizada = models.DateTimeField()
+    cotven_cod_vehiculo_nuevo = models.ForeignKey('VehiculoVenta', on_delete=models.CASCADE)
     cotven_estado = models.BooleanField(default=False)
     cotven_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación

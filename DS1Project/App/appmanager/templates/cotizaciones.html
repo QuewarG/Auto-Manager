@@ -61,22 +61,20 @@
                         <td> <button type="submit" class="btn btn-outline-info">{% trans "Aceptar cotización" %}</button></td>
                     </form>
                 {% else %}
-                    <td><button class="btn btn-outline-primary"> {% trans "Editar" %}</button></td>
-                    <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
-                {% endif %}
-                <!--Boton de edicion
-                <form method="get" action="url">
+                    {% comment %} Boton de edicion {% endcomment %}
+                <form method="get" action = "{% url 'edit_cotizacion_reparacion' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="editID" value="{{cotizacion.id}}">
+                    <input type="hidden" name="edit_cotID" value="{{cotizacion.cotrep_cod}}">
                     <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
-                </form>-->
+                </form>
 
-                <!--Boton de borrado
-                <form method="post" action="url">
+                {% comment %} Boton de borrado {% endcomment %}
+                <form method="post" action="{% url 'delete_CotizacionReparacion' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="userID" value="{{cotizacion.id}}">
+                    <input type="hidden" name="delete_cotID" value="{{cotizacion.cotrep_cod}}">
                     <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
-                </form>-->
+                </form>
+                {% endif %}
 
             </tr>
             {% endfor %}

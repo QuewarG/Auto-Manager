@@ -16,8 +16,8 @@
         {% endif %}
     </div>
     <script>
-        window.setTimeout(function(){
-            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(1000, function () {
                 $(this).remove();
             });
         }, 1500);
@@ -43,7 +43,7 @@
                 <th>{% trans "Precio" %}</th>
                 <th>{% trans "Sucursal" %}</th>
                 <th>{% trans "Existencias" %}</th>
-                <th colspan="2">{% trans "Opciones" %}</th>
+                <th colspan="3">{% trans "Opciones" %}</th>
 
             </tr>
         </thead>
@@ -58,7 +58,7 @@
                 <td>{{ producto.invsus_codigo_inventario.inv_precioneto }}</td>
                 <td>{{ producto.invsus_sucursal}}</td>
                 <td>{{ producto.invsus_existencias }}</td>
-            
+
                 <!--Boton de edicion-->
                 <form method="" action="">
                     {% csrf_token %}
@@ -70,8 +70,36 @@
                 <form method="post" action="{% url 'delete_product' %}">
                     {% csrf_token %}
                     <input type="hidden" name="delete_productID" value={{ producto.inv_cod }}>
-                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}  </button></td>
+                    <td> <button type="submit" class="btn btn-outline-danger"> {% trans "Eliminar" %} </button></td>
                 </form>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h3>holitaa</h3>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
             <!--endfor-->
@@ -80,7 +108,7 @@
     </table>
 
     <a href="{% url 'new_product' %}">
-        <button type="button" class="btn btn-secondary" onclick="" style="margin-left: 5px;"> 
+        <button type="button" class="btn btn-secondary" onclick="" style="margin-left: 5px;">
             <i class="fa-solid fa-cart-flatbed"></i> {% trans "Añadir Producto" %}
         </button>
     </a>

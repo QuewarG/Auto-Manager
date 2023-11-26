@@ -20,7 +20,7 @@ body {
     bottom: 0;
     width: 270px;
     height: 100vh;
-    padding: 0 1.7rem;
+    padding: 0.5rem 1.7rem;
     color: #fff;
     overflow: hidden;
     /*transition: all 0.5s linear;*/
@@ -43,6 +43,17 @@ body {
 .logo {
     height: 80px;
     padding: 16px;
+    margin-bottom: 22px; /* separación entre logo y links */
+}
+
+.logo--automanager {
+    margin-left: 35px;
+    margin-top: -10px;
+    width: 80px;
+    height: 80px;
+    /*padding: 16px;*/
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 .menu {
@@ -53,7 +64,7 @@ body {
 }
 
 .menu li {
-    padding: 0.7rem 1.2rem;
+    padding: 0.52rem 1.2rem;
     margin: 9px 0;
     border-radius: 8px;
     transition: all 0.5s ease-in-out;
@@ -112,6 +123,8 @@ body {
     cursor: pointer;
     border-radius: 50%;
 }
+
+
 
 .header--wrapper {
     display: flex;
@@ -212,8 +225,6 @@ section article h2 {
     position: relative;
     overflow: visible;
     }
-  
-  
   
     .logout, .settings {
     position: static;

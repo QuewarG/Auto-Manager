@@ -309,7 +309,8 @@ class CotizacionReparacionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        
+        self.fields['cotrep_cod'] = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}))
         self.fields['cotrep_orden_trabajo'].widget = forms.Select(attrs={'class': 'select form-select'}, choices=self.get_choices() )
         self.fields['cotrep_orden_trabajo'].label = _('Orden de trabajo')
         self.fields['cotrep_precioreparacion'].label = _('Precio Cotizado de la Reparación')
@@ -322,4 +323,4 @@ class CotizacionReparacionForm(forms.ModelForm):
             vehiculo = orden.orden_vehiculoreparacion
             label = f'{orden.orden_cod} | {vehiculo.vehrep_placa} | {vehiculo.vehrep_dueño.username} | {orden.orden_fecha_creacion.strftime("%d/%m/%Y")}'
             choices.append((orden.pk, label))
-        return choices
+        return choices    

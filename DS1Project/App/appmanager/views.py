@@ -538,8 +538,7 @@ def create_CotizacionReparacion(request):
                                              })
     else:
         form = CotizacionReparacionForm(request.POST)
-        
-        # del form.fields['rol_cod'] #elimina un campo del formulario
+        form.fields.pop('cotrep_cod', None)
 
         if form.is_valid():
             form.save()
@@ -551,6 +550,52 @@ def create_CotizacionReparacion(request):
             return render(request, 'cotizar_reparacion.html',{
                                                 'form': CotizacionReparacionForm
                                              })
+        
+def edit_cotizacion_reparacion(request):
+    if request.method == 'GET':
+        cotrep = CotizacionReparacion.objects.get( cotrep_cod = request.GET['edit_cotID'])
+
+        valores_por_defecto = {
+            'cotrep_cod': cotrep.cotrep_cod,
+            'cotrep_orden_trabajo': cotrep.cotrep_orden_trabajo,
+            'cotrep_precioreparacion': cotrep.cotrep_precioreparacion,
+            'cotrep_observaciones': cotrep.cotrep_observaciones,
+        }
+
+        editform = CotizacionReparacionForm(initial=valores_por_defecto)
+
+        return render(request, 'edit_cotizacion_reparacion.html',{
+                                                'form': editform
+                                             })
+    else:
+        print (request.POST)
+        cotrep = CotizacionReparacion.objects.get( cotrep_cod = request.POST['cotrep_cod'])
+        form = CotizacionReparacionForm(request.POST, instance=cotrep)
+        if form.is_valid():
+            # Guarda los cambios en el usuario
+            form.save()
+            msg = _('Cotización de reparación actualizada.')
+            messages.success(request, msg)
+            return redirect( 'cotizaciones' )
+        else:
+            errors = form.errors
+            for field, error_list in errors.items():
+                for error in error_list:
+                    messages.warning(request, f'{field}: {error}')
+                
+            return render(request, 'edit_cotizacion_reparacion.html', {'form': form, 'cotizacion': cotrep})
+
+def delete_CotizacionReparacion(request):
+    if request.method == 'GET':
+        cotizaciones(request)
+    else:
+        cotrep = CotizacionReparacion.objects.get( cotrep_cod = request.POST['delete_cotID'])
+        cotrep.delete()
+        msg = _('La cotización de reparación fue eliminada con éxito.')
+        messages.success(request, msg)
+
+    return redirect( 'cotizaciones' ) 
+
 
 def create_RepuestoVenta(request):
     new_repuestoventa = RepuestoVenta(
@@ -641,12 +686,6 @@ def delete_product(request):
 def delete_InventarioPorSucursal(request, inventarioSurcursal_id):
     inventarioporsucursal = InventarioPorSucursal.objects.get( invsus_cod = inventarioSurcursal_id)
     inventarioporsucursal.delete()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
-
-def delete_CotizacionReparacion(request, cotizacionRep_id):
-    cotizacionreparacion = CotizacionReparacion.objects.get( cotrep_cod = cotizacionRep_id)
-    cotizacionreparacion.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 

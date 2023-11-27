@@ -324,3 +324,62 @@ class CotizacionReparacionForm(forms.ModelForm):
             label = f'{orden.orden_cod} | {vehiculo.vehrep_placa} | {vehiculo.vehrep_dueño.username} | {orden.orden_fecha_creacion.strftime("%d/%m/%Y")}'
             choices.append((orden.pk, label))
         return choices    
+    
+class VehiculoVentaForm(forms.ModelForm):
+    class Meta:
+        model = VehiculoVenta
+        fields = ['vehvnt_placa', 'vehvnt_marca', 'vehvnt_modelo' , 'vehvnt_color', 'vehvnt_anio', 'vehvnt_cod_sucursal', 'vehvnt_precioneto', 'vehvnt_disponible', 'vehvnt_vigente']
+        labels = {
+            'vehvnt_placa': 'Placa del Vehículo',
+            'vehvnt_marca': 'Marca del Vehículo',
+            'vehvnt_modelo': 'Modelo del Vehículo',
+            'vehvnt_color': 'Color del Vehículo',
+            'vehvnt_anio': 'Año del Vehículo',
+            'vehvnt_cod_sucursal': 'Sucursal del Vehículo',
+            'vehvnt_precioneto': 'Precio Neto del Vehículo',
+            'vehvnt_disponible': 'Disponibilidad del Vehículo',
+            'vehvnt_vigente': 'Vigencia del Vehículo',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['vehvnt_cod_sucursal'].queryset = Sucursal.objects.filter(sucursal_vigente=True)
+
+
+
+class EditarProductoForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(queryset=CategoriaInventario.objects.all(), empty_label=None)
+    sucursal = forms.ModelChoiceField(queryset=Sucursal.objects.all(), empty_label=None, to_field_name='sucursal_nombre')
+    existencias = forms.IntegerField()
+
+    class Meta:
+        model = Inventario
+        fields = ['inv_nombre', 'inv_descripcion', 'inv_precioneto', 'categoria']
+       
+    def __init__(self, *args, **kwargs):
+        super(EditarProductoForm, self).__init__(*args, **kwargs)
+        self.fields['categoria'].label = _('Categoría')
+        self.fields['inv_nombre'].label = _('Nombre')
+        self.fields['inv_descripcion'].label = _('Descripción')
+        self.fields['inv_precioneto'].label = _('Precio Neto')
+        self.fields['sucursal'].label = _('Sucursal')
+        self.fields['existencias'].label = _('Existencias')
+
+    def save(self, commit=True):
+        producto = super().save(commit=False)
+        if commit:
+            producto.save()
+
+            # Obtener los datos del formulario
+            sucursal = self.cleaned_data.get('sucursal')
+            existencias = self.cleaned_data.get('existencias')
+
+            # Guardar en InventarioPorSucursal
+            inventario_por_sucursal, _ = InventarioPorSucursal.objects.get_or_create(
+                invsus_codigo_inventario=producto,
+                invsus_sucursal=sucursal,
+                defaults={'invsus_existencias': existencias}
+            )
+            inventario_por_sucursal.invsus_existencias = existencias
+            inventario_por_sucursal.save()
+        return producto

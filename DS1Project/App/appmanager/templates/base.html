@@ -21,10 +21,12 @@
 <body>
   
   <div class="sidebar">
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="{% static 'imgs/logo3.jpeg' %}" alt="" class="logo--automanager">
+    </div>
     <ul class="menu">
-      <li class="activate">
-        <a class="button-link" href={% url 'login' %}>
+      <li class=""><!--activate-->
+        <a class="button-link" href={% url 'adminpage' %}>
           <i class="fa-solid fa-a"></i>
           <span>Automanager</span>
         </a>
@@ -53,13 +55,13 @@
       </li>
       <li>
         <a href={% url 'cotizacion_reparacion' %}>
-          <i class="fa-solid fa-receipt"></i>
+          <i class="fa-solid fa-screwdriver-wrench"></i>
           <span>{% trans "Cotización Reparación" %}</span>
         </a>
       </li>
       <li>
         <a href={% url 'cotizacion_reparacion' %}>
-          <i class="fa-solid fa-receipt"></i>
+          <i class="fa-solid fa-car"></i>
           <span>{% trans "Cotización Vehículo" %}</span>
         </a>
       </li>
@@ -189,6 +191,7 @@
   <div class="main--content">
     <div class="header--wrapper">
       <div class="header--title">
+
         {% if request.user.is_authenticated %}
 
           {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
@@ -261,11 +264,12 @@
   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-
+   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
 
 <body>
 </html>

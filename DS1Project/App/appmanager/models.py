@@ -62,6 +62,7 @@ class VehiculoVenta(models.Model):
     vehvnt_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     vehvnt_placa = models.CharField(max_length=10)
     vehvnt_marca = models.CharField(max_length=30)
+    vehvnt_modelo = models.CharField(max_length=30, default='Desconocido')
     vehvnt_color = models.CharField(max_length=30)
     vehvnt_anio = models.CharField(max_length=30)
     vehvnt_cod_sucursal = models.ForeignKey('Sucursal', on_delete=models.CASCADE)

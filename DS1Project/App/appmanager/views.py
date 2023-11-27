@@ -449,6 +449,40 @@ def edit_sucursal(request):
                     messages.warning(request, f'{field}: {error}')
                 
             return render(request, 'edit_sucursal.html', {'form': form, 'sucursal': sucursal}) 
+
+#################################################
+def edit_product(request):
+    if request.method == 'GET':
+        product = Inventario.objects.get( inv_cod = request.GET['product_editID'])
+        
+        valores_por_defecto = {
+            'inv_cod': product.inv_cod,
+            'inv_nombre': product.inv_nombre,
+            'inv_categoria': product.inv_categoria,
+            'inv_precioneto': product.inv_precioneto,
+            'inv_vigente': product.inv_vigente,
+            'inv_categoria': product.inv_categoria,
+        }
+
+        editform = EditarProductoForm(initial=valores_por_defecto)
+
+        return render(request, 'edit_product.html',{
+                                                'form': editform
+                                             })
+    else:
+
+        product = Inventario.objects.get( inv_cod = request.POST['inv_cod'])
+        form = EditarProductoForm(request.POST, instance=product)
+        if form.is_valid():
+            # Guarda los cambios en el usuario
+            form.save()
+            msg = _('Producto actualizado.')
+            messages.success(request, msg)
+            return redirect('inventory')
+
+        return render(request, 'edit_product.html', {'form': form, 'product': product}) 
+  
+   
             
 def delete_Sucursal(request):
     if request.method == 'GET':
@@ -472,20 +506,19 @@ def create_Cargo(request):
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 
-def create_VehiculoVenta(request):
-    new_vehiculoventa = VehiculoVenta(
-                                        vehvnt_placa = request.POST['vehvnt_placa'],
-                                        vehvnt_marca = request.POST['vehvnt_marca'],
-                                        vehvnt_color = request.POST['vehvnt_color'],
-                                        vehvnt_anio = request.POST['vehvnt_anio'],
-                                        vehvnt_cod_sucursal = request.POST['vehvnt_sucursal'],
-                                        vehvnt_precioneto = request.POST['vehvnt_precioneto'],
-                                        vehvnt_disponible = request.POST['vehvnt_disponible'],
-                                        vehvnt_vigente = True
-                                    )
-    new_vehiculoventa.save()
-
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+def create_vehiculoVenta(request):
+    if request.method == 'POST':
+        form = VehiculoVentaForm(request.POST)
+        if form.is_valid():
+            # Realizar acciones cuando el formulario es válido
+            # Guardar el formulario, enviar notificaciones, etc.
+            form.save()
+            # Redirigir a la página de inventario u otra página deseada
+            return HttpResponseRedirect('/inventory/')  # Cambia '/inventario/' por la URL a la que quieres redirigir
+    else:
+        form = VehiculoVentaForm()
+        
+    return render(request, 'new_vehicle.html', {'form': form})
 
 def create_order(request):
     if request.method == 'POST':
@@ -654,11 +687,16 @@ def delete_PersonaxCargo(request, personaxcarg_id):
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
 
-def delete_VehiculoVenta(request, vehiculoventa_id):
-    vehiculoventa = VehiculoVenta.objects.get( vehvnt_cod = vehiculoventa_id)
-    vehiculoventa.delete()
+def delete_vehiculoventa(request):
+    if request.method == 'GET':
+        view_vehicle(request)
+    else:
+        vehicle = VehiculoVenta.objects.get(vehvnt_cod = request.POST['delete_vehicleID'])
+        msg = _('Vehiculo eliminado con éxito.')
+        messages.success(request, msg)
+        vehicle.delete()
 
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+    return redirect( 'vehicle_inventory' )
 
 def delete_VehiculoReparacion(request, vehiculoreparacion_id):
     vehiculoreparacion = VehiculoReparacion.objects.get( vehrep_cod = vehiculoreparacion_id)
@@ -676,7 +714,8 @@ def delete_product(request):
     if request.method == 'GET':
         inventory(request)
     else:
-        product = Inventario.objects.get(inv_cod = request.POST['delete_productID'])
+        print("El error es el siguiente", request.POST['delete_productID'])
+        product = Inventario.objects.get(inv_cod = request.POST['delete_productID'])#
         msg = _('Producto eliminado con éxito.')
         messages.success(request, msg)
         product.delete()
@@ -742,3 +781,10 @@ def consulta_reparacion_cliente(request):
 
     # Renderizar la plantilla con la información
     return render(request, 'consulta_reparacion.html', {'usuario': usuario_actual, 'vehiculo': vehiculo_usuario, 'orden_trabajo': orden_trabajo, 'cotizacion': cotizacion})
+
+def view_vehicle(request):
+
+    vehicles = VehiculoVenta.objects.all()
+
+    messages.get_messages(request)
+    return render(request, 'vehicle_inventory.html', {'vehicles': vehicles})

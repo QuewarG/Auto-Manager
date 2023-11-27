@@ -7,6 +7,14 @@
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
 }
+
+body {
+    background-image: url('../imgs/bg.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+
+}
+
 header{
     position: fixed;
     top: 0;
@@ -101,7 +109,7 @@ nav .social a i:hover{
 
 .hero .text .btn{
     padding: 10px 30px;
-    background-color: #1576EE;
+    background-color: black;
     text-transform: uppercase;
     color: #fff;
     font-weight: bold;
@@ -110,5 +118,5 @@ nav .social a i:hover{
     transition: 0.3s;
 }
 .hero .text .btn:hover{
-    background-color: transparent;
+    background-color: #1576EE;
 }

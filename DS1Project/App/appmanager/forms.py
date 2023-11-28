@@ -329,20 +329,18 @@ class VehiculoVentaForm(forms.ModelForm):
     class Meta:
         model = VehiculoVenta
         fields = ['vehvnt_placa', 'vehvnt_marca', 'vehvnt_modelo' , 'vehvnt_color', 'vehvnt_anio', 'vehvnt_cod_sucursal', 'vehvnt_precioneto', 'vehvnt_disponible', 'vehvnt_vigente']
-        labels = {
-            'vehvnt_placa': 'Placa del Vehículo',
-            'vehvnt_marca': 'Marca del Vehículo',
-            'vehvnt_modelo': 'Modelo del Vehículo',
-            'vehvnt_color': 'Color del Vehículo',
-            'vehvnt_anio': 'Año del Vehículo',
-            'vehvnt_cod_sucursal': 'Sucursal del Vehículo',
-            'vehvnt_precioneto': 'Precio Neto del Vehículo',
-            'vehvnt_disponible': 'Disponibilidad del Vehículo',
-            'vehvnt_vigente': 'Vigencia del Vehículo',
-        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['vehvnt_placa'].label = _('Placa del Vehículo')
+        self.fields['vehvnt_marca'].label = _('Marca del Vehículo')
+        self.fields['vehvnt_modelo'].label = _('Modelo del Vehículo')
+        self.fields['vehvnt_color'].label = _('Color del Vehículo')
+        self.fields['vehvnt_anio'].label = _('Año del Vehículo')
+        self.fields['vehvnt_cod_sucursal'].label = _('Sucursal del Vehículo')
+        self.fields['vehvnt_precioneto'].label = _('Precio Neto del Vehículo')
+        self.fields['vehvnt_disponible'].label = _('Disponibilidad del Vehículo')
+        self.fields['vehvnt_vigente'].label = _('Vigencia del Vehículo')
         self.fields['vehvnt_cod_sucursal'].queryset = Sucursal.objects.filter(sucursal_vigente=True)
 
 

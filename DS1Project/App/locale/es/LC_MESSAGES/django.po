@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-24 16:52-0500\n"
+"POT-Creation-Date: 2023-11-27 16:07-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,16 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\App\settings.py:116
+#: .\App\settings.py:118
 msgid "English"
 msgstr ""
 
-#: .\App\settings.py:117
+#: .\App\settings.py:119
 msgid "Spanish"
 msgstr ""
 
-#: .\appmanager\forms.py:22 .\appmanager\forms.py:129
-#: .\appmanager\templates\users.html:47
+#: .\appmanager\forms.py:22 .\appmanager\forms.py:131
+#: .\appmanager\templates\users.html:44
 msgid "Username"
 msgstr ""
 
@@ -35,152 +35,186 @@ msgstr ""
 msgid "Nombre de usuario muy largo."
 msgstr ""
 
-#: .\appmanager\forms.py:42 .\appmanager\forms.py:199
-msgid "La contraseña debe tener al menos 8 caracteres."
-msgstr ""
-
-#: .\appmanager\forms.py:47
-msgid "La contraseña debe contener al menos un carácter especial."
-msgstr ""
-
-#: .\appmanager\forms.py:58
-msgid "Las contraseñas no coinciden."
-msgstr ""
-
-#: .\appmanager\forms.py:74 .\appmanager\forms.py:97 .\appmanager\forms.py:136
-#: .\appmanager\forms.py:234 .\appmanager\templates\inventory.html:20
-#: .\appmanager\templates\roles.html:46
-#: .\appmanager\templates\sucursales.html:46
-#: .\appmanager\templates\users.html:48
+#: .\appmanager\forms.py:76 .\appmanager\forms.py:99 .\appmanager\forms.py:138
+#: .\appmanager\forms.py:236 .\appmanager\forms.py:360
+#: .\appmanager\templates\inventory.html:42
+#: .\appmanager\templates\roles.html:43
+#: .\appmanager\templates\sucursales.html:43
+#: .\appmanager\templates\users.html:45
 msgid "Nombre"
 msgstr ""
 
-#: .\appmanager\forms.py:75 .\appmanager\forms.py:98 .\appmanager\forms.py:137
-#: .\appmanager\templates\users.html:49
+#: .\appmanager\forms.py:77 .\appmanager\forms.py:100 .\appmanager\forms.py:139
+#: .\appmanager\templates\users.html:46
 msgid "Apellido"
 msgstr ""
 
-#: .\appmanager\forms.py:76 .\appmanager\forms.py:101 .\appmanager\forms.py:140
+#: .\appmanager\forms.py:78 .\appmanager\forms.py:103 .\appmanager\forms.py:142
 msgid "Ingrese una dirección de correo valida"
 msgstr ""
 
-#: .\appmanager\forms.py:76 .\appmanager\forms.py:99 .\appmanager\forms.py:138
+#: .\appmanager\forms.py:78 .\appmanager\forms.py:101 .\appmanager\forms.py:140
 msgid "Correo Electrónico"
 msgstr ""
 
-#: .\appmanager\forms.py:77 .\appmanager\forms.py:102 .\appmanager\forms.py:141
+#: .\appmanager\forms.py:79 .\appmanager\forms.py:104 .\appmanager\forms.py:143
 msgid "Seleccione su tipo de documento"
 msgstr ""
 
-#: .\appmanager\forms.py:77 .\appmanager\forms.py:100 .\appmanager\forms.py:139
+#: .\appmanager\forms.py:79 .\appmanager\forms.py:102 .\appmanager\forms.py:141
 msgid "Tipo Documento"
 msgstr ""
 
-#: .\appmanager\forms.py:78 .\appmanager\forms.py:103 .\appmanager\forms.py:142
+#: .\appmanager\forms.py:80 .\appmanager\forms.py:105 .\appmanager\forms.py:144
 msgid "Número Documento"
 msgstr ""
 
-#: .\appmanager\forms.py:79 .\appmanager\forms.py:104 .\appmanager\forms.py:143
+#: .\appmanager\forms.py:81 .\appmanager\forms.py:106 .\appmanager\forms.py:145
 msgid "Número Telefónico"
 msgstr ""
 
-#: .\appmanager\forms.py:80 .\appmanager\forms.py:105
+#: .\appmanager\forms.py:82 .\appmanager\forms.py:107
 msgid "Roles disponibles"
 msgstr ""
 
-#: .\appmanager\forms.py:144
+#: .\appmanager\forms.py:146
 msgid "Cambiar Rol"
 msgstr ""
 
-#: .\appmanager\forms.py:146
+#: .\appmanager\forms.py:148
 msgid "Asignar cargo a desempeñar"
 msgstr ""
 
-#: .\appmanager\forms.py:147
+#: .\appmanager\forms.py:149
 msgid "Asignar sucursal"
 msgstr ""
 
-#: .\appmanager\forms.py:192
+#: .\appmanager\forms.py:194
 msgid "Nombre del Rol"
 msgstr ""
 
-#: .\appmanager\forms.py:193
+#: .\appmanager\forms.py:195
 msgid "Descripción del Rol"
 msgstr ""
 
-#: .\appmanager\forms.py:216
-msgid "Nombre sucursal"
-msgstr ""
-
-#: .\appmanager\forms.py:217
-msgid "Dirección de la sucursal"
+#: .\appmanager\forms.py:201
+msgid "La contraseña debe tener al menos 8 caracteres."
 msgstr ""
 
 #: .\appmanager\forms.py:218
+msgid "Nombre sucursal"
+msgstr ""
+
+#: .\appmanager\forms.py:219
+msgid "Dirección de la sucursal"
+msgstr ""
+
+#: .\appmanager\forms.py:220
 msgid "Gerente encargado"
 msgstr ""
 
-#: .\appmanager\forms.py:233 .\appmanager\templates\inventory.html:21
+#: .\appmanager\forms.py:235 .\appmanager\forms.py:359
+#: .\appmanager\templates\inventory.html:43
 msgid "Categoría"
 msgstr ""
 
-#: .\appmanager\forms.py:235 .\appmanager\templates\inventory.html:22
-#: .\appmanager\templates\roles.html:47
+#: .\appmanager\forms.py:237 .\appmanager\forms.py:361
+#: .\appmanager\templates\inventory.html:44
+#: .\appmanager\templates\roles.html:44
 msgid "Descripción"
 msgstr ""
 
-#: .\appmanager\forms.py:236
+#: .\appmanager\forms.py:238 .\appmanager\forms.py:362
+#: .\appmanager\templates\vehicle_inventory.html:24
 msgid "Precio Neto"
 msgstr ""
 
-#: .\appmanager\forms.py:237 .\appmanager\templates\inventory.html:24
-#: .\appmanager\templates\users.html:55
+#: .\appmanager\forms.py:239 .\appmanager\forms.py:363
+#: .\appmanager\templates\inventory.html:46
+#: .\appmanager\templates\users.html:52
 msgid "Sucursal"
 msgstr ""
 
-#: .\appmanager\forms.py:238 .\appmanager\templates\inventory.html:25
+#: .\appmanager\forms.py:240 .\appmanager\forms.py:364
+#: .\appmanager\templates\inventory.html:47
 msgid "Existencias"
 msgstr ""
 
-#: .\appmanager\forms.py:273 .\appmanager\templates\orders.html:36
+#: .\appmanager\forms.py:275 .\appmanager\templates\orders.html:36
 msgid "Encargado"
 msgstr ""
 
-#: .\appmanager\forms.py:274
+#: .\appmanager\forms.py:276
 msgid "Dueño"
 msgstr ""
 
-#: .\appmanager\forms.py:275 .\appmanager\forms.py:315
-#: .\appmanager\templates\cotizaciones.html:36
+#: .\appmanager\forms.py:277 .\appmanager\forms.py:317
+#: .\appmanager\templates\cotizaciones.html:45
 msgid "Observaciones"
 msgstr ""
 
-#: .\appmanager\forms.py:276 .\appmanager\templates\orders.html:38
+#: .\appmanager\forms.py:278 .\appmanager\templates\orders.html:38
 msgid "Placa del vehículo"
 msgstr ""
 
-#: .\appmanager\forms.py:277
+#: .\appmanager\forms.py:279
 msgid "Marca del vehículo"
 msgstr ""
 
-#: .\appmanager\forms.py:278
+#: .\appmanager\forms.py:280
 msgid "Color del vehículo"
 msgstr ""
 
-#: .\appmanager\forms.py:279
+#: .\appmanager\forms.py:281
 msgid "¿En reparación?"
 msgstr ""
 
-#: .\appmanager\forms.py:313
+#: .\appmanager\forms.py:315
 msgid "Orden de trabajo"
 msgstr ""
 
-#: .\appmanager\forms.py:314
+#: .\appmanager\forms.py:316
 msgid "Precio Cotizado de la Reparación"
 msgstr ""
 
-#: .\appmanager\templates\adminpage.html:12 .\appmanager\templates\base.html:87
-#: .\appmanager\templates\base.html:129 .\appmanager\templates\users.html:37
+#: .\appmanager\forms.py:335
+msgid "Placa del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:336
+msgid "Marca del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:337
+msgid "Modelo del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:338
+msgid "Color del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:339
+msgid "Año del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:340
+msgid "Sucursal del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:341
+msgid "Precio Neto del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:342
+msgid "Disponibilidad del Vehículo"
+msgstr ""
+
+#: .\appmanager\forms.py:343
+msgid "Vigencia del Vehículo"
+msgstr ""
+
+#: .\appmanager\templates\adminpage.html:12 .\appmanager\templates\base.html:90
+#: .\appmanager\templates\base.html:132 .\appmanager\templates\users.html:34
 msgid "Usuarios"
 msgstr ""
 
@@ -188,9 +222,9 @@ msgstr ""
 msgid "Cantidad de usuarios: "
 msgstr ""
 
-#: .\appmanager\templates\adminpage.html:19 .\appmanager\templates\base.html:44
-#: .\appmanager\templates\base.html:101
-#: .\appmanager\templates\inventory.html:11
+#: .\appmanager\templates\adminpage.html:19 .\appmanager\templates\base.html:47
+#: .\appmanager\templates\base.html:104
+#: .\appmanager\templates\inventory.html:32
 msgid "Inventario"
 msgstr ""
 
@@ -198,8 +232,8 @@ msgstr ""
 msgid "Cantidad de inventario: "
 msgstr ""
 
-#: .\appmanager\templates\adminpage.html:26 .\appmanager\templates\base.html:38
-#: .\appmanager\templates\sucursales.html:36
+#: .\appmanager\templates\adminpage.html:26 .\appmanager\templates\base.html:41
+#: .\appmanager\templates\sucursales.html:33
 msgid "Sucursales"
 msgstr ""
 
@@ -207,64 +241,64 @@ msgstr ""
 msgid "Cantidad de sucursales: "
 msgstr ""
 
-#: .\appmanager\templates\base.html:50 .\appmanager\templates\base.html:108
-#: .\appmanager\templates\base.html:144 .\appmanager\templates\base.html:159
-#: .\appmanager\templates\cotizaciones.html:24
+#: .\appmanager\templates\base.html:53 .\appmanager\templates\base.html:111
+#: .\appmanager\templates\base.html:147 .\appmanager\templates\base.html:162
+#: .\appmanager\templates\cotizaciones.html:33
 msgid "Cotizaciones"
 msgstr ""
 
-#: .\appmanager\templates\base.html:56
+#: .\appmanager\templates\base.html:59
 msgid "Cotización Reparación"
 msgstr ""
 
-#: .\appmanager\templates\base.html:62
+#: .\appmanager\templates\base.html:65
 msgid "Cotización Vehículo"
 msgstr ""
 
-#: .\appmanager\templates\base.html:69 .\appmanager\templates\base.html:115
+#: .\appmanager\templates\base.html:72 .\appmanager\templates\base.html:118
 #: .\appmanager\templates\sales.html:12
 msgid "Ventas"
 msgstr ""
 
-#: .\appmanager\templates\base.html:75 .\appmanager\templates\base.html:122
-#: .\appmanager\templates\base.html:151
+#: .\appmanager\templates\base.html:78 .\appmanager\templates\base.html:125
+#: .\appmanager\templates\base.html:154
 msgid "Ordenes"
 msgstr ""
 
-#: .\appmanager\templates\base.html:81 .\appmanager\templates\roles.html:37
+#: .\appmanager\templates\base.html:84 .\appmanager\templates\roles.html:34
 msgid "Roles"
 msgstr ""
 
-#: .\appmanager\templates\base.html:93 .\appmanager\templates\base.html:136
+#: .\appmanager\templates\base.html:96 .\appmanager\templates\base.html:139
 #: .\appmanager\templates\reports.html:11
 msgid "Reportes"
 msgstr ""
 
-#: .\appmanager\templates\base.html:166
+#: .\appmanager\templates\base.html:169
 msgid "Consultar estado del vehiculo"
 msgstr ""
 
-#: .\appmanager\templates\base.html:172
+#: .\appmanager\templates\base.html:175
 msgid "SESION NO VALIDA"
 msgstr ""
 
-#: .\appmanager\templates\base.html:179
+#: .\appmanager\templates\base.html:182
 msgid "Salir"
 msgstr ""
 
-#: .\appmanager\templates\base.html:194
+#: .\appmanager\templates\base.html:198
 msgid "Admin"
 msgstr ""
 
-#: .\appmanager\templates\base.html:197
+#: .\appmanager\templates\base.html:201
 msgid "Vendedor"
 msgstr ""
 
-#: .\appmanager\templates\base.html:200
+#: .\appmanager\templates\base.html:204
 msgid "Jefe de Taller"
 msgstr ""
 
-#: .\appmanager\templates\base.html:210 .\appmanager\templates\home.html:27
+#: .\appmanager\templates\base.html:214 .\appmanager\templates\home.html:27
 msgid "Idioma: "
 msgstr ""
 
@@ -282,62 +316,67 @@ msgstr ""
 msgid "Su vehículo aún se encuentra en nuestros talleres siendo reparado."
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:34
+#: .\appmanager\templates\cotizaciones.html:43
+#: .\appmanager\templates\inventory.html:41
 #: .\appmanager\templates\orders.html:35
 msgid "Código"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:35
-#: .\appmanager\templates\inventory.html:23
+#: .\appmanager\templates\cotizaciones.html:44
+#: .\appmanager\templates\inventory.html:45
 msgid "Precio"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:37
+#: .\appmanager\templates\cotizaciones.html:46
 #: .\appmanager\templates\orders.html:40
+#: .\appmanager\templates\vehicle_inventory.html:25
 msgid "Estado"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:38
+#: .\appmanager\templates\cotizaciones.html:47
 msgid "Fecha de Expedición"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:39
-#: .\appmanager\templates\inventory.html:26
+#: .\appmanager\templates\cotizaciones.html:48
+#: .\appmanager\templates\inventory.html:48
 #: .\appmanager\templates\orders.html:41 .\appmanager\templates\reports.html:23
-#: .\appmanager\templates\roles.html:48 .\appmanager\templates\sales.html:26
-#: .\appmanager\templates\sucursales.html:49
-#: .\appmanager\templates\users.html:56
+#: .\appmanager\templates\roles.html:45 .\appmanager\templates\sales.html:26
+#: .\appmanager\templates\sucursales.html:46
+#: .\appmanager\templates\users.html:53
+#: .\appmanager\templates\vehicle_inventory.html:26
 msgid "Opciones"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:51
+#: .\appmanager\templates\cotizaciones.html:60
 msgid "Aprobada"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:53
+#: .\appmanager\templates\cotizaciones.html:62
 msgid "Pendiente"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:62
+#: .\appmanager\templates\cotizaciones.html:71
 msgid "Aceptar cotización"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:70
-#: .\appmanager\templates\inventory.html:46
+#: .\appmanager\templates\cotizaciones.html:79
+#: .\appmanager\templates\inventory.html:69
 #: .\appmanager\templates\orders.html:72 .\appmanager\templates\reports.html:39
-#: .\appmanager\templates\roles.html:61 .\appmanager\templates\sales.html:44
-#: .\appmanager\templates\sucursales.html:65
-#: .\appmanager\templates\users.html:84
+#: .\appmanager\templates\roles.html:58 .\appmanager\templates\sales.html:44
+#: .\appmanager\templates\sucursales.html:62
+#: .\appmanager\templates\users.html:81
+#: .\appmanager\templates\vehicle_inventory.html:46
 msgid "Editar"
 msgstr ""
 
-#: .\appmanager\templates\cotizaciones.html:78
-#: .\appmanager\templates\inventory.html:53
+#: .\appmanager\templates\cotizaciones.html:87
+#: .\appmanager\templates\inventory.html:76
 #: .\appmanager\templates\orders.html:81 .\appmanager\templates\orders.html:82
-#: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:68
+#: .\appmanager\templates\reports.html:46 .\appmanager\templates\roles.html:65
 #: .\appmanager\templates\sales.html:51
-#: .\appmanager\templates\sucursales.html:72
-#: .\appmanager\templates\users.html:91
+#: .\appmanager\templates\sucursales.html:69
+#: .\appmanager\templates\users.html:88
+#: .\appmanager\templates\vehicle_inventory.html:53
 msgid "Eliminar"
 msgstr ""
 
@@ -347,30 +386,39 @@ msgstr ""
 
 #: .\appmanager\templates\cotizar_reparacion.html:42
 #: .\appmanager\templates\edit_cotizacion_reparacion.html:39
+#: .\appmanager\templates\edit_product.html:35
 #: .\appmanager\templates\edit_rol.html:42
 #: .\appmanager\templates\edit_sucursal.html:30
 #: .\appmanager\templates\new_order.html:17
-#: .\appmanager\templates\new_product.html:20
+#: .\appmanager\templates\new_product.html:32
 #: .\appmanager\templates\new_rol.html:42
 #: .\appmanager\templates\new_sucursal.html:30
+#: .\appmanager\templates\new_vehicle.html:37
 #: .\appmanager\templates\signupEdit.html:43
 msgid "Guardar"
 msgstr ""
 
 #: .\appmanager\templates\cotizar_reparacion.html:44
 #: .\appmanager\templates\edit_cotizacion_reparacion.html:41
+#: .\appmanager\templates\edit_product.html:37
 #: .\appmanager\templates\edit_rol.html:44
 #: .\appmanager\templates\edit_sucursal.html:32
 #: .\appmanager\templates\new_order.html:19
+#: .\appmanager\templates\new_product.html:34
 #: .\appmanager\templates\new_rol.html:44
 #: .\appmanager\templates\new_sucursal.html:32
-#: .\appmanager\templates\signup.html:54
+#: .\appmanager\templates\new_vehicle.html:39
+#: .\appmanager\templates\signup.html:37
 #: .\appmanager\templates\signupEdit.html:45
 msgid "Cancelar"
 msgstr ""
 
 #: .\appmanager\templates\edit_cotizacion_reparacion.html:30
 msgid "Editar cotización de reparación"
+msgstr ""
+
+#: .\appmanager\templates\edit_product.html:29
+msgid "Editar Producto"
 msgstr ""
 
 #: .\appmanager\templates\edit_rol.html:31
@@ -397,24 +445,48 @@ msgstr ""
 msgid "Iniciar Sesión"
 msgstr ""
 
-#: .\appmanager\templates\inventory.html:64
+#: .\appmanager\templates\inventory.html:81
+msgid "Ver"
+msgstr ""
+
+#: .\appmanager\templates\inventory.html:101
+msgid "Detalles del vehiculo"
+msgstr ""
+
+#: .\appmanager\templates\inventory.html:105
+msgid "Cerrar"
+msgstr ""
+
+#: .\appmanager\templates\inventory.html:121
+msgid "Ver Vehículos a la Venta"
+msgstr ""
+
+#: .\appmanager\templates\inventory.html:127
 msgid "Añadir Producto"
+msgstr ""
+
+#: .\appmanager\templates\inventory.html:133
+msgid "Añadir Vehículo Nuevo"
 msgstr ""
 
 #: .\appmanager\templates\new_order.html:11
 msgid "Crear Nueva Orden de Trabajo"
 msgstr ""
 
-#: .\appmanager\templates\new_product.html:16
-msgid "Crear Nuevo Producto"
+#: .\appmanager\templates\new_product.html:22
+msgid "Añadir Nuevo Producto"
 msgstr ""
 
-#: .\appmanager\templates\new_rol.html:31 .\appmanager\templates\roles.html:76
+#: .\appmanager\templates\new_rol.html:31 .\appmanager\templates\roles.html:73
 msgid "Crear Rol"
 msgstr ""
 
 #: .\appmanager\templates\new_sucursal.html:21
 msgid "Crear Nueva Sucursal"
+msgstr ""
+
+#: .\appmanager\templates\new_vehicle.html:29
+msgid "Crear Vehículo Nuevo"
 msgstr ""
 
 #: .\appmanager\templates\orders.html:26
@@ -485,19 +557,11 @@ msgstr ""
 msgid "Añadir Venta"
 msgstr ""
 
-#: .\appmanager\templates\signup.html:23
-msgid "Hubo un error"
-msgstr ""
-
-#: .\appmanager\templates\signup.html:24
-msgid "Revisa los campos nuevamente"
-msgstr ""
-
-#: .\appmanager\templates\signup.html:40 .\appmanager\templates\users.html:100
+#: .\appmanager\templates\signup.html:23 .\appmanager\templates\users.html:97
 msgid "Crear Usuario"
 msgstr ""
 
-#: .\appmanager\templates\signup.html:52
+#: .\appmanager\templates\signup.html:35
 msgid "Registrar"
 msgstr ""
 
@@ -505,40 +569,72 @@ msgstr ""
 msgid "Editar Usuario"
 msgstr ""
 
-#: .\appmanager\templates\sucursales.html:47
+#: .\appmanager\templates\sucursales.html:44
 msgid "Ubicacion"
 msgstr ""
 
-#: .\appmanager\templates\sucursales.html:48
+#: .\appmanager\templates\sucursales.html:45
 msgid "Gerente"
 msgstr ""
 
-#: .\appmanager\templates\sucursales.html:82
+#: .\appmanager\templates\sucursales.html:79
 msgid "Añadir Sucursal"
 msgstr ""
 
-#: .\appmanager\templates\users.html:50
+#: .\appmanager\templates\users.html:47
 msgid "Tipo Doc"
 msgstr ""
 
-#: .\appmanager\templates\users.html:51
+#: .\appmanager\templates\users.html:48
 msgid "NroDoc"
 msgstr ""
 
-#: .\appmanager\templates\users.html:52
+#: .\appmanager\templates\users.html:49
 msgid "Email"
 msgstr ""
 
-#: .\appmanager\templates\users.html:53
+#: .\appmanager\templates\users.html:50
 msgid "Teléfono"
 msgstr ""
 
-#: .\appmanager\templates\users.html:54
+#: .\appmanager\templates\users.html:51
 msgid "Rol"
 msgstr ""
 
-#: .\appmanager\templates\users.html:76
+#: .\appmanager\templates\users.html:73
 msgid "No asignada"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:11
+msgid "Vehículos Disponibles"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:20
+msgid "Marca"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:21
+msgid "Modelo"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:22
+msgid "Año"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:23
+msgid "Color"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:40
+msgid "Disponible"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:40
+msgid "No Disponible"
+msgstr ""
+
+#: .\appmanager\templates\vehicle_inventory.html:65
+msgid "Atras"
 msgstr ""
 
 #: .\appmanager\views.py:45
@@ -597,22 +693,30 @@ msgstr ""
 msgid "Sucursal actualizada."
 msgstr ""
 
-#: .\appmanager\views.py:458
+#: .\appmanager\views.py:479
+msgid "Producto actualizado."
+msgstr ""
+
+#: .\appmanager\views.py:492
 msgid "Sucursal eliminada con éxito."
 msgstr ""
 
-#: .\appmanager\views.py:545
+#: .\appmanager\views.py:578
 msgid "Cotización creada con éxito."
 msgstr ""
 
-#: .\appmanager\views.py:577
+#: .\appmanager\views.py:610
 msgid "Cotización de reparación actualizada."
 msgstr ""
 
-#: .\appmanager\views.py:594
+#: .\appmanager\views.py:627
 msgid "La cotización de reparación fue eliminada con éxito."
 msgstr ""
 
-#: .\appmanager\views.py:680
+#: .\appmanager\views.py:695
+msgid "Vehiculo eliminado con éxito."
+msgstr ""
+
+#: .\appmanager\views.py:719
 msgid "Producto eliminado con éxito."
 msgstr ""

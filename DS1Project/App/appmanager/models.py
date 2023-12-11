@@ -18,13 +18,14 @@ class Rol(models.Model):
     class Meta:
         ordering = ['rol_cod']
 
+
 class Usuario(AbstractUser):
     user_per_tipo_doc = models.CharField(max_length=10)
     user_numero_doc = models.CharField(max_length=20)
     user_telefono = models.CharField(max_length=20)
     cod_rol = models.ForeignKey('Rol', on_delete=models.SET_DEFAULT, default=1)  # Clave foránea a rol
 
-#MODELOS
+
 class Cargo(models.Model):
     cargo_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     cargo_nombre = models.CharField(max_length=30)
@@ -35,7 +36,8 @@ class Cargo(models.Model):
     
     def __str__(self):
         return self.cargo_nombre   # auto_now actualiza el valor cada vez que se guarda el objeto
-    
+
+
 class Sucursal(models.Model):
     sucursal_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     sucursal_nombre = models.CharField(max_length=50)
@@ -47,6 +49,7 @@ class Sucursal(models.Model):
     
     def __str__(self):
         return self.sucursal_nombre  # Reemplaza 'nombre' con el campo adecuado que contiene el nombre de la sucursal
+
 
 class PersonaXCargo(models.Model):
     perxcargo_cod = models.AutoField(primary_key=True)
@@ -71,6 +74,7 @@ class VehiculoVenta(models.Model):
     vehvnt_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
 
 class VehiculoReparacion(models.Model):
     vehrep_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
@@ -112,6 +116,7 @@ class Inventario(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
 class InventarioPorSucursal(models.Model):
     invsus_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
     invsus_codigo_inventario = models.ForeignKey('Inventario', on_delete=models.CASCADE)  # Clave foránea a Inventario
@@ -120,6 +125,7 @@ class InventarioPorSucursal(models.Model):
     invsus_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
 
 class CotizacionReparacion(models.Model):
     cotrep_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
@@ -131,6 +137,7 @@ class CotizacionReparacion(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
 class RepuestoVenta(models.Model):
     repvnt_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
     repvnt_inventario = models.ForeignKey('InventarioPorSucursal', on_delete=models.CASCADE)  # Clave foránea a InventarioPorSucursal
@@ -138,6 +145,7 @@ class RepuestoVenta(models.Model):
     repvnt_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
 
 class CotizacionRepuestos(models.Model):
     cotrepues_cod = models.AutoField(primary_key=True)  # serial en PostgreSQL se traduce a AutoField en Django
@@ -149,6 +157,7 @@ class CotizacionRepuestos(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
 class CotizacionVehiculo(models.Model):
     cotven_cod = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
     cotven_cod_vehiculo_nuevo = models.ForeignKey('VehiculoVenta', on_delete=models.CASCADE)
@@ -156,6 +165,7 @@ class CotizacionVehiculo(models.Model):
     cotven_vigente = models.BooleanField(default=True)
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
+
 
 class Factura(models.Model):
     codfac = models.AutoField(primary_key=True)  # SERIAL en PostgreSQL se traduce a AutoField en Django
@@ -173,6 +183,7 @@ class Factura(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)  # auto_now_add establece el valor al momento de la creación
     update_at = models.DateTimeField(auto_now=True)  # auto_now actualiza el valor cada vez que se guarda el objeto
 
+
 class CategoriaInventario(models.Model):
     categoriainv = models.AutoField(primary_key=True)
     categoriainv_nombre = models.CharField(max_length=100)
@@ -183,4 +194,3 @@ class CategoriaInventario(models.Model):
 
     def __str__(self):
         return self.categoriainv_nombre
-   

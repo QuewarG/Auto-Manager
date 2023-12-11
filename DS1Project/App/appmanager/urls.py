@@ -1,10 +1,8 @@
 from django.urls import path, include
-#from captcha import views as captcha_views
 from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
-    #path('captcha/', include('captcha.urls')),
     path('adminpage/', adminpage, name='adminpage'),
     path('cambiar_idioma/<str:idioma>/', cambiar_idioma, name='cambiar_idioma'),
     path('sucursales/', sucursales, name='sucursales'),
@@ -21,12 +19,16 @@ urlpatterns = [
     path('roles/delete_rol/', delete_rol, name='delete_rol'),
     path('inventory/', inventory, name='inventory'),
     path('inventory/create_product/', create_product, name='new_product'),
-    path('inventory/create_vehicle/', create_vehiculoVenta, name='new_vehicle'),#
+    path('inventory/create_vehicle/', create_vehiculoVenta, name='new_vehicle'),
     path('inventory/view_vehicule/', view_vehicle, name='vehicle_inventory'),
-    path('inventory/edit_product/', edit_product, name='edit_product'), #edit_product
-    path('inventory/delete_product/', delete_product, name='delete_product'), #delete_product delete_vehiculoventa
+    path('inventory/edit_product/', edit_product, name='edit_product'),
+    path('inventory/delete_product/', delete_product, name='delete_product'),
     path('inventory/delete_vehicle/', delete_vehiculoventa, name='delete_vehicle'),
     path('orders/', orders, name='orders'),
+    ###
+    path('orders/edit_order', edit_order, name='edit_order'),
+    path('orders/delete_order', delete_order, name='delete_order'),
+    ###
     path('orders/cerrar_orden', cerrar_orden_trabajo, name='cerrar_orden_trabajo'),
     path('orders/create_order', create_order, name='create_order'),
     path('cotizaciones/', cotizaciones, name='cotizaciones'),

@@ -65,18 +65,19 @@
                     </td>
                 </form>
 
-                <form method="get" action="">
+                <!-- Boton de edición -->
+                <form method="get" action="{% url 'edit_order' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="orden_editID" value="{{ order.orden_cod }}">
+                    <input type="hidden" name="order_editID" value="{{ order.orden_cod }}">
                     <td>
                         <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button>
                     </td>
                 </form>
 
                 <!-- Boton de borrado -->
-                <form method="post" action="">
+                <form method="post" action="{% url 'delete_order' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="ordenID" value="{{ order.orden_cod }}">
+                    <input type="hidden" name="delete_orderID" value="{{ order.orden_cod }}">
                     <td>
                         <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="{% trans "Eliminar" %}">
                             {% trans "Eliminar" %}

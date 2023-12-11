@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
@@ -9,11 +9,11 @@ from django.conf import settings
 from .models import *
 from .forms import *
 
-# FUNCIONES DEL SISTEMA
 
 def home(request):
     print (request.LANGUAGE_CODE)
     return render(request, "home.html")
+
 
 @login_required
 def adminpage(request):
@@ -47,8 +47,6 @@ def login_user(request):
             
         else:
             # Verifica los errores específicos del formulario
-
-            captcha_errors = ['Este campo é obrigatório.', 'Este campo es obligatorio.',  'This field is required.']
             if 'captcha' in form.errors:
                 captcha_error = _("Debe superar la prueba reCAPTCHA")
                 messages.error(request, captcha_error)
@@ -60,15 +58,17 @@ def login_user(request):
 
     return render(request, 'registration/login.html', {'form': form})
 
+
 def exit(request):
     logout(request)
     return redirect('home')
 
-#VISTAS DE PRUEBA
+
 def roles(request):
     rol = Rol.objects.all()
     messages.get_messages(request)
     return render(request, 'roles.html', {'rol' : rol})
+
 
 @login_required
 def create_rol(request):
@@ -95,6 +95,7 @@ def create_rol(request):
             return render(request, 'new_rol.html',{
                                                 'form': RolForm
                                              })
+
 
 @login_required
 def edit_rol(request):
@@ -125,6 +126,7 @@ def edit_rol(request):
 
         return render(request, 'edit_rol.html', {'form': form, 'rol': rol}) 
 
+
 @login_required
 def delete_rol(request):
     if request.method == 'GET':
@@ -135,7 +137,8 @@ def delete_rol(request):
         messages.success(request, msg)
         rol.delete()
 
-    return redirect('/roles/') #añadr la ruta donde se vaya a redirigir
+    return redirect('/roles/')
+
 
 @login_required
 def users(request):
@@ -184,11 +187,10 @@ def users(request):
                     usuario.sucursal_cod = None
                     usuario.cargo_cod = None
 
-
-
     messages.get_messages(request)
     return render(request, 'users.html', {'listado_usuarios' : listado_usuarios,
                                           'usuario_actual': request.user})
+
 
 @login_required
 def delete_Usuario(request):
@@ -200,7 +202,8 @@ def delete_Usuario(request):
         messages.success(request, msg)
         usuario.delete()
 
-    return redirect('/users/') #añadr la ruta donde se vaya a redirigir
+    return redirect('/users/')
+
 
 #Funcion encargada de la edicion de la informacion del usuario
 @login_required
@@ -210,13 +213,13 @@ def edit_usuario(request):
 
         if request.user and (request.user.cod_rol.rol_cod == 2 or request.user.cod_rol.rol_cod == 1):
             CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.all()
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.all()
+            #CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.all()
         elif request.user and request.user.cod_rol.rol_cod == 3:
             CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.filter(rol_cod = 5)
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.filter( cargo_cod = 4)
+            #CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.filter( cargo_cod = 4)
         else:
             CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.none()
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
+            #CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
 
         editform = CustomUserEditForm(instance=usuario)
 
@@ -230,11 +233,14 @@ def edit_usuario(request):
         usuario = Usuario.objects.get( username = request.POST['username'])
 
         if request.user and (request.user.cod_rol.rol_cod == 2 or request.user.cod_rol.rol_cod == 1):
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.all()
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.all()
+            
         elif request.user and request.user.cod_rol.rol_cod == 3:
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.filter( cargo_cod = 4)
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.filter(rol_cod = 5)
+            
         else:
-            CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
+            CustomUserEditForm.base_fields['cod_rol'].queryset = Rol.objects.none()
+            #CustomUserEditForm.base_fields['cod_cargo'].queryset = Cargo.objects.none()
 
         CustomUserEditForm.base_fields['cod_sucursal'].initial = request.POST.get('cod_sucursal', None)
 
@@ -262,6 +268,29 @@ def signup(request):
     else:
         form = CustomUserCreationForm(request.POST or None, user = request.user)
         if form.is_valid():
+
+            def create_PersonaXCargo(user, selected_branch):
+                role_to_position = {
+                    'Superadministrador': 'Gerente',  # Asignando el cargo de Gerente a los Superadministradores
+                    'Gerente': 'Gerente',
+                    'Vendedor': 'Vendedor',
+                    'Jefe de taller': 'Jefe de taller',
+                    'Cliente': 'Cliente'
+                }
+                name_position = role_to_position.get(user.cod_rol.rol_nombre, None)
+
+                if name_position is not None:
+                    position_found = Cargo.objects.filter(cargo_nombre=name_position).first()
+
+                    if position_found:
+                        persona_por_cargo = PersonaXCargo(
+                            perxcargo_persona_cod_id=user.id,
+                            perxcargo_cargo_cod_id=position_found.cargo_cod,
+                            perxcargo_sucursal_cod=selected_branch,  # Asigna la sucursal correspondiente
+                            perxcargo_vigente=True,
+                        )
+                        persona_por_cargo.save()
+
             if form.cleaned_data['password1'] == form.cleaned_data['password2']:
                 try:
                     new_user = Usuario.objects.create_user(
@@ -276,6 +305,8 @@ def signup(request):
                     cod_rol=Rol.objects.get(rol_cod=form.cleaned_data['rol'])
                     )
                     new_user.save()
+                    selected_branch = form.cleaned_data['cod_sucursal']
+                    create_PersonaXCargo(new_user, selected_branch)
                     msg =_('Usuario creado con éxito.')
                     messages.success(request, msg)
                     return redirect('users')
@@ -302,9 +333,9 @@ def signup(request):
             return render(request, 'signup.html',{
                                                 'form': form
                                              })
-        
-def inventory(request):
 
+
+def inventory(request):
     sucursal_usuario = PersonaXCargo.objects.get(perxcargo_persona_cod=request.user)
 
     if request.user.cod_rol.rol_cod == 1:
@@ -315,8 +346,8 @@ def inventory(request):
     messages.get_messages(request)
     return render(request, 'inventory.html', {'inventario': inventario})
 
-def orders(request):
 
+def orders(request):
     orders = OrdenTrabajo.objects.all()
 
     vehicle_repair = VehiculoReparacion.objects.all()
@@ -330,6 +361,7 @@ def orders(request):
     
     messages.get_messages(request)
     return render(request, 'orders.html', {'orders': orders})
+
 
 def cerrar_orden_trabajo(request):
 
@@ -349,6 +381,7 @@ def cerrar_orden_trabajo(request):
 
     return redirect('orders') 
 
+
 def cotizaciones(request):
     if request.user.cod_rol.rol_cod == 5:
         cotizaciones = CotizacionReparacion.objects.filter(cotrep_orden_trabajo__orden_vehiculoreparacion__vehrep_dueño=request.user)
@@ -356,6 +389,7 @@ def cotizaciones(request):
         cotizaciones = CotizacionReparacion.objects.all()
 
     return render(request, 'cotizaciones.html', {'cotizaciones': cotizaciones})
+
 
 @login_required
 def cambiar_estado_cotizacion(request):
@@ -377,19 +411,22 @@ def cambiar_estado_cotizacion(request):
         messages.error(request, msg)
         return redirect('cotizaciones')
 
+
 def sales(request):
     return render(request, 'sales.html')
 
+
 def reports(request):
     return render(request, 'reports.html')
+
 
 def sucursales(request):
     sucursales = Sucursal.objects.all()
     messages.get_messages(request)
     return render(request, 'sucursales.html', {'sucursales' : sucursales})
 
+
 def create_sucursal(request):
-    
     if request.method == 'GET':
         form = SucursalForm()
         return render(request, 'new_sucursal.html', {'form': form})
@@ -415,7 +452,8 @@ def create_sucursal(request):
             return render(request, 'sucursales.html',{
                                                 'form': form
                                              })
-            
+
+
 def edit_sucursal(request):
     if request.method == 'GET':
         sucursal = Sucursal.objects.get( sucursal_cod = request.GET['sucursal_editID'])
@@ -433,7 +471,6 @@ def edit_sucursal(request):
                                                 'form': editform
                                              })
     else:
-        print (request.POST)
         sucursal = Sucursal.objects.get( sucursal_cod = request.POST['sucursal_cod'])
         form = SucursalForm(request.POST, instance=sucursal)
         if form.is_valid():
@@ -450,7 +487,7 @@ def edit_sucursal(request):
                 
             return render(request, 'edit_sucursal.html', {'form': form, 'sucursal': sucursal}) 
 
-#################################################
+
 def edit_product(request):
     if request.method == 'GET':
         product = Inventario.objects.get( inv_cod = request.GET['product_editID'])
@@ -481,9 +518,8 @@ def edit_product(request):
             return redirect('inventory')
 
         return render(request, 'edit_product.html', {'form': form, 'product': product}) 
-  
-   
-            
+
+
 def delete_Sucursal(request):
     if request.method == 'GET':
         sucursales(request)
@@ -494,7 +530,8 @@ def delete_Sucursal(request):
         sucursal.delete()
 
     return redirect( 'sucursales' ) 
-         
+
+
 def create_Cargo(request):
     new_cargo = Cargo(
                         cargo_nombre = request.POST['cargo_nombre'],
@@ -520,6 +557,7 @@ def create_vehiculoVenta(request):
         
     return render(request, 'new_vehicle.html', {'form': form})
 
+
 def create_order(request):
     if request.method == 'POST':
         form = OrdenTrabajoVehiculoForm(request.POST)
@@ -527,11 +565,11 @@ def create_order(request):
             form.save()
             # Redirigir a alguna página de éxito o a donde desees
             return redirect('orders')
-
     else:
         form = OrdenTrabajoVehiculoForm()
 
     return render(request, 'new_order.html', {'form': form})
+
 
 def create_product(request):
     if request.method == 'POST':
@@ -555,12 +593,13 @@ def create_product(request):
             )
 
             # Redirigir a alguna página de éxito
-            return redirect('inventory')  # Reemplaza 'inventory' con la vista o URL a la que quieres redirigir
+            return redirect('inventory')
 
     else:
         form = CrearProductoForm()
     
     return render(request, 'new_product.html', {'form': form})
+
 
 def create_CotizacionReparacion(request):
     #AÑADIR EL RESTO DE LOGICO DEL PROCESAMIENTO DEL FORMULARIO
@@ -584,6 +623,37 @@ def create_CotizacionReparacion(request):
                                                 'form': CotizacionReparacionForm
                                              })
         
+
+def edit_order(request):
+    if request.method == 'GET':
+        order = OrdenTrabajo.objects.get(orden_cod=request.GET['order_editID'])
+        
+        valores_por_defecto = {
+            'orden_cod': order.orden_cod,
+            'orden_vehiculoreparacion': order.orden_vehiculoreparacion,
+            'orden_encargado': order.orden_encargado,
+            'orden_observacion': order.orden_observacion,
+            'orden_estado': order.orden_estado,
+            'orden_vigente': order.orden_vigente,
+        }
+
+        edit_form = EditarOrdenTrabajoForm(initial=valores_por_defecto)
+
+        return render(request, 'edit_order.html', {'form': edit_form})
+    
+    else:
+        order = OrdenTrabajo.objects.get(orden_cod=request.POST['orden_cod'])
+        form = EditarOrdenTrabajoForm(request.POST, instance=order)
+        
+        if form.is_valid():
+            form.save()
+            msg = _('Orden actualizada.')
+            messages.success(request, msg)
+            return redirect('orders')  # Cambia esto a la URL correcta
+
+        return render(request, 'edit_order.html', {'form': form, 'order': order})
+
+
 def edit_cotizacion_reparacion(request):
     if request.method == 'GET':
         cotrep = CotizacionReparacion.objects.get( cotrep_cod = request.GET['edit_cotID'])
@@ -618,6 +688,7 @@ def edit_cotizacion_reparacion(request):
                 
             return render(request, 'edit_cotizacion_reparacion.html', {'form': form, 'cotizacion': cotrep})
 
+
 def delete_CotizacionReparacion(request):
     if request.method == 'GET':
         cotizaciones(request)
@@ -642,6 +713,7 @@ def create_RepuestoVenta(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
+
 def create_CotizacionVehiculo(request):
     new_cotizacionvehiculo = CotizacionVehiculo(
                                                     cotven_cod_vehiculo_nuevo = request.POST['cotven_vehiculonuevo'],
@@ -652,6 +724,7 @@ def create_CotizacionVehiculo(request):
     new_cotizacionvehiculo.save()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+
 
 def create_Factura(request):
     new_factura = Factura(
@@ -671,6 +744,7 @@ def create_Factura(request):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
+
 #FIN SECCION DE INSERCIONES
 
 #SECCION DE BORRADOS EN LAS TABLAS DE LA BD
@@ -679,6 +753,7 @@ def delete_Cargo(request, cargo_id):
     cargo.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+
 
 def delete_PersonaxCargo(request, personaxcarg_id):
     personaxcargo = PersonaXCargo.objects.get( perxcargo_cod = personaxcarg_id)
@@ -698,23 +773,30 @@ def delete_vehiculoventa(request):
 
     return redirect( 'vehicle_inventory' )
 
+
 def delete_VehiculoReparacion(request, vehiculoreparacion_id):
     vehiculoreparacion = VehiculoReparacion.objects.get( vehrep_cod = vehiculoreparacion_id)
     vehiculoreparacion.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
-def delete_OrdenTrabajo(request, orden_id):
-    ordentrabajo = OrdenTrabajo.objects.get( orden_cod = orden_id)
-    ordentrabajo.delete()
 
-    return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+def delete_order(request):
+    if request.method == 'GET':
+        orders(request)
+    else:
+        ordentrabajo = OrdenTrabajo.objects.get( orden_cod = request.POST['delete_orderID'])
+        msg = _('Orden eliminada con éxito.')
+        messages.success(request, msg)
+        ordentrabajo.delete()
+
+    return redirect( 'orders' )
+
 
 def delete_product(request):
     if request.method == 'GET':
         inventory(request)
     else:
-        print("El error es el siguiente", request.POST['delete_productID'])
         product = Inventario.objects.get(inv_cod = request.POST['delete_productID'])#
         msg = _('Producto eliminado con éxito.')
         messages.success(request, msg)
@@ -722,11 +804,13 @@ def delete_product(request):
 
     return redirect( 'inventory' )
 
+
 def delete_InventarioPorSucursal(request, inventarioSurcursal_id):
     inventarioporsucursal = InventarioPorSucursal.objects.get( invsus_cod = inventarioSurcursal_id)
     inventarioporsucursal.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+
 
 def delete_RepuestoVenta(request, repuestoventa_id):
     repuestoventa = RepuestoVenta.objects.get( repvnt_cod = repuestoventa_id)
@@ -734,11 +818,13 @@ def delete_RepuestoVenta(request, repuestoventa_id):
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
 
+
 def delete_CotizacionVehiculo(request, cotizacionvehiculo_id):
     cotizacionvehiculo = CotizacionVehiculo.objects.get( cotven_cod = cotizacionvehiculo_id)
     cotizacionvehiculo.delete()
 
     return redirect('/rutapordefinir/') #añadr la ruta donde se vaya a redirigir
+
 
 def delete_Factura(request, fac_id):
     factura = Factura.objects.get( codfac = fac_id)
@@ -764,6 +850,7 @@ def data_adminpage(request):
 
     return render(request, 'adminpage.html', {'users_count': users_count, 'products_count': products_count})
 
+
 def consulta_reparacion_cliente(request):
     # Suponiendo que tienes un usuario autenticado
     usuario_actual = request.user
@@ -782,9 +869,11 @@ def consulta_reparacion_cliente(request):
     # Renderizar la plantilla con la información
     return render(request, 'consulta_reparacion.html', {'usuario': usuario_actual, 'vehiculo': vehiculo_usuario, 'orden_trabajo': orden_trabajo, 'cotizacion': cotizacion})
 
+
 def view_vehicle(request):
 
     vehicles = VehiculoVenta.objects.all()
 
     messages.get_messages(request)
     return render(request, 'vehicle_inventory.html', {'vehicles': vehicles})
+

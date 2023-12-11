@@ -12,11 +12,11 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password', 'required': True}))
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
-#formulario personalizado con la tabla user para el registro de los usuarios mediante el formulario del login
+# Formulario personalizado con la tabla user para el registro de los usuarios mediante el formulario del login
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
-        fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name', 'tipo_doc', 'num_doc', 'num_tel', 'rol')
+        fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name', 'tipo_doc', 'num_doc', 'num_tel', 'rol', 'cod_sucursal')
         
         labels ={
              'username': _('Username'),
@@ -31,7 +31,6 @@ class CustomUserCreationForm(UserCreationForm):
             msg =_("Nombre de usuario muy largo.")
             raise ValidationError(msg)
         return username
-
 
     def clean_password1(self):
         # Añade validaciones personalizadas al campo password1
@@ -53,12 +52,10 @@ class CustomUserCreationForm(UserCreationForm):
         # Añade validaciones personalizadas al campo password2
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-
         
         if password1 and password2 and password1 != password2:
             msg = ("Las contraseñas no coinciden.")
             raise ValidationError(msg)
-        
 
         return password2
     
@@ -72,7 +69,6 @@ class CustomUserCreationForm(UserCreationForm):
         ('OTRO', 'OTRO'),
     ]
 
-
     first_name = forms.CharField(max_length=150, required=True, label = _('Nombre') )
     last_name = forms.CharField(max_length=150, required=True, label = _('Apellido') )
     email = forms.EmailField(required=True, help_text = _('Ingrese una dirección de correo valida'), label = _('Correo Electrónico'))
@@ -80,12 +76,12 @@ class CustomUserCreationForm(UserCreationForm):
     num_doc = forms.CharField(max_length=20, required=True, label = _('Número Documento') )
     num_tel = forms.CharField(max_length=20, required=False, label = _('Número Telefónico') )
     rol = forms.ModelChoiceField(queryset=Rol.objects.all(), empty_label=None, label = _('Roles disponibles') )
+    cod_sucursal = forms.ModelChoiceField(queryset=Sucursal.objects.all(), empty_label=None, label=_('Sucursal'))
+
 
     def __init__(self, *args, **kwargs):
         # Obtener el rol actual del usuario y establecerlo como valor inicial
-        #         
         self.user = kwargs.pop('user', None)
-        print (self.user)
         super().__init__(*args, **kwargs)
         
         #selecciona los roles dependiendo del usuario registrado
@@ -106,6 +102,7 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['num_tel'].label = _('Número Telefónico')
         self.fields['rol'].label = _("Roles disponibles")
 
+
 class CustomUserEditForm(UserChangeForm):
     tipo_docs = [
         ('CC', 'C.C'),
@@ -120,13 +117,12 @@ class CustomUserEditForm(UserChangeForm):
     user_numero_doc = forms.CharField(max_length=20, required=True )
     user_telefono = forms.CharField(max_length=20, required=False )
     cod_rol = forms.ModelChoiceField (queryset=Rol.objects.all(), empty_label=None)
-    cod_cargo = forms.ModelChoiceField (queryset=Cargo.objects.all(), empty_label=None)
     cod_sucursal = forms.ModelChoiceField (queryset=Sucursal.objects.all(), empty_label=None)
     
     
     class Meta:
         model = Usuario
-        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol', 'cod_cargo', 'cod_sucursal']
+        fields = ['username', 'email', 'first_name', 'last_name', 'user_per_tipo_doc', 'user_numero_doc', 'user_telefono', 'cod_rol', 'cod_sucursal']
         labels ={
              'username': _('Username'),
         }
@@ -144,10 +140,7 @@ class CustomUserEditForm(UserChangeForm):
         self.fields['user_numero_doc'].label = _('Número Documento')
         self.fields['user_telefono'].label = _('Número Telefónico')
         self.fields['cod_rol'].label = _("Cambiar Rol")
-
-        self.fields['cod_cargo'].label = _("Asignar cargo a desempeñar")
         self.fields['cod_sucursal'].label = _("Asignar sucursal")
-
 
         #SECCION DONDE SE ASIGNA LA SUCURSAL AL USUARIO
         
@@ -155,30 +148,37 @@ class CustomUserEditForm(UserChangeForm):
         usuario = kwargs.get('instance')
         
         if usuario:
-            self.fields['cod_rol'].initial = usuario.cod_rol if usuario.cod_rol else None
+            persona_cargo = PersonaXCargo.objects.filter(perxcargo_persona_cod=usuario).first()
+            if persona_cargo:
+                self.fields['cod_sucursal'].initial = persona_cargo.perxcargo_sucursal_cod
 
     def save(self, commit=True):
-        # Guardar el usuario
-        user = super().save(commit)
+        user = super().save(commit=commit)
+
+        role_to_position = {
+           'Superadministrador': 'Gerente',  # Asignando el cargo de Gerente a los Superadministradores
+           'Gerente': 'Gerente',
+           'Vendedor': 'Vendedor',
+           'Jefe de taller': 'Jefe de taller',
+           'Cliente': 'Cliente'
+        }
+        name_position = role_to_position.get(user.cod_rol.rol_nombre, None)
 
         persona_cargo = PersonaXCargo.objects.filter(perxcargo_persona_cod=user).first()
 
         if persona_cargo:
-            # Si existe, actualiza los campos
-            persona_cargo.perxcargo_cargo_cod = self.cleaned_data.get('cod_cargo')
             persona_cargo.perxcargo_sucursal_cod = self.cleaned_data.get('cod_sucursal')
+
+            if name_position:
+                cargo, created = Cargo.objects.get_or_create(cargo_nombre=name_position)
+                persona_cargo.perxcargo_cargo_cod = cargo  # Actualiza el cargo del usuario en PersonaXCargo
+
             persona_cargo.save()
         else:
-            # Si no existe, crea un nuevo registro
-            persona_cargo = PersonaXCargo(
-                perxcargo_persona_cod=user,
-                perxcargo_cargo_cod = self.cleaned_data.get('cod_cargo'),
-                perxcargo_sucursal_cod = self.cleaned_data.get('cod_sucursal'),
-                perxcargo_vigente=True,
-            )
-            persona_cargo.save()
+            print("Hubo un error")
 
         return user
+
 
 class RolForm(forms.ModelForm):
 
@@ -208,8 +208,7 @@ class SucursalForm(forms.ModelForm):
         model = Sucursal
         fields = ['sucursal_nombre', 'sucursal_ubicacion', 'sucursal_cod_gerente']
         sucursal_cod_gerente = forms.ModelChoiceField( queryset=Usuario.objects.filter(cod_rol_id = 2) )
-        
-        
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -257,7 +256,8 @@ class CrearProductoForm(forms.ModelForm):
             inventario_por_sucursal.invsus_existencias = existencias
             inventario_por_sucursal.save()
         return producto
-    
+
+
 class OrdenTrabajoVehiculoForm(forms.ModelForm):
     vehrep_placa = forms.CharField(max_length=20)
     vehrep_marca = forms.CharField(max_length=30)
@@ -280,7 +280,6 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
         self.fields['vehrep_color'].label = _('Color del vehículo')
         self.fields['vehrep_enReparacion'].label = _('¿En reparación?')
     
-
     def save(self, commit=True):
         vehiculo_data = {
             'vehrep_placa': self.cleaned_data['vehrep_placa'],
@@ -296,17 +295,55 @@ class OrdenTrabajoVehiculoForm(forms.ModelForm):
         if commit:
             orden_trabajo.save()
         return orden_trabajo
+    
+# !!!
+class EditarOrdenTrabajoForm(forms.ModelForm):
+    vehrep_placa = forms.CharField(max_length=20)
+    vehrep_marca = forms.CharField(max_length=30)
+    vehrep_color = forms.CharField(max_length=30)
+    vehrep_enReparacion = forms.BooleanField(required=False)
+    orden_encargado = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id=4), empty_label=None)
+    orden_dueño = forms.ModelChoiceField(queryset=Usuario.objects.filter(cod_rol_id=5), empty_label=None)
+
+    class Meta:
+        model = OrdenTrabajo
+        fields = ['orden_encargado', 'orden_dueño', 'orden_observacion', 'vehrep_placa', 'vehrep_marca', 'vehrep_color', 'vehrep_enReparacion']
+
+    def __init__(self, *args, **kwargs):
+        super(EditarOrdenTrabajoForm, self).__init__(*args, **kwargs)
+        self.fields['orden_encargado'].label = _('Encargado')
+        self.fields['orden_dueño'].label = _('Dueño')
+        self.fields['orden_observacion'].label = _('Observaciones')
+        self.fields['vehrep_placa'].label = _('Placa del vehículo')
+        self.fields['vehrep_marca'].label = _('Marca del vehículo')
+        self.fields['vehrep_color'].label = _('Color del vehículo')
+        self.fields['vehrep_enReparacion'].label = _('¿En reparación?')
+
+    def save(self, commit=True):
+        vehiculo_data = {
+            'vehrep_placa': self.cleaned_data['vehrep_placa'],
+            'vehrep_marca': self.cleaned_data['vehrep_marca'],
+            'vehrep_color': self.cleaned_data['vehrep_color'],
+            'vehrep_enReparacion': self.cleaned_data['vehrep_enReparacion'],
+            'vehrep_dueño': self.cleaned_data['orden_dueño'],
+        }
+        vehiculo = VehiculoReparacion.objects.create(**vehiculo_data)
+
+        orden_trabajo = super().save(commit=False)
+        orden_trabajo.orden_vehiculoreparacion = vehiculo
+        if commit:
+            orden_trabajo.save()
+        return orden_trabajo
+
 
 class CotizacionReparacionForm(forms.ModelForm):
 
     cotrep_orden_trabajo = forms.ModelChoiceField(queryset=OrdenTrabajo.objects.filter(orden_estado = False ), empty_label=None)
 
-    
     class Meta:
         model = CotizacionReparacion
         fields = ['cotrep_orden_trabajo','cotrep_precioreparacion','cotrep_observaciones']
         
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -323,7 +360,7 @@ class CotizacionReparacionForm(forms.ModelForm):
             vehiculo = orden.orden_vehiculoreparacion
             label = f'{orden.orden_cod} | {vehiculo.vehrep_placa} | {vehiculo.vehrep_dueño.username} | {orden.orden_fecha_creacion.strftime("%d/%m/%Y")}'
             choices.append((orden.pk, label))
-        return choices    
+        return choices
     
 class VehiculoVentaForm(forms.ModelForm):
     class Meta:
@@ -342,7 +379,6 @@ class VehiculoVentaForm(forms.ModelForm):
         self.fields['vehvnt_disponible'].label = _('Disponibilidad del Vehículo')
         self.fields['vehvnt_vigente'].label = _('Vigencia del Vehículo')
         self.fields['vehvnt_cod_sucursal'].queryset = Sucursal.objects.filter(sucursal_vigente=True)
-
 
 
 class EditarProductoForm(forms.ModelForm):
@@ -380,4 +416,5 @@ class EditarProductoForm(forms.ModelForm):
             )
             inventario_por_sucursal.invsus_existencias = existencias
             inventario_por_sucursal.save()
+
         return producto

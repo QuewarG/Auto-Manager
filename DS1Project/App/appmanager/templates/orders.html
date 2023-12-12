@@ -26,7 +26,7 @@
 <div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
-            <i class="fa-regular fa-tools"></i>
+            <i class="fa-solid fa-paste"></i>
             <span style="margin-left: 15px;">{% trans "Órdenes de Trabajo" %}</span>
         </h2>
     </div>
@@ -63,7 +63,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="orden_closeID" value="{{ order.orden_cod }}">
                     <td>
-                        <button type="submit" class="btn btn-outline-info">{% trans "Cerrar Orden" %}</button>
+                        <button type="submit" class="btn btn-outline-secondary">{% trans "Cerrar Orden" %}</button>
                     </td>
                 </form>
 

@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -89,7 +89,7 @@
             {% endfor %}
         </tbody>
     </table>
-    {% comment %} <button type="button" class="btn btn-secondary" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button> {% endcomment %}
+    {% comment %} <button type="button" class="btn btn-outline-success" onclick=redirectcreateUser() style="margin-left: 5px; margin-top: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button> {% endcomment %}
 </div>
 
 {% endblock %}

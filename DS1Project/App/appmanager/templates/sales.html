@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -55,8 +55,9 @@
 
         </tbody>
     </table>
-    <button onclick="addSale()" type="button" class="btn btn-secondary" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Venta" %}
-    </button>
 </div>
+
+<button onclick="addSale()" type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Venta" %}
+</button>
 
 {% endblock %}

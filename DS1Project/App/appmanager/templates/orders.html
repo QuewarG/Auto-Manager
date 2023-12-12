@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -88,12 +88,12 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{% url 'create_order' %}">
-        <button type="button" class="btn btn-secondary" style="margin-left: 5px;"> 
-            <i class="fa-solid fa-plus"></i> {% trans "Crear Orden" %}
-        </button>
-    </a>
 </div>
+
+<a href="{% url 'create_order' %}">
+    <button type="button" class="btn btn-success" style="margin-left: 5px; margin-top: 5px;"> 
+        <i class="fa-solid fa-plus"></i> {% trans "Crear Orden" %}
+    </button>
+</a>
 
 {% endblock %}

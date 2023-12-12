@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -90,13 +90,12 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table>
-
-    <button type="button" class="btn btn-secondary" onclick=redirectcreateUser() style="margin-left: 5px;">
-         <i class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}
-    </button>
-    
+    </table>    
 </div>
+
+<button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px; margin-top: 5px;">
+    <i class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}
+</button>
 
 {% endblock %}
 

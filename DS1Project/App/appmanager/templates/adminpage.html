@@ -4,31 +4,151 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'styles/automanager.css' %}">
+<link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+<script src="{% static 'js/dashboard.js' %}"></script>
 
-<div class="card-container">
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title text-center">{% trans "Usuarios" %}</h3>
-            <h1><i class="fa-solid fa-user"></i></h1>
-            <p class="card-text">{% trans "Cantidad de usuarios: " %} {{ users_count }}</p>
+
+<div class="card--container">
+    <h3 class="main--title"> {% trans "Detalles de la Aplicación" %} </h3>
+    <div class="card--wrapper">
+        <div class="data--card light-red">
+            <div class="card--header">
+                <div class="data">
+                    <span class="title"> {% trans "Cantidad de Usuarios" %} </span>
+                    <span class="users--value"> {{ users_count }} </span>
+                </div>
+                <i class="fa-solid fa-users icon"></i>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title text-center">{% trans "Inventario" %}</h3>
-            <h1><i class="fa-solid fa-boxes"></i></h1>
-            <p class="card-text">{% trans "Cantidad de inventario: " %} {{ products_count }}</p>
+
+        <div class="data--card light-purple">
+            <div class="card--header">
+                <div class="data">
+                    <span class="title"> {% trans "Sucursales" %} </span>
+                    <span class="users--value"> {{ branches_count }} </span>
+                </div>
+                <i class="fa-regular fa-building icon dark-purple"></i>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title text-center">{% trans "Sucursales" %}</h3>
-            <h1><i class="fa-solid fa-store"></i></h1>
-            <p class="card-text">{% trans "Cantidad de sucursales: " %} {{ branches_count }}</p>
+
+        <div class="data--card light-blue">
+            <div class="card--header">
+                <div class="data">
+                    <span class="title"> {% trans "Productos" %} </span>
+                    <span class="users--value"> {{ products_count }} </span>
+                </div>
+                <i class="fa-solid fa-store icon dark-blue"></i>
+            </div>
+        </div>
+
+        <div class="data--card light-green">
+            <div class="card--header">
+                <div class="data">
+                    <span class="title"> {% trans "Ordenes" %} </span>
+                    <span class="users--value"> #ordenes </span>
+                </div>
+                <i class="fa-regular fa-file icon dark-green"></i>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="graphics--wrapper">
+    <h3 class="main--title"> {% trans 'Graficos' %}</h3>
+    <div class="card--graphics">
+        <div class="graphics">
+            <canvas id="myChart" width="500" height="300"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="pieChart" width="400" height="200" 
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <!--<div class="graphics">
+            <canvas id="lineChart" width="400" height="200"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="radarChart" width="400" height="400"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="doughnutChart" width="400" height="200"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="scatterChart" width="400" height="200"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="polarAreaChart" width="400" height="400"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="bubbleChart" width="400" height="200"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>
+
+        <div class="graphics">
+            <canvas id="timelineChart" width="400" height="200"
+                data-users-count="{{ users_count }}"
+                data-branches-count="{{ branches_count }}"
+                data-products-count="{{ products_count }}">
+            </canvas>
+        </div>-->
+        
+        
+    </div>
+</div>
+
+<!--<div class="card--container--barras" style="margin-top: 25px; display: inline-block;">
+    <div class="card--wrapper">
+        <canvas id="myChart" width="400" height="200" class="barras"
+        data-users-count="{{ users_count }}"
+        data-branches-count="{{ branches_count }}"
+        data-products-count="{{ products_count }}">
+    </canvas>
+    </div>
+</div>
+
+<div class="card--container--pastel" style="margin-top: 40px; display: inline-block;">
+    <canvas id="pieChart" width="400" height="200" class="pastel"
+        data-users-count="{{ users_count }}"
+        data-branches-count="{{ branches_count }}"
+        data-products-count="{{ products_count }}">
+    </canvas>
+</div>-->
 
 
 {% endblock %}

@@ -18,7 +18,7 @@
     <nav>
         <img src="img/car-logo.png" class="logo" alt="">
         <div class="menu">
-            <a href="#">{% trans "Home" %}</a>
+            <a href="{% url 'home' %}">{% trans "Home" %}</a>
             <a href="{% url 'aboutUs' %}">{% trans "Sobre Nosotros" %}</a>
             <a href="#" style="margin-top: 7px;">
               
@@ -52,12 +52,12 @@
   
 <div class="hero">
 
-  <div class="text">
-    <h4>Automanager</h4>
-    <h1><span>{% trans "TU VIAJE PERFECTO COMIENZA AQUÍ" %}</span></h1>
-    <a href="{% url 'login' %}" class="btn">{% trans "Iniciar Sesión" %}</a>
-  </div>
+    <div class="text">
+      <h4 style="color: #1576EE; font-weight: 600;"><span>{% trans "Sobre Nosotros" %}</span></h4>
+      <p> Somos tu destino confiable para todas tus necesidades de vehículos. <br> Desde 2023, nos destacamos por ofrecer un servicio integral <br> que incluye ventas y reparación de vehículos. Nos enorgullece nuestra <br> historia de dedicación y compromiso con la excelencia. Nuestro <br> equipo está impulsado por la pasión por proporcionar vehículos <br> de alta calidad y un servicio personalizado, asegurando que cada <br> cliente encuentre la solución perfecta para sus necesidades automotrices. <br> En Automanager, no solo vendemos y reparamos vehículos; <br> construimos relaciones duraderas basadas en la confianza y la satisfacción <br> del cliente.</p>
+    </div>
 </div>
+  
 
 <!--<script>
   let heroBg = document.querySelector('.hero');

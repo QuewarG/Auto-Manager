@@ -6,21 +6,24 @@ document.addEventListener('DOMContentLoaded', function () {
     var usersCount = document.getElementById('myChart').dataset.usersCount;
     var branchesCount = document.getElementById('myChart').dataset.branchesCount;
     var productsCount = document.getElementById('myChart').dataset.productsCount;
+    var ordersCount = document.getElementById('myChart').dataset.ordersCount;
 
     var chartData = {
-        labels: ["Users", "Branches", "Products"],
+        labels: ["Users", "Branches", "Products", "Ordenes"],
         datasets: [{
             label: 'Detalles',
-            data: [usersCount, branchesCount, productsCount],
+            data: [usersCount, branchesCount, productsCount, ordersCount],
             backgroundColor: [
                 'rgb(249, 218, 218)',
                 'rgb(254, 226, 254)',
-                'rgb(236, 236, 254)'
+                'rgb(236, 236, 254)',
+                'rgb(235, 254, 235)',
             ],
             borderColor: [
                 '#ED3833',
                 '#812B80',
-                '#2046F6'
+                '#2046F6',
+                '#3A811D',
             ],
             borderWidth: 1
         }]
@@ -48,20 +51,24 @@ document.addEventListener('DOMContentLoaded', function () {
     var usersCount = document.getElementById('pieChart').dataset.usersCount;
     var branchesCount = document.getElementById('pieChart').dataset.branchesCount;
     var productsCount = document.getElementById('pieChart').dataset.productsCount;
+    var ordersCount = document.getElementById('pieChart').dataset.ordersCount;
+
 
     var pieChartData = {
-        labels: ["Users", "Branches", "Products"],
+        labels: ["Users", "Branches", "Products", "Orders"],
         datasets: [{
-            data: [usersCount, branchesCount, productsCount],
+            data: [usersCount, branchesCount, productsCount, ordersCount],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(75, 192, 192, 0.7)'
+                '#F88682',
+                '#C554C5',
+                '#6E8BFF',
+                '#7BCF5B',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(75, 192, 192, 1)'
+                '#ED3833',
+                '#812B80',
+                '#2046F6',
+                '#3A811D',
             ],
             borderWidth: 1
         }]

@@ -46,24 +46,27 @@
           <span>{% trans "Inventario" %}</span>
         </a>
       </li>
+
       <li>
-          <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-receipt"></i>
-            <span>{% trans "Cotizaciones" %}</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-            <li>
-              <a class="dropdown-item" href={% url 'cotizaciones' %}> 
-                {% trans "Ver Cotizaciones" %}
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
-                {% trans "Cotizar Reparación" %}
-              </a>
-            </li>
-        </ul>
-      </li>
+        <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-receipt"></i>
+          <span>{% trans "Cotizaciones" %}</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+          <li>
+            <a class="dropdown-item" href={% url 'cotizaciones' %}> 
+              <i class="fa-solid fa-magnifying-glass-dollar"></i>
+              <span> {% trans "Ver Cotizaciones" %} </span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+              <span> {% trans "Cotizar Reparación" %} </span>
+            </a>
+          </li>
+      </ul>
+    </li>
 
       <!--<li>
         <a href={% url 'cotizacion_reparacion' %}>
@@ -133,7 +136,29 @@
       </li>
 
     {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
+
     <li>
+      <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Cotizaciones" %}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+        <li>
+          <a class="dropdown-item" href={% url 'cotizaciones' %}> 
+            <i class="fa-solid fa-magnifying-glass-dollar"></i>
+            <span> {% trans "Ver Cotizaciones" %} </span>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span> {% trans "Cotizar Reparación" %} </span>
+          </a>
+        </li>
+    </ul>
+  </li>
+
+    <!--<li>
       <a href={% url 'cotizaciones' %}>
         <i class="fa-solid fa-receipt"></i>
         <span>{% trans "Cotizaciones" %}</span>
@@ -145,7 +170,7 @@
         <i class="fa-solid fa-screwdriver-wrench"></i>
         <span>{% trans "Cotización Reparación" %}</span>
       </a>
-    </li>
+    </li>-->
       
     <li>
       <a href={% url 'orders' %}>

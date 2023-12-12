@@ -19,22 +19,21 @@
 </head>
 
 <body>
-  
+  <div class="sidebar-container">
   <div class="sidebar">
     <div class="logo">
       <img src="{% static 'imgs/logo3.jpeg' %}" alt="" class="logo--automanager">
     </div>
     <ul class="menu">
+      {% if request.user.is_authenticated %}
+
+        {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
       <li class=""><!--activate-->
         <a class="button-link" href={% url 'adminpage' %}>
           <i class="fa-solid fa-a"></i>
           <span>Automanager</span>
         </a>
       </li>
-      
-  {% if request.user.is_authenticated %}
-
-    {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
       <li>
         <a href={% url 'sucursales' %}>
           <i class="fa-regular fa-building"></i>
@@ -48,17 +47,24 @@
         </a>
       </li>
       <li>
-        <a href={% url 'cotizaciones' %}>
-          <i class="fa-solid fa-receipt"></i>
-          <span>{% trans "Cotizaciones" %}</span>
-        </a>
+          <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-receipt"></i>
+            <span>{% trans "Cotizaciones" %}</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li>
+              <a class="dropdown-item" href={% url 'cotizaciones' %}> 
+                {% trans "Ver Cotizaciones" %}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
+                {% trans "Cotizar Reparación" %}
+              </a>
+            </li>
+        </ul>
       </li>
-      <li>
-        <a href={% url 'cotizacion_reparacion' %}>
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <span>{% trans "Cotización Reparación" %}</span>
-        </a>
-      </li>
+
       <!--<li>
         <a href={% url 'cotizacion_reparacion' %}>
           <i class="fa-solid fa-car"></i>
@@ -106,26 +112,12 @@
       </li>
 
       <li>
-        <a href={% url 'cotizaciones' %}>
-          <i class="fa-solid fa-receipt"></i>
-          <span>{% trans "Cotizaciones" %}</span>
-        </a>
-      </li>
-
-      <li>
         <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
           <span>{% trans "Ventas" %}</span>
         </a>
       </li>
-
-      <li>
-        <a href={% url 'orders' %}>
-          <i class="fa-regular fa-file"></i>
-          <span>{% trans "Ordenes" %}</span>
-        </a>
-      </li>
-
+      
       <li>
         <a href={% url 'users' %}>
           <i class="fas fa-user"></i>
@@ -147,6 +139,13 @@
         <span>{% trans "Cotizaciones" %}</span>
       </a>
     </li>
+
+    <li>
+      <a href={% url 'cotizacion_reparacion' %}>
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        <span>{% trans "Cotización Reparación" %}</span>
+      </a>
+    </li>
       
     <li>
       <a href={% url 'orders' %}>
@@ -165,7 +164,7 @@
 
     <li>
       <a href={% url 'consulta_reparacion_cliente' %}>
-        <i class="fa-solid fa-receipt"></i>
+        <i class="fa-solid fa-car-on"></i>
         <span>{% trans "Consultar estado del vehiculo" %}</span>
       </a>
     </li>
@@ -175,17 +174,16 @@
     <p>{% trans "SESION NO VALIDA" %}</p>
     {% endif %}
 
-      
-      <li class="logout">
-        <a href={% url 'exit' %}>
-          <i class="fas fa-sign-out-alt"></i>
-          <span>{% trans "Salir" %}</span>
-        </a>
-  {% endif %}
-      </li>
-    </ul>
-
+    <li class="logout">
+      <a href={% url 'exit' %}>
+        <i class="fas fa-sign-out-alt"></i>
+        <span>{% trans "Salir" %}</span>
+      </a>
+      {% endif %}
+    </li>
+  </ul>
   </div>
+</div>
 
 
   <div class="main--content">

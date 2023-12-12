@@ -45,14 +45,14 @@
 
         <!-- CARD PEQUEÑA -->
         <div class="card" style="width: 35rem; margin: 20px auto; margin-top: -10px;">
-            {% if vehiculo.vehrep_enReparacion %}
+            {% if not vehiculo.vehrep_enReparacion %}
                 <img src="{% static 'imgs/car_done.jpg' %}" alt="car_reparation" class="img-fluid">
             {% else %}
                 <img src="{% static 'imgs/car_reparation.jpg' %}" alt="car_reparation" class="img-fluid">
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title"> <strong> {% trans "Info" %}  </strong> </h5>
-                {% if vehiculo.vehrep_enReparacion %}
+                {% if not vehiculo.vehrep_enReparacion %}
                     <p class="card-text"> {% trans "Su vehículo se encuentra reparado. Acérquese a nuestras oficinas para retirarlo." %} </p>
                 {% else %}
                     <p class="card-text"> {% trans "Su vehículo aún se encuentra en nuestros talleres siendo reparado." %} </p>
@@ -63,7 +63,6 @@
             <div class="row">
                 <div class="col">
                     <ul class="list-group list-group-flush">
-                        {% if vehiculo.vehrep_enReparacion %}
                         <li class="list-group-item"> 
                             <strong> {% trans "Cliente: "%} </strong> 
                             {{usuario.username}} 
@@ -75,9 +74,7 @@
                         <li class="list-group-item"> 
                             <strong> {% trans "Placa: " %}  </strong>
                             {{vehiculo.vehrep_placa}} 
-                           
                         </li>
-                        {% endif %}
                     </ul>
                 </div>
                 <div class="col">

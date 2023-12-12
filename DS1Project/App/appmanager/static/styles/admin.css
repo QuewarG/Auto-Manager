@@ -13,19 +13,47 @@ body {
     display: flex;
 }
 
-.sidebar {
+/* Añadir un nuevo estilo para el contenedor de la barra lateral */
+.sidebar-container {
+    width: 230px; /* Ancho original de la barra lateral */
+    height: 100vh;
     position: sticky;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 270px;
-    height: 100vh;
+    overflow-y: auto; /* Agregar desplazamiento vertical cuando sea necesario */
+    background: #32383E;
+}
+
+/* Actualizar el estilo de la barra lateral */
+.sidebar {
+    width: 100%; /* Hacer que la barra lateral ocupe el 100% del contenedor */
     padding: 0.5rem 1.7rem;
     color: #fff;
-    overflow: hidden;
-    /*transition: all 0.5s linear;*/
-    /*rg(22, 33, 52);*/
-    background: #32383E;
+    transition: all 0.5s linear;
+    height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar-container {
+        width: 20%; /* Ancho original de la barra lateral para pantallas pequeñas */
+    }
+
+    .sidebar {
+        width: 100%; /* Hacer que la barra lateral ocupe el 100% del contenedor */
+        padding: 0 1.7rem;
+        position: relative;
+        overflow: visible;
+    }
+
+    .logout {
+        position: static;
+        width: auto;
+    }
+
+    .logo--automanager {
+        display: none;
+    }
 }
 
 /*.sidebar:hover {
@@ -47,23 +75,25 @@ body {
 
 .logo--automanager {
     margin-left: 35px;
-    margin-top: -10px;
+    margin-top: 10px;
     width: 80px;
     height: 80px;
     cursor: pointer;
     border-radius: 50%;
 }
 
+
 .menu {
-    height: 88%;
+    height: 83%;
     position: relative;
     list-style: none;
     padding: 0;
+    margin-top: 40px;
 }
 
 .menu li {
     padding: 0.52rem 1.2rem;
-    margin: 9px 0;
+    margin: 15px 0;
     border-radius: 8px;
     transition: all 0.5s ease-in-out;
 }
@@ -89,6 +119,19 @@ body {
     font-size: 1.2rem;
 }
 
+.menu button {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menu button i {
+    font-size: 1.2rem;
+}
+
 .logout {
     position: absolute;
     bottom: 0;
@@ -96,12 +139,6 @@ body {
     width: 100%;
 }
 
-.settings {
-    position: absolute;
-    bottom: 40px;
-    left: 0;
-    width: 100%;
-}
 
 .logout a {
     text-decoration: none;
@@ -207,9 +244,9 @@ section article h2 {
     overflow-x: auto;
 }
 
-.sidebar {
+/*.sidebar {
     width: 235px;
-}
+}*/
 
 .main--content {
     flex: 1; /* El contenido principal tomará el espacio restante */
@@ -219,13 +256,13 @@ section article h2 {
 @media screen and (max-width: 600px) {
     .sidebar {
     width: 25%;
-    padding: 0 1.7rem;
+    padding: 0 1rem;
     position: relative;
     overflow: visible;
     }
   
-    .logout, .settings {
-    position: static;
-    width: auto;
+    .logout {
+        position: static;
+        width: auto;
     }
 }

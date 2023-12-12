@@ -110,8 +110,8 @@ class CustomUserEditForm(UserChangeForm):
         ('OTRO', 'OTRO'),
     ]
    
-    first_name = forms.CharField(max_length=150, required=True)
-    last_name = forms.CharField(max_length=150, required=True )
+    first_name = forms.CharField(max_length=150, required=True, disabled=True)
+    last_name = forms.CharField(max_length=150, required=True, disabled=True)
     email = forms.EmailField(required=True )
     user_per_tipo_doc = forms.ChoiceField(choices=tipo_docs )
     user_numero_doc = forms.CharField(max_length=20, required=True )

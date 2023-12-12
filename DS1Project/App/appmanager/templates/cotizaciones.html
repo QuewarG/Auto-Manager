@@ -67,14 +67,14 @@
                     <form method="post" action="{% url 'cambiar_estado_cotizacion' %}">
                         {% csrf_token %}
                         <input type="hidden" name="acept_ID" value="{{cotizacion.cotrep_cod}}">
-                        <td> <button type="submit" class="btn btn-outline-info">{% trans "Aceptar cotización" %}</button></td>
+                        <td> <button type="submit" class="btn btn-outline-primary">{% trans "Aceptar cotización" %}</button></td>
                     </form>
                 {% else %}
                     {% comment %} Boton de edicion {% endcomment %}
                 <form method="get" action = "{% url 'edit_cotizacion_reparacion' %}">
                     {% csrf_token %}
                     <input type="hidden" name="edit_cotID" value="{{cotizacion.cotrep_cod}}">
-                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
 
                 {% comment %} Boton de borrado {% endcomment %}

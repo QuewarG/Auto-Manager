@@ -1,0 +1,143 @@
+.card--container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.card--wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.main--title {
+    color: #106CF6;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.data--card {
+    background: rgb(229, 223, 223);
+    border-radius: 10px;
+    padding: 1.2rem;
+    width: 220px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.5 ease-in-out;
+
+}
+
+.data--card:hover {
+    transform: translate(-5px);
+}
+
+.card--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 200;
+}
+
+.users--value {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.icon {
+    color: #fff;
+    padding: 1rem;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background: red;
+}
+
+.light-red {
+    background: rgb(249, 218, 218);
+}
+
+.light-purple {
+    background: rgb(254, 226, 254);
+}
+
+.light-green {
+    background: rgb(235, 254, 235);
+}
+
+.light-blue {
+    background: rgb(236, 236, 254);
+}
+
+.dark-red {
+    background: red;
+}
+
+.dark-purple {
+    background: purple;
+}
+
+.dark-green {
+    background: green;
+}
+
+.dark-blue {
+    background: blue;
+}
+
+.graphics--wrapper {
+    background: #fff;
+    margin-top: 1rem;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.card--graphics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6rem;
+}
+
+
+.graphics {
+    background: rgb(248, 248, 248);
+    border-radius: 10px;
+    padding: 1.2rem;
+    width: 470px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 500px;
+}
+
+
+/*
+.card--container--pastel {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 500px;
+    max-height: 300px;
+    margin-left: 120px;
+
+}
+
+.pastel {
+    margin-left: 90px;
+}*/

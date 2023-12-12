@@ -9,10 +9,12 @@ from django.conf import settings
 from .models import *
 from .forms import *
 
-
 def home(request):
     print (request.LANGUAGE_CODE)
     return render(request, "home.html")
+
+def aboutUs(request):
+    return render(request, 'aboutUs.html')
 
 
 @login_required
@@ -28,7 +30,7 @@ def adminpage(request):
         'users_count': users_count, 
         'products_count': products_count, 
         'branches_count': branches_count,
-        'orders_count' : orders_count
+        'orders_count' : orders_count, 
         }
     )
 

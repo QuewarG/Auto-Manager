@@ -194,20 +194,20 @@
 
         {% if request.user.is_authenticated %}
 
-          {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
-            <span>{% trans "Admin" %}</span>
-            <h2>Dashboard</h2>
-          {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
-            <span>{% trans "Vendedor" %}</span>
-            <h2>Dashboard</h2>
-          {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
-            <span>{% trans "Jefe de Taller" %}</span>
-            <h2>Dashboard</h2>
-          {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
-            <span>{% trans "Cliente" %}</span>
-            <h2>Dashboard</h2>
-          {% endif %}          
-        {% endif %}
+        {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
+          <span style="font-weight: 600;">{% trans "Admin" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
+          <span style="font-weight: 600;">{% trans "Vendedor" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
+          <span style="font-weight: 600;">{% trans "Jefe de Taller" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+          <span style="font-weight: 600;">{% trans "Cliente" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% endif %}          
+      {% endif %}
 
           
       </div>
@@ -259,7 +259,7 @@
       
     </div>
 
-    <div class="py-3">
+    <div class="py-2">
       {% block content %} {% endblock %}
     </div>
 

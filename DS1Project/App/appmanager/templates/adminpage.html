@@ -45,7 +45,7 @@
             <div class="card--header">
                 <div class="data">
                     <span class="title"> {% trans "Ordenes" %} </span>
-                    <span class="users--value"> #ordenes </span>
+                    <span class="users--value"> {{ orders_count }} </span>
                 </div>
                 <i class="fa-regular fa-file icon dark-green"></i>
             </div>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="graphics--wrapper">
-    <h3 class="main--title"> {% trans 'Graficos' %}</h3>
+    <h3 class="main--title"> {% trans 'Gráficos' %}</h3>
     <div class="card--graphics">
         <div class="graphics">
             <canvas id="myChart" width="500" height="300"

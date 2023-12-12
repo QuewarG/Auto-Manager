@@ -21,12 +21,14 @@ def adminpage(request):
     users_count = Usuario.objects.count()
     products_count = Inventario.objects.count()
     branches_count = Sucursal.objects.count()
+    orders_count = OrdenTrabajo.objects.count()
 
     return render(request, 'adminpage.html', {
         'actual_user': actual_user, 
         'users_count': users_count, 
         'products_count': products_count, 
-        'branches_count': branches_count
+        'branches_count': branches_count,
+        'orders_count' : orders_count
         }
     )
 

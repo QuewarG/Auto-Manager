@@ -7,7 +7,12 @@
 <div>
     {% if messages %}
     <div class="alert alert-success" role="alert">
-        <!-- Código de los mensajes de alerta -->
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
     </div>
     <script>
         window.setTimeout(function(){
@@ -16,7 +21,6 @@
             });
         }, 1500);
     </script>
-    {% endif %}
 </div>
 
 <div class="card bg-primary text-white">
@@ -32,7 +36,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>{% trans "Código" %}</th>
                 <th>{% trans "Encargado" %}</th>
                 <th>{% trans "Dueño del vehículo" %}</th>
                 <th>{% trans "Placa del vehículo" %}</th>
@@ -44,7 +47,6 @@
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{ order.orden_cod }}</td>
                 <td>{{ order.orden_encargado }}</td>
                 <td>{{ order.orden_dueño }}</td>
                 <td>{{ order.orden_vehiculoreparacion }}</td>

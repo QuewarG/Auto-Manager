@@ -24,10 +24,6 @@ jobs:
 
     - name: Run Tests
       run: |
-        python manage.py test
-
-    - name: Run Docker Compose
-      run: |
-        docker-compose -f path/to/your/docker-compose.yml up -d
+        python manage.py DS1Project/App/appmanager/tests.py
 
  

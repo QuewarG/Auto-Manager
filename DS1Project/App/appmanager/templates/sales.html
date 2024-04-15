@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-dollar-sign"></i>
@@ -14,8 +14,8 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
-    <table class="table table-striped">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th scope="col">{% trans "Usuario" %}</th>
@@ -41,7 +41,7 @@
                 <form method="" action="">
                     {% csrf_token %}
                     <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <td> <button type="" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
     
                 <!--Boton de borrado-->
@@ -55,8 +55,9 @@
 
         </tbody>
     </table>
-    <button onclick="addSale()" type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Venta" %}
-    </button>
 </div>
+
+<button onclick="addSale()" type="button" class="btn btn-success" style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Venta" %}
+</button>
 
 {% endblock %}

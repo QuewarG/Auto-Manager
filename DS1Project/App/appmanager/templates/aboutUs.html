@@ -1,0 +1,76 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+  <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Appmanager</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+        <img src="img/car-logo.png" class="logo" alt="">
+        <div class="menu">
+            <a href="{% url 'home' %}">{% trans "Home" %}</a>
+            <a href="{% url 'aboutUs' %}">{% trans "Sobre Nosotros" %}</a>
+            <a href="#" style="margin-top: 7px;">
+              
+          
+                <form action="{% url 'set_language' %}" method="post" class="language-form">
+                  <label for="idioma"> <i class="fa-solid fa-globe"></i> {% trans "Idioma: " %}</label>
+                  {% csrf_token %}
+                  <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                  <select name="language" id="id_language" onchange="this.form.submit()">
+                      {% for lang_code, lang_name in LANGUAGES %}
+                          <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                              {{ lang_name }}
+                          </option>
+                      {% endfor %}
+                  </select>
+            
+                </form>
+              
+              
+            </a>
+
+        </div>
+
+        <div class="social">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </nav>
+</header>
+  
+<div class="hero">
+
+    <div class="text">
+      <h4 style="color: #1576EE; font-weight: 600;"><span>{% trans "Sobre Nosotros" %}</span></h4>
+      <p> Somos tu destino confiable para todas tus necesidades de vehículos. <br> Desde 2023, nos destacamos por ofrecer un servicio integral <br> que incluye ventas y reparación de vehículos. Nos enorgullece nuestra <br> historia de dedicación y compromiso con la excelencia. Nuestro <br> equipo está impulsado por la pasión por proporcionar vehículos <br> de alta calidad y un servicio personalizado, asegurando que cada <br> cliente encuentre la solución perfecta para sus necesidades automotrices. <br> En Automanager, no solo vendemos y reparamos vehículos; <br> construimos relaciones duraderas basadas en la confianza y la satisfacción <br> del cliente.</p>
+    </div>
+</div>
+  
+
+<!--<script>
+  let heroBg = document.querySelector('.hero');
+
+  setInterval(() => {
+    heroBg.style.backgroundImage = "url(static/imgs/bg-light.jpg)"
+
+    setTimeout(() => {
+      heroBg.style.backgroundImage = "url(static/imgs/bg.jpg)"
+    }, 1000);
+  }, 2200);
+</script>-->
+
+  
+</body>
+</html>

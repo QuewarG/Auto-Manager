@@ -12,26 +12,28 @@
   <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <title>Admin Dashboard</title>
 </head>
 
 <body>
+  <div class="sidebar-container">
   <div class="sidebar">
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="{% static 'imgs/logo3.jpeg' %}" alt="" class="logo--automanager">
+    </div>
     <ul class="menu">
-      <li class="activate">
-        <a class="button-link" href={% url 'login' %}>
+      {% if request.user.is_authenticated %}
+
+        {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
+      <li class=""><!--activate-->
+        <a class="button-link" href={% url 'adminpage' %}>
           <i class="fa-solid fa-a"></i>
           <span>Automanager</span>
         </a>
       </li>
-      
-  {% if request.user.is_authenticated %}
-
-    {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
       <li>
         <a href={% url 'sucursales' %}>
           <i class="fa-regular fa-building"></i>
@@ -44,12 +46,35 @@
           <span>{% trans "Inventario" %}</span>
         </a>
       </li>
+
       <li>
-        <a href={% url 'cotizaciones' %}>
+        <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-receipt"></i>
           <span>{% trans "Cotizaciones" %}</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+          <li>
+            <a class="dropdown-item" href={% url 'cotizaciones' %}> 
+              <i class="fa-solid fa-magnifying-glass-dollar"></i>
+              <span> {% trans "Ver Cotizaciones" %} </span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+              <span> {% trans "Cotizar Reparación" %} </span>
+            </a>
+          </li>
+      </ul>
+    </li>
+
+      <!--<li>
+        <a href={% url 'cotizacion_reparacion' %}>
+          <i class="fa-solid fa-car"></i>
+          <span>{% trans "Cotización Vehículo" %}</span>
         </a>
       </li>
+    -->
       <li>
         <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
@@ -90,26 +115,12 @@
       </li>
 
       <li>
-        <a href={% url 'cotizaciones' %}>
-          <i class="fa-solid fa-receipt"></i>
-          <span>{% trans "Cotizaciones" %}</span>
-        </a>
-      </li>
-
-      <li>
         <a href={% url 'sales' %}>
           <i class="fa-solid fa-dollar-sign"></i>
           <span>{% trans "Ventas" %}</span>
         </a>
       </li>
-
-      <li>
-        <a href={% url 'orders' %}>
-          <i class="fa-regular fa-file"></i>
-          <span>{% trans "Ordenes" %}</span>
-        </a>
-      </li>
-
+      
       <li>
         <a href={% url 'users' %}>
           <i class="fas fa-user"></i>
@@ -125,12 +136,41 @@
       </li>
 
     {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
+
     <li>
+      <a class="" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Cotizaciones" %}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+        <li>
+          <a class="dropdown-item" href={% url 'cotizaciones' %}> 
+            <i class="fa-solid fa-magnifying-glass-dollar"></i>
+            <span> {% trans "Ver Cotizaciones" %} </span>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href={% url 'cotizacion_reparacion' %}>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span> {% trans "Cotizar Reparación" %} </span>
+          </a>
+        </li>
+    </ul>
+  </li>
+
+    <!--<li>
       <a href={% url 'cotizaciones' %}>
         <i class="fa-solid fa-receipt"></i>
         <span>{% trans "Cotizaciones" %}</span>
       </a>
     </li>
+
+    <li>
+      <a href={% url 'cotizacion_reparacion' %}>
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        <span>{% trans "Cotización Reparación" %}</span>
+      </a>
+    </li>-->
       
     <li>
       <a href={% url 'orders' %}>
@@ -139,29 +179,60 @@
       </a>
     </li>
 
+    {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+    <li>
+      <a href={% url 'cotizaciones' %}>
+        <i class="fa-solid fa-receipt"></i>
+        <span>{% trans "Cotizaciones" %}</span>
+      </a>
+    </li>
+
+    <li>
+      <a href={% url 'consulta_reparacion_cliente' %}>
+        <i class="fa-solid fa-car-on"></i>
+        <span>{% trans "Consultar estado del vehiculo" %}</span>
+      </a>
+    </li>
+
     {% else %}
     <!-- Código para la opción por defecto o manejo de errores -->
     <p>{% trans "SESION NO VALIDA" %}</p>
     {% endif %}
 
-      
-      <li class="logout">
-        <a href={% url 'exit' %}>
-          <i class="fas fa-sign-out-alt"></i>
-          <span>{% trans "Salir" %}</span>
-        </a>
-  {% endif %}
-      </li>
-    </ul>
-
+    <li class="logout">
+      <a href={% url 'exit' %}>
+        <i class="fas fa-sign-out-alt"></i>
+        <span>{% trans "Salir" %}</span>
+      </a>
+      {% endif %}
+    </li>
+  </ul>
   </div>
+</div>
 
 
   <div class="main--content">
     <div class="header--wrapper">
       <div class="header--title">
-        <span>{% trans "Admin" %}</span>
-        <h2>Dashboard</h2>
+
+        {% if request.user.is_authenticated %}
+
+        {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
+          <span style="font-weight: 600;">{% trans "Admin" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
+          <span style="font-weight: 600;">{% trans "Vendedor" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
+          <span style="font-weight: 600;">{% trans "Jefe de Taller" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+          <span style="font-weight: 600;">{% trans "Cliente" %}</span>
+          <h2 style="font-weight: 600;">Dashboard</h2>
+        {% endif %}          
+      {% endif %}
+
+          
       </div>
       <div class="user--info">
         <div class="lenguage--box">      
@@ -190,24 +261,28 @@
         {% if request.user.cod_rol.obtener_codigo_rol == 1 or request.user.cod_rol.obtener_codigo_rol == 2 %} 
 
         <img src="{% static 'imgs/admin.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-info">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% elif request.user.cod_rol.obtener_codigo_rol == 3 %} 
         <img src="{% static 'imgs/vendedor.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-info">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% elif request.user.cod_rol.obtener_codigo_rol == 4 %} 
         <img src="{% static 'imgs/jefe_taller.png' %}" alt="Admin Logo" class="logo">
-        <span class="badge badge-info">{{ user.username }} </span>
+        <span class="badge bg-primary">{{ user.username }} </span>
+
+        {% elif request.user.cod_rol.obtener_codigo_rol == 5 %} 
+        <img src="{% static 'imgs/client.png' %}" alt="Admin Logo" class="logo">
+        <span class="badge bg-primary">{{ user.username }} </span>
 
         {% endif %}
-        {% endif %}
+      {% endif %}
 
       </div>
       
     </div>
 
-    <div class="py-3">
+    <div class="py-2">
       {% block content %} {% endblock %}
     </div>
 
@@ -215,10 +290,14 @@
   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-
+   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+
 <body>
 </html>

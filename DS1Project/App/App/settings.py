@@ -18,23 +18,24 @@ SECRET_KEY = "django-insecure-g8&627w5bdqxow+sg)g7-@d4_bqi17y+7=_0gn+yd%e02ag)%=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "crispy_forms",
-    "crispy_bootstrap5", 
+     
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_recaptcha",
-    "captcha",
     "appmanager",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "django_recaptcha",
+    "captcha", 
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -81,14 +82,13 @@ WSGI_APPLICATION = "App.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql',
-        "HOST": 'localhost',
+        "HOST": 'db',
         "PORT": '5432',
-        "NAME": 'automanagerprueba',
-        "USER": 'postgres',
-        "PASSWORD": 'camilo12345',
+        "NAME": 'automanager',
+        "USER": 'adminAuto',
+        "PASSWORD": '12345678',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

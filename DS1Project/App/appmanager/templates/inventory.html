@@ -4,7 +4,27 @@
 
 {% block content %}
 
-<div class="card bg-success text-white">
+{% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
+<div>
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(1000, function () {
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
+</div>
+
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-box"></i>
@@ -13,17 +33,18 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
-    <table class="table table-striped">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
         <thead>
             <tr>
+                <th>{% trans "Código" %}</th>
                 <th>{% trans "Nombre" %}</th>
                 <th>{% trans "Categoría" %}</th>
                 <th>{% trans "Descripción" %}</th>
                 <th>{% trans "Precio" %}</th>
                 <th>{% trans "Sucursal" %}</th>
                 <th>{% trans "Existencias" %}</th>
-                <th colspan="2">{% trans "Opciones" %}</th>
+                <th colspan="3">{% trans "Opciones" %}</th>
 
             </tr>
         </thead>
@@ -32,39 +53,96 @@
             <!--for-->
             {% for producto in inventario %}
             <tr>
-                <td>{{ producto.inv_nombre }}</td>
-                <td>{{ producto.inv_categoria }}</td>
-                <td>{{ producto.inv_descripcion }}</td>
-                <td>{{ producto.inv_precioneto }}</td>
-                <td>{{ producto.sucursal}}</td>
-                <td>{{ producto.existencias }}</td>
-            
+                <td> {{ producto.invsus_codigo_inventario.inv_cod }} </td>
+                <td>{{ producto.invsus_codigo_inventario.inv_nombre }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_categoria }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_descripcion }}</td>
+                <td>{{ producto.invsus_codigo_inventario.inv_precioneto }}</td>
+                <td>{{ producto.invsus_sucursal}}</td>
+                <td>{{ producto.invsus_existencias }}</td>
+
                 <!--Boton de edicion-->
-                <form method="" action="">
+                <form method="get" action="{% url 'edit_product' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="" value="">
-                    <td> <button type="" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <input type="hidden" name="product_editID" value="{{ producto.invsus_codigo_inventario.inv_cod }}">
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
                 <form method="post" action="{% url 'delete_product' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="delete_productID" value={{ producto.inv_cod }}>
-                    <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}  </button></td>
+                    <input type="hidden" name="delete_productID" value={{ producto.invsus_codigo_inventario.inv_cod }}>
+                    <td> <button type="submit" class="btn btn-outline-danger"> {% trans "Eliminar" %} </button></td>
                 </form>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        {% trans "Ver" %}
+                    </button>
+
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">
+                                        {{ producto.invsus_codigo_inventario.inv_nombre }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{% static 'imgs/inventory/mazda3.png' %}" alt="">
+                                    <br>
+                                    <br>
+                                    <p>{% trans "Detalles del vehiculo" %}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary"
+                                        data-bs-dismiss="modal"> {% trans "Cerrar" %} </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
             <!--endfor-->
 
         </tbody>
     </table>
+</div>
 
+<div class="d-flex" style="margin-top: 10px;">
     <a href="{% url 'new_product' %}">
-        <button type="button" class="btn btn-success" onclick="" style="margin-left: 5px;"> 
+        <button type="button" class="btn btn-success" style="margin-left: 5px;"> 
             <i class="fa-solid fa-cart-flatbed"></i> {% trans "Añadir Producto" %}
         </button>
     </a>
 
+    <a href="{% url 'new_vehicle' %}">
+        <button type="button" class="btn btn-success" style="margin-left: 5px;"> 
+            <i class="fa-solid fa-car"></i> {% trans "Añadir Vehículo Nuevo" %}
+        </button>
+    </a>
+    
+    <a href="{% url 'vehicle_inventory' %}">
+        <button type="button" class="btn btn-success" style="margin-left: 5px;"> 
+            <i class="fa-solid fa-car-side"></i> {% trans "Ver Vehículos a la Venta" %}
+        </button>
+    </a>
 </div>
+
+<style>
+    .modal-body img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto; /* Esto centrará la imagen horizontalmente dentro del modal */
+}
+
+</style>
 
 {% endblock %}

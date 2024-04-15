@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <!-- Añade una clase container para controlar el ancho del contenido -->
+    <div class="container">
+        <!-- SECCIÓN DE MENSAJES DE ALERTA O VERIFICACIÓN -->
+        <div>
+            {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <script>
+                    window.setTimeout(function () {
+                        $(".alert").fadeTo(500, 0).slideUp(1000, function () {
+                            $(this).remove();
+                        });
+                    }, 1500);
+                </script>
+            {% endif %}
+        </div>
+
+        <!-- CARD DE ESTADO DE REPARACIÓN -->
+        <div class="card bg-primary text-white mx-auto">
+            <div class="card-header">
+                <h2 class="">
+                    <i class="fas fa-user"></i>
+                    <span style="margin-left: 15px;">{% trans "ESTADO DE LA REPARACIÓN DEL VEHÍCULO" %}</span>
+                </h2>
+            </div>
+        </div>
+
+        <!-- TABLA DE INFORMACIÓN -->
+        <div class="table-responsive py-4">
+            <!-- ... (resto del código de la tabla) ... -->
+        </div>
+
+        <!-- CARD PEQUEÑA -->
+        <div class="card" style="width: 35rem; margin: 20px auto; margin-top: -10px;">
+            {% if not vehiculo.vehrep_enReparacion %}
+                <img src="{% static 'imgs/car_done.jpg' %}" alt="car_reparation" class="img-fluid">
+            {% else %}
+                <img src="{% static 'imgs/car_reparation.jpg' %}" alt="car_reparation" class="img-fluid">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"> <strong> {% trans "Info" %}  </strong> </h5>
+                {% if not vehiculo.vehrep_enReparacion %}
+                    <p class="card-text"> {% trans "Su vehículo se encuentra reparado. Acérquese a nuestras oficinas para retirarlo." %} </p>
+                {% else %}
+                    <p class="card-text"> {% trans "Su vehículo aún se encuentra en nuestros talleres siendo reparado." %} </p>
+                {% endif %}
+            </div>
+
+            <!-- Dividir la lista en dos columnas -->
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> 
+                            <strong> {% trans "Cliente: "%} </strong> 
+                            {{usuario.username}} 
+                        </li>
+                        <li class="list-group-item"> 
+                            <strong> {% trans "Marca: " %} </strong>
+                            {{vehiculo.vehrep_marca}} 
+                        </li>
+                        <li class="list-group-item"> 
+                            <strong> {% trans "Placa: " %}  </strong>
+                            {{vehiculo.vehrep_placa}} 
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group list-group-flush">
+                                           
+                        <li class="list-group-item"> 
+                           <strong> {% trans "Encargado: " %}  </strong>
+                            {{orden_trabajo.orden_encargado.username }} 
+                        </li>
+                        <li class="list-group-item"> 
+                            <strong> {% trans "Precio: " %}  </strong>
+                            {{cotizacion.cotrep_precioreparacion}} 
+                        </li>
+                
+                </div>
+            </div>
+
+            <div class="card-body">
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}

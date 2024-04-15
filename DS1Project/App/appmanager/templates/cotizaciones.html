@@ -8,15 +8,24 @@
 {% comment %} SECCION DE MENSAJES DE ALERTA O VERIFICACION {% endcomment %}
 <div>
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="alert alert-success" role="alert">
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
 </div>
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fa-solid fa-receipt"></i>
@@ -25,46 +34,62 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
-    <table class="table table-striped ">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <!--INFORMACIÓN DE LA TABLA-->
-                <th>{% trans "Campo1" %}</th>
-                <th>{% trans "Campo2" %}</th>
-                <th>{% trans "Campo3" %}</th>
+                <th>{% trans "Código" %}</th>
+                <th>{% trans "Precio" %}</th>
+                <th>{% trans "Observaciones" %}</th>
+                <th>{% trans "Estado" %}</th>
+                <th>{% trans "Fecha de Expedición" %}</th>
                 <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
             <!--INFORMACIÓN DE BASE DE DATOS-->
-            <!--for-->
+            {% for cotizacion in cotizaciones %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button class="btn btn-outline-info"> {% trans "Editar" %}</button></td>
-                <td><button class="btn btn-outline-danger"> {% trans "Eliminar" %}</button></td>
+                <td>{{ cotizacion.cotrep_cod }}</td>
+                <td>{{ cotizacion.cotrep_precioreparacion }}</td>
+                <td>{{ cotizacion.cotrep_observaciones }}</td>
+                <td>
+                    {% if cotizacion.cotrep_estado %}
+                        {% trans "Aprobada" %}
+                    {% else %}
+                        {% trans "Pendiente" %}
+                    {% endif %}
+                </td>
+                <td>{{ cotizacion.create_at }}</td>
 
-                <!--Boton de edicion
-                <form method="get" action="url">
+                {% if request.user.cod_rol.obtener_codigo_rol == 5 %} 
+                    <form method="post" action="{% url 'cambiar_estado_cotizacion' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="acept_ID" value="{{cotizacion.cotrep_cod}}">
+                        <td> <button type="submit" class="btn btn-outline-primary">{% trans "Aceptar cotización" %}</button></td>
+                    </form>
+                {% else %}
+                    {% comment %} Boton de edicion {% endcomment %}
+                <form method="get" action = "{% url 'edit_cotizacion_reparacion' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="editID" value="{{cotizacion.id}}">
-                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
-                </form>-->
+                    <input type="hidden" name="edit_cotID" value="{{cotizacion.cotrep_cod}}">
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
+                </form>
 
-                <!--Boton de borrado
-                <form method="post" action="url">
+                {% comment %} Boton de borrado {% endcomment %}
+                <form method="post" action="{% url 'delete_CotizacionReparacion' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="userID" value="{{cotizacion.id}}">
+                    <input type="hidden" name="delete_cotID" value="{{cotizacion.cotrep_cod}}">
                     <td> <button type="submit" class="btn btn-outline-danger">{% trans "Eliminar" %}</button></td>
-                </form>-->
+                </form>
+                {% endif %}
 
             </tr>
-            <!--endfor-->
+            {% endfor %}
         </tbody>
     </table>
-    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button>
+    {% comment %} <button type="button" class="btn btn-outline-success" onclick=redirectcreateUser() style="margin-left: 5px; margin-top: 5px;"> <i class="fa-solid fa-plus"></i> {% trans "Añadir Cotización" %}</button> {% endcomment %}
 </div>
 
 {% endblock %}

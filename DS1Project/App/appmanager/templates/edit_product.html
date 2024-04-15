@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'imgs/favicon.ico' %}" type="image/x-icon">
+    <title>automanager</title>
+</head>
+<body>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card border-light mb-3">                
+                <div class="card-body">
+                    <h1 class="card-title">{% trans "Editar Producto" %}</h1>
+                    <hr>
+                    <form method="post" class="form-group">    
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="d-flex">
+                            <button class="btn btn-success">{% trans "Guardar" %}</button>
+                            &nbsp;
+                            <a href={% url 'inventory' %} class="btn btn-secondary"> {% trans "Cancelar" %} </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<div class="card bg-primary text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fa-solid fa-box"></i>
+            <span style="margin-left: 15px;">{% trans "Vehículos Disponibles" %}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans "Marca" %}</th>
+                <th>{% trans "Modelo" %}</th>
+                <th>{% trans "Año" %}</th>
+                <th>{% trans "Color" %}</th>
+                <th>{% trans "Precio Neto" %}</th>
+                <th>{% trans "Estado" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- CICLO FOR PARA MOSTRAR LOS DATOS-->
+            <!--for-->
+            {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle.vehvnt_marca }}</td>
+                <td>{{ vehicle.vehvnt_modelo }}</td>
+                <td>{{ vehicle.vehvnt_anio }}</td>
+                <td>{{ vehicle.vehvnt_color }}</td>
+                <td>{{ vehicle.vehvnt_precioneto}}</td>
+                <td> {% if vehicle.vehvnt_disponible %} {% trans "Disponible" %} {% else %} {% trans "No Disponible" %} {% endif %} </td>
+            
+                <!--Boton de edicion-->
+                <form method="" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="" value="">
+                    <td> <button type="" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
+                </form>
+
+                <!--Boton de borrado-->
+                <form method="post" action="{% url 'delete_vehicle' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_vehicleID" value={{ vehicle.vehvnt_cod }}>
+                    <td> <button type="submit" class="btn btn-outline-danger"> {% trans "Eliminar" %} </button></td>
+                </form>
+            </tr>
+            {% endfor %}
+            <!--endfor-->
+
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex">
+    <a href="{% url 'inventory' %}">
+        <button type="button" class="btn btn-secondary" style="margin-left: 5px;"> 
+            <i class="fa-solid fa-car"></i> {% trans "Atras" %}
+        </button>
+    </a>
+</div>
+
+{% endblock %}

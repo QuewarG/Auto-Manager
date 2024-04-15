@@ -1,7 +1,101 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block content %}
+{% load static %}
 
-<h2>{% trans "Ordenes" %}</h2>
+{% block content %}
+<!-- Sección de mensajes de alerta o verificación -->
+<div>
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        <ul class="messages">
+            {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script>
+        window.setTimeout(function(){
+            $(".alert").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove();
+            });
+        }, 1500);
+    </script>
+</div>
+
+<div class="card bg-primary text-white">
+    <div class="card-header">
+        <h2 class="">
+            <i class="fa-solid fa-paste"></i>
+            <span style="margin-left: 15px;">{% trans "Órdenes de Trabajo" %}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans "Encargado" %}</th>
+                <th>{% trans "Dueño del vehículo" %}</th>
+                <th>{% trans "Placa del vehículo" %}</th>
+                <th>{% trans "Observación" %}</th>
+                <th>{% trans "Estado" %}</th>
+                <th colspan="2">{% trans "Opciones" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.orden_encargado }}</td>
+                <td>{{ order.orden_dueño }}</td>
+                <td>{{ order.orden_vehiculoreparacion }}</td>
+                <td>{{ order.orden_observacion }}</td>
+                <td>
+                    {% if order.orden_vehiculoreparacion.vehrep_enReparacion %}
+                        {% trans "Reparando" %}
+                    {% else %}
+                        {% trans "Reparado" %}
+                    {% endif %}
+                </td>
+
+                <form method="post" action="{% url 'cerrar_orden_trabajo' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="orden_closeID" value="{{ order.orden_cod }}">
+                    <td>
+                        <button type="submit" class="btn btn-outline-secondary">{% trans "Cerrar Orden" %}</button>
+                    </td>
+                </form>
+
+                <!-- Boton de edición -->
+                <form method="get" action="{% url 'edit_order' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_editID" value="{{ order.orden_cod }}">
+                    <td>
+                        <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button>
+                    </td>
+                </form>
+
+                <!-- Boton de borrado -->
+                <form method="post" action="{% url 'delete_order' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_orderID" value="{{ order.orden_cod }}">
+                    <td>
+                        <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="{% trans "Eliminar" %}">
+                            {% trans "Eliminar" %}
+                        </button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'create_order' %}">
+    <button type="button" class="btn btn-success" style="margin-left: 5px; margin-top: 5px;"> 
+        <i class="fa-solid fa-plus"></i> {% trans "Crear Orden" %}
+    </button>
+</a>
 
 {% endblock %}

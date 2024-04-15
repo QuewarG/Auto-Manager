@@ -10,9 +10,6 @@
 <div>
     {% if messages %}
     <div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
         <ul class="messages">
             {% for message in messages %}
             <h3{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h3>
@@ -29,7 +26,7 @@
     </script>
 </div>
 
-<div class="card bg-success text-white">
+<div class="card bg-primary text-white">
     <div class="card-header">
         <h2 class="">
             <i class="fas fa-user"></i>
@@ -38,8 +35,8 @@
     </div>
 </div>
 
-<div class="table-responsive py-4">
-    <table class="table table-striped ">
+<div class="table-responsive py-4" style="max-height: 480px; overflow-y: auto;">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
@@ -51,12 +48,14 @@
                 <th>{% trans "Email" %}</th>
                 <th>{% trans "Teléfono" %}</th>
                 <th>{% trans "Rol" %}</th>
+                <th>{% trans "Sucursal" %}</th>
                 <th colspan="2">{% trans "Opciones" %}</th>
             </tr>
         </thead>
         <tbody>
             <!--INFORMACIÓN DE PRUEBA CON TABLA LOCAL-->
-            {% for usuario in user %}
+            {% for usuario in listado_usuarios %}
+              
             <tr>
                 <td>{{usuario.username}}</td>
                 <td>{{usuario.first_name}}</td>
@@ -66,12 +65,19 @@
                 <td>{{usuario.email}}</td>
                 <td>{{usuario.user_telefono}}</td>
                 <td>{{usuario.cod_rol.rol_nombre}}</td>
+                <td>
+                    {% if usuario.sucursal_cod %}
+                        {{usuario.sucursal_cod}}
+                    {% else %}
+                        {% trans "No asignada" %}
+                    {% endif %}
+                </td>
 
                 <!--Boton de edicion-->
                 <form method="get" action="{% url 'edit_usuario' %}">
                     {% csrf_token %}
                     <input type="hidden" name="editID" value="{{usuario.id}}">
-                    <td> <button type="submit" class="btn btn-outline-info">{% trans "Editar" %}</button></td>
+                    <td> <button type="submit" class="btn btn-outline-primary">{% trans "Editar" %}</button></td>
                 </form>
 
                 <!--Boton de borrado-->
@@ -84,13 +90,12 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table>
-
-    <button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px;">
-         <i class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}
-    </button>
-    
+    </table>    
 </div>
+
+<button type="button" class="btn btn-success" onclick=redirectcreateUser() style="margin-left: 5px; margin-top: 5px;">
+    <i class="fa-solid fa-user-plus"></i> {% trans "Crear Usuario" %}
+</button>
 
 {% endblock %}
 
